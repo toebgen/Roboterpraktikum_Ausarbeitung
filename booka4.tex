@@ -1,0 +1,96 @@
+\documentclass{UVKABoA4}
+
+\usepackage{graphicx} % Standardpaket zur Grafikeinbindung
+\usepackage{amsmath,amssymb} % Erweiterung des Mathematik-Modus
+\usepackage[colorinlistoftodos, german]{todonotes} % Option 'disable' entfernt alle ToDos
+\usepackage[absolute,overlay]{textpos}
+\usepackage{vmargin}          % Adjust margins in a simple way
+\usepackage{tikz}
+
+% Toggle the following two lines to switch between english and german layout
+% \usepackage[english]{babel} % Neue deutsche Rechtschreibung und Silbentrennung.
+\usepackage[ngerman]{babel} % Neue deutsche Rechtschreibung und Silbentrennung.
+
+\usepackage[raiselinks=true,
+            bookmarks=true,
+            bookmarksopenlevel=1,
+            bookmarksopen=true,
+            bookmarksnumbered=true,
+            hyperindex=true,
+            plainpages=false,
+            pdfpagelabels=true,
+            pdfborder={0 0 0.5}]{hyperref}
+
+
+\makeatletter
+\def\tagform@#1{\maketag@@@{\ignorespaces [#1]\unskip\@@italiccorr}}	% Anpassung der Formelnummerierung
+\makeatother
+
+\makeindex
+
+\newcommand{\myname}{Forename~Surname}
+\newcommand{\headtitle}{Title of thesis\\ 
+                        Second title line}
+\newcommand{\floatingtitle}{Title of thesis - Second title line}
+\newcommand{\thesistype}{Diplomarbeit}
+
+\newcommand{\reviewerone}{Prof.~Dr.--Ing.~J.~M.~Zöllner}
+\newcommand{\reviewertwo}{Prof.~Dr.--Ing.~R.~Dillmann}
+\newcommand{\advisor}{Dipl.--Inform.~Max~Mustermann}
+
+\newcommand{\timestart}{XX. Monat 20XX}
+\newcommand{\releaseyear}{20XX}
+\newcommand{\timeend}{XX. Monat \releaseyear}
+\newcommand{\releasemonth}{im Monat \releaseyear}
+
+
+% Names of the organizations
+\newcommand{\department}{\iflanguage{english}{Department of Computer Science}
+                                             {Fakultät für Informatik}}
+\newcommand{\institute}{\iflanguage{english}{Institute for Anthropomatics}
+                                            {Institut für Anthropomatik}}
+\newcommand{\fzidepartment}{Abteilung Technisch Kognitive Assistenzsysteme}
+\newcommand{\fziname}{\iflanguage{english}{FZI Research Center for Information Technology}
+                                          {FZI Forschungszentrum Informatik}}
+
+% A graphic best describing your thesis
+\newcommand{\titlefig}{\includegraphics[width=0.4\textwidth]{graphics/FZI-Logo}}
+
+\begin{document}
+
+\pagenumbering{roman}
+\include{preface/kit_titlepage}
+\include{preface/titlepage}
+% \include{preface/thesis}
+\parindent 1em
+\include{preface/affirmation}
+% \include{preface/preface}
+% \include{preface/abstract}
+% \include{preface/acknowledgment}
+
+\begingroup
+\changefont{phv}{m}{n}
+\tableofcontents
+\endgroup
+
+\mainmatter
+\renewcommand{\chapterpagestyle}{plain}
+\pagestyle{scrheadings}
+\pagenumbering{arabic}
+
+\include{content/example}
+
+\pagestyle{scrplain}
+\appendix
+
+\include{content/appendix}
+
+\listoftodos
+\listoffigures
+\listoftables
+\bibliography{content/bibliography}
+
+\printindex
+
+
+\end{document}

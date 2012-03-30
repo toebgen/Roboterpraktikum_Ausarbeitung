@@ -1,0 +1,37 @@
+\pagestyle{empty}
+\begingroup
+\changefont{phv}{m}{n}
+\renewcommand{\baselinestretch}{1}
+
+\begin{titlepage}
+  \parindent 0em 
+  \LARGE\textbf{\floatingtitle}
+  \vspace{24pt}\\
+  \iflanguage{english}{by}{von}\\
+  \myname \\[1.5cm]
+  \begin{center}
+  \titlefig\\[1cm]
+  \end{center}
+  \vfill
+  \begin{minipage}{0.4\textwidth}
+    \begin{flushleft} \large
+      \LARGE\textbf{\thesistype}\\
+      \LARGE\releasemonth
+    \end{flushleft}
+  \end{minipage}
+  \begin{minipage}{0.6\textwidth}
+    \begin{flushright}
+      \includegraphics[width=1.5cm]{graphics/FZI-Logo}
+    \end{flushright}
+  \end{minipage}
+  \newpage
+  \small \thesistype, FZI\\
+  \department, \releaseyear\\
+  Gutachter: \reviewerone, \reviewertwo
+  \vfill
+  \fzidepartment\\
+  \fziname
+  \newpage
+\end{titlepage}
+
+\endgroup
