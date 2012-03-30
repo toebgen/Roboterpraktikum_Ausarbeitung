@@ -68,6 +68,8 @@
 
 \begin{document}
 
+\listoftodos
+
 \pagenumbering{roman}
 \include{preface/kit_titlepage}
 \include{preface/titlepage}
@@ -88,14 +90,20 @@
 \pagestyle{scrheadings}
 \pagenumbering{arabic}
 
-\include{content/example}
+\include{content/einleitung}
+\include{content/bahnplanung}
+\include{content/lokalisierung}
+\include{content/gestenerkennung}
+\include{content/integration}
+\include{content/test}
+\include{content/zusammenfassung}
+\include{content/ausblick}
 
 \pagestyle{scrplain}
 \appendix
 
-\include{content/appendix}
+% \include{content/appendix}
 
-\listoftodos
 \listoffigures
 \listoftables
 \bibliography{content/bibliography}
