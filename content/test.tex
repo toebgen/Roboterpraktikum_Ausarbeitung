@@ -3,3 +3,48 @@
 
 \todo[inline]{Steuerungs-Gruppe: Schreiben}
 
+\section{Testumgebung}
+
+
+\section{Aufgetretene Schwierigkeiten}
+
+\subsection{Laserscanner}
+
+\begin{itemize}
+	\item \glqq Unsichtbare Wand\grqq\ in ca. 4m Entfernung
+	\begin{itemize}
+		\item Scanner nicht exakt waagerecht angebracht
+		\item nicht relevant, da Entfernung von 4m ausreichend
+	\end{itemize}
+	\item \glqq Tote Pixel\grqq
+	\begin{itemize}
+		\item Fehlmessungen werden mit Wert 0 und nicht MAX belegt
+		\item Roboter steht immer im Hindernis -> keine Fortbewegung
+		\item Optionale Zuschaltung der Module per XML
+	\end{itemize}
+\end{itemize}
+
+
+\subsection{Stromversorgung}
+
+\begin{itemize}
+	\item Robotereigene Stromversorgung reicht nicht aus für Roboter + Kinect
+	\item Netzgerät nötig
+	\item Einschränkung der Reichweite
+\end{itemize}
+
+\subsection{Kinect}
+
+\begin{itemize}
+	\item verliert getrackten Menschen bei zu schneller Bewegung
+	\item Verringerung der Geschwindigkeit (Rotation sowie Translation)
+\end{itemize}
+
+
+\subsection{Weitere Probleme}
+
+\begin{itemize}
+	\item Odometrie auf Teppichboden
+	\item SW-Bugs
+	\item \ldots
+\end{itemize}
