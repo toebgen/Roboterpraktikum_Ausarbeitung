@@ -3,7 +3,20 @@
 
 
 \section{Aufgabenstellung}
-\todo[inline]{Oier: Schreiben}
+
+Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man das in Abstraktionsschichten einteilen: LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung. Außerdem sollte man das alles auch Simulieren können.
+
+Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung. Sonst waren inverse Kinematik, Bahnplanung/Steuerung, Kollisionsvermeidung und Simulationsumgebung nicht vorhanden.
+
+Nach dem Bottom-Up Prinzip hat man zunächst, die LowLevel-Ansteuerung von der Odete angepasst und mittels Simulation getestet. Da die Simulationsumgebung für die SegwayOmni Plattform nicht vorhanden war, musste diese auch eingerichtet werden.
+
+Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus Koordinaten die nötige Geschwindigkeiten für \textit{OmniDrive} zu berechnen. Falls es sich bspw. um ein Industrieroboter handeln würde, dann würde die inverse Kinematik die nötige Gelenkwinkeleinstellungen berechnen, um mit dem Greifer eine neue Position zu erreichen. Danach würde die inverse Dynamik die entsprechende Motor-Kräfte und Momente berechnen.
+
+Die Bahnplanung berechnet Trajektoriepunkte auf Basis der Mensch-Position und Geschwindigkeit, welche von der Kinect-Kamera geliefert werden. Außerdem werden hier diverse Transformationen von Welt zu Roboter bzw. Bild-Koordinaten und zurück gemacht. Nebenbei, wird der Pfad gespeichert damit der Roboter es später alleine abfahren kann.
+
+Zum Schluß wird eine ständige Überprüfung der geplante Trajektorie gemacht, um Kollisionen zu vermeiden. Um Hindernisse zu umfahren, werden der A*-Algorithmus und ein Anti-Gravitationsfeld eingesetzt. Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hindernisse zu fahren.
+
+
 
 
 \section{Grundlagen Bahnplanung}
