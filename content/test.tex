@@ -1,15 +1,23 @@
 
 \chapter{Test auf realem Roboter}
-\authorsection{\editorjulian , \editortobias}
+\authorsection{\editortobias}
 \todo[inline]{Steuerungs-Gruppe: Schreiben}
 
-\section{Testumgebung}
+\begin{itemize}
+	\item Test auf realem Roboter erst spät möglich
+	\item Schwer einzelne Komponenten zu testen da es viele Abhängigkeiten gibt
+	\item Insbesondere der Steuerungs/Bahnplanungs/Hindernis Teil ist sowohl von den Laserscannern als auch vom Kinect-Teil abhängig.
+\end{itemize}
 
+
+\section{Testumgebung}
+\authorsection{\editortobias}
 \begin{itemize}
 	\item Aufgebaute Umgebung
 	\begin{itemize}
 		\item FZI, oberes Stockwerk
-		\item Abgegrenzter Bereich
+		\item erste Tests in Bereich ohne Hindernisse
+		\item Abgegrenzter Bereich zur Simulation einer Büroumgebung (Siehe Motivation!)
 		\item Karte erstellen zur Lokalisierung
 	\end{itemize}
 	\item Geplantes Bewegungs-Szenario
@@ -17,6 +25,7 @@
 
 
 \section{Aufgetretene Schwierigkeiten}
+\authorsection{\editorjulian}
 
 \subsection{Laserscanner}
 
@@ -46,7 +55,7 @@
 \subsection{Kinect}
 
 \begin{itemize}
-	\item verliert getrackten Menschen bei zu schneller Bewegung
+	\item verliert getrackten Menschen bei zu schneller Bewegung (insbesondere Rotation)
 	\item Verringerung der Geschwindigkeit (Rotation sowie Translation)
 \end{itemize}
 
