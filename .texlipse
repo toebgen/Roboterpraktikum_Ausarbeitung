@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Fri Apr 13 11:34:06 CEST 2012
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=
+mainTexFile=Roboterpraktikum.tex
+outputFile=Roboterpraktikum.pdf
+langSpell=
+markDer=true
+srcDir=
