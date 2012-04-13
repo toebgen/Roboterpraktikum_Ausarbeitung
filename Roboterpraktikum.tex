@@ -6,6 +6,27 @@
 \usepackage[absolute,overlay]{textpos}
 \usepackage{vmargin}          % Adjust margins in a simple way
 \usepackage{tikz}
+\usepackage{listings}
+\lstset{numbers=left,					% where to put the line-numbers
+	language=C++,						% choose the language of the code
+	basicstyle=\ttfamily\scriptsize\mdseries,	% the size of the fonts that are
+	% used for the code; \ttfamily\scriptsize\mdseries, \small, \footnotesize
+	numberstyle=\tiny,					% the size of the fonts that are used for the line-numbers; \tiny, \footnotesize
+	stepnumber=1,						% the step between two line-numbers. If it's 1 each line will be numbered
+	numbersep=5pt,						% how far the line-numbers are from the code
+	backgroundcolor=\color{hellgrau},	% choose the background color. You must add \usepackage{color}
+	showspaces=false,					% show spaces adding particular underscores
+	tabsize=2,							% sets default tabsize to 2 spaces
+	captionpos=b,						% sets the caption-position to bottom
+	breaklines=true,					% sets automatic line breaking
+	title=\lstname,						% show the filename of files included with \lstinputlisting; also try caption instead of title
+	keywordstyle=\color{blue},
+	xleftmargin=30pt,
+	xrightmargin=10pt,
+	aboveskip=\baselineskip
+}%
+\lstloadlanguages{C++}%
+
 
 % Toggle the following two lines to switch between english and german layout
 % \usepackage[english]{babel} % Neue deutsche Rechtschreibung und Silbentrennung.
@@ -23,6 +44,7 @@
 
 \renewcommand{\labelitemi}{$\triangleright$} 
 \newcommand{\authorsection}[1]{\begin{flushright}\textit{Autor: #1}\end{flushright}}
+\newcommand{\todoprivate}[1]{\todo[color=green]{#1}}
 
 \makeatletter
 \def\tagform@#1{\maketag@@@{\ignorespaces [#1]\unskip\@@italiccorr}}	% Anpassung der Formelnummerierung
@@ -111,6 +133,5 @@
 \bibliography{content/bibliography}
 
 \printindex
-
 
 \end{document}

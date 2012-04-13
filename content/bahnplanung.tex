@@ -1,58 +1,151 @@
-
+% #############################################################################
+%															Bahnplanung und Steuerung
+% #############################################################################
 \chapter{Bahnplanung und Steuerung}
+\label{bahnplanung_steuerung_cha}
 
-
+% ********************************************************************************
+% 										Aufgabenstellung
+% ********************************************************************************
 \section{Aufgabenstellung}
+\label{bahnplanung_aufgabenstellung_sec}
 \authorsection{\editoroier}
 
-Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man das in Abstraktionsschichten einteilen: LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung. Außerdem sollte man das alles auch Simulieren können.
+Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man das in Abstraktionsschichten einteilen:
+LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung.
+Außerdem sollte man das alles auch Simulieren können.
 
-Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung. Sonst waren inverse Kinematik, Bahnplanung/Steuerung, Kollisionsvermeidung und Simulationsumgebung nicht vorhanden.
+Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung.
+Sonst waren inverse Kinematik, Bahnplanung/Steuerung, Kollisionsvermeidung und Simulationsumgebung nicht vorhanden.
 
-Nach dem Bottom-Up Prinzip hat man zunächst, die LowLevel-Ansteuerung von der Odete angepasst und mittels Simulation getestet. Da die Simulationsumgebung für die SegwayOmni Plattform nicht vorhanden war, musste diese auch eingerichtet werden.
+Nach dem Bottom-Up Prinzip hat man zunächst, die LowLevel-Ansteuerung von der Odete angepasst und mittels Simulation getestet.
+Da die Simulationsumgebung für die SegwayOmni Plattform nicht vorhanden war, musste diese auch eingerichtet werden.
 
-Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus Koordinaten die nötige Geschwindigkeiten für \textit{OmniDrive} zu berechnen. Falls es sich bspw. um ein Industrieroboter handeln würde, dann würde die inverse Kinematik die nötige Gelenkwinkeleinstellungen berechnen, um mit dem Greifer eine neue Position zu erreichen. Danach würde die inverse Dynamik die entsprechende Motor-Kräfte und Momente berechnen.
+Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus Koordinaten die nötige Geschwindigkeiten für \textit{OmniDrive} zu berechnen.
+Falls es sich bspw. um ein Industrieroboter handeln würde, dann würde die inverse Kinematik die nötige Gelenkwinkeleinstellungen berechnen, um mit dem Greifer eine neue Position zu erreichen.
+Danach würde die inverse Dynamik die entsprechende Motor-Kräfte und Momente berechnen.
 
-Die Bahnplanung berechnet Trajektoriepunkte auf Basis der Mensch-Position und Geschwindigkeit, welche von der Kinect-Kamera geliefert werden. Außerdem werden hier diverse Transformationen von Welt zu Roboter bzw. Bild-Koordinaten und zurück gemacht. Nebenbei, wird der Pfad gespeichert damit der Roboter es später alleine abfahren kann.
+Die Bahnplanung berechnet Trajektoriepunkte auf Basis der Mensch-Position und Geschwindigkeit, welche von der Kinect-Kamera geliefert werden.
+Außerdem werden hier diverse Transformationen von Welt zu Roboter bzw. Bild-Koordinaten und zurück gemacht.
+Nebenbei, wird der Pfad gespeichert damit der Roboter es später alleine abfahren kann.
 
-Zum Schluß wird eine ständige Überprüfung der geplante Trajektorie gemacht, um Kollisionen zu vermeiden. Um Hindernisse zu umfahren, werden der A*-Algorithmus und ein Anti-Gravitationsfeld eingesetzt. Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hindernisse zu fahren.
+Zum Schluß wird eine ständige Überprüfung der geplante Trajektorie gemacht, um Kollisionen zu vermeiden.
+Um Hindernisse zu umfahren, werden der A*-Algorithmus und ein Anti-Gravitationsfeld eingesetzt.
+Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hindernisse zu fahren.
 
 
 
-
+% ********************************************************************************
+% 										Grundlagen Bahnplanung
+% ********************************************************************************
 \section{Grundlagen Bahnplanung}
+\label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
+
 \todo[inline]{Oier: Schreiben}
 
 
-
+% ********************************************************************************
+% 										Umsetzung
+% ********************************************************************************
 \section{Umsetzung}
+\label{bahnplanung_umsetzung_sec}
 
 
+% -----------------------------------------------------------------------------
+%													LowLevel-Ansteuerung
 \subsection{LowLevel-Ansteuerung}
+\label{bahnplanung_lowlevel_subsec}
 \authorsection{\editoroier}
+
 \todo[inline]{Oier: Schreiben}
 
 
+% -----------------------------------------------------------------------------
+%													Inverse Kinematik
 \subsection{Inverse Kinematik}
+\label{inverse_kinematik_subsec}
 \authorsection{\editorjulian}
+
 \todo[inline]{Julian: Schreiben}
 
 
+% -----------------------------------------------------------------------------
+%													Bahnplanung
 \subsection{Bahnplanung}
+\label{bahnplanung_subsec}
 \authorsection{\editortobias}
 \todo[inline]{Tobi: Schreiben}
 
+
 \begin{itemize}
-	\item  Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit (Kinect)
-	\item Schätzung der zukünftigen Position des Menschen
-	\item Transformation von Welt- in Roboter- bzw. Bildkoordinaten und zurück
-	\item Abspeichern von Pfaden
-	\item Abfahren von Pfaden
+	\item Kurzer Grobüberblick über die Behaviours-Gruppe, hier werden Bahnplanungs-Aufgaben bearbeitet\todoprivate{ref zu behaviours-Bild}
+	\begin{itemize}
+		\item Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit (Kinect)
+		\item Schätzung der zukünftigen Position des Menschen
+		\item Transformation von Welt- in Roboter- bzw. Bildkoordinaten und zurück\todoprivate{evtl. auch weg lassen}
+		\item Abspeichern von Pfaden
+		\item Abfahren von Pfaden
+	\end{itemize}
+	\item Module werden im Folgenden kurz beschrieben
+	\item Kollisionsvermeidung als eigener Abschnitt
+\end{itemize}
+
+\missingfigure[figwidth=0.7\textwidth]{Behaviours}
+
+
+\subsubsection{Position des Menschen}
+
+\begin{itemize}
+    \item bekommt aktuelle Position und Geschwindigkeit des Menschen
+    \item schätzt die zukünftige Position des Menschen
+    \item gibt aktuelle und geschätzte Position des Menschen weiter
+    \item Zeit-Parameter für die Schätzung: $t_{est}$
+    \item Berechnung nach der Formel: $s_{est} = s_{act} + v \cdot t_{est}$
 \end{itemize}
 
 
+\subsubsection{Berechnung der Trajektorie}
+
+\begin{itemize}
+	\item Struktur der zu berechnenden Trajektorie duch \lstinline{OmniDriveAlongPath} \todoprivate{ref zu LowLevel?}\ vorgegeben:
+	\begin{itemize}
+		\item Start $(x,y)$
+		\item Following $(x,y,yaw)$
+		\item Next $(x,y)$
+	\end{itemize}
+	\item Bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
+	\item Berechnung einer neuen Trajektorie, sobald neue Mensch-Daten vorliegen
+	\item Berechnung der Trajektorien-Punkte im Einzelnen:
+	\begin{itemize}
+	  \item Start: aktuelle Roboterposition
+	  \item Next: Punkt $d$ vor Mensch, auf Roboter-Mensch-Vektor; yaw wird gesondert berechnet, sodass Roboter immer zu Mensch schaut
+	  \item Following: Punkt $d$ vor geschätzter Mensch-Position, auf next-estimated-Vektor 
+  \end{itemize}
+  \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $1,5m$
+  \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
+% 	\item MUX für Trajektorie
+% 	\begin{itemize}
+% 		\item GenerateTrajectory
+% 		\item LoadFromFile
+% 	\end{itemize}
+\end{itemize}
+
+\todoprivate{Zeichnung mit Vektoren}
+
+
+
+\subsubsection{Pfadspeicherung}
+
+\begin{itemize}
+  \item 
+\end{itemize}
+
+
+% -----------------------------------------------------------------------------
+%													Kollisionsvermeidung
 \subsection{Kollisionsvermeidung}
+\label{kollisionsvermeidung_subsec}
 
 \subsubsection{Modul}
 \authorsection{\editortobias}
@@ -63,6 +156,9 @@ Zum Schluß wird eine ständige Überprüfung der geplante Trajektorie gemacht, 
 \todo[inline]{Julian: Schreiben}
 
 
+% -----------------------------------------------------------------------------
+%													Simulation
 \subsection{Simulation}
+\label{simulation_subsec}
 \authorsection{\editoroier}
 \todo[inline]{Oier: Schreiben}
