@@ -60,6 +60,9 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 
 \todo[inline]{Oier: Schreiben}
 
+% evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
+%		bzw. Abb. 2.3 von WS09/10
+
 
 % -----------------------------------------------------------------------------
 %													Inverse Kinematik
@@ -97,9 +100,9 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \subsubsection{Position des Menschen}
 
 \begin{itemize}
-    \item bekommt aktuelle Position und Geschwindigkeit des Menschen
-    \item schätzt die zukünftige Position des Menschen
-    \item gibt aktuelle und geschätzte Position des Menschen weiter
+    \item bekommt aktuelle Position und Geschwindigkeit des Menschen von Kinect
+    \item schätzt die zukünftige Position des Menschen anhand dieser Daten
+    \item gibt aktuelle und geschätzte Position des Menschen aus
     \item Zeit-Parameter für die Schätzung: $t_{est}$
     \item Berechnung nach der Formel: $s_{est} = s_{act} + v \cdot t_{est}$
 \end{itemize}
@@ -110,20 +113,21 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \begin{itemize}
 	\item Struktur der zu berechnenden Trajektorie duch \lstinline{OmniDriveAlongPath} \todoprivate{ref zu LowLevel?}\ vorgegeben:
 	\begin{itemize}
-		\item Start $(x,y)$
-		\item Following $(x,y,yaw)$
-		\item Next $(x,y)$
+		\item Start $(x,y)$, Koordinaten in der Ebene
+		\item Following $(x,y,yaw)$, Koordinaten und Orientierung in der Ebene \todoprivate{Skizze zu x-y-z-roll-pitch-yaw ?}
+		\item Next $(x,y)$, Koordinaten in der Ebene
 	\end{itemize}
-	\item Bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
+	\item Modul bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
 	\item Berechnung einer neuen Trajektorie, sobald neue Mensch-Daten vorliegen
 	\item Berechnung der Trajektorien-Punkte im Einzelnen:
 	\begin{itemize}
 	  \item Start: aktuelle Roboterposition
-	  \item Next: Punkt $d$ vor Mensch, auf Roboter-Mensch-Vektor; yaw wird gesondert berechnet, sodass Roboter immer zu Mensch schaut
-	  \item Following: Punkt $d$ vor geschätzter Mensch-Position, auf next-estimated-Vektor 
+	  \item Next: Pose auf Roboter-Mensch-Vektor, die sich im Abstand $d$ vor dem Mensch befindet; yaw wird gesondert berechnet, sodass Roboter immer zu Mensch schaut
+	  \item Following: Position auf next-estimated-Vektor, die sich $d$ vor geschätzter Mensch-Position befindet
   \end{itemize}
-  \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $1,5m$
+  \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $2m$
   \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
+
 % 	\item MUX für Trajektorie
 % 	\begin{itemize}
 % 		\item GenerateTrajectory
@@ -135,10 +139,27 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 
 
 
-\subsubsection{Pfadspeicherung}
+\subsubsection{Pfadspeichern und -laden}
 
 \begin{itemize}
-  \item 
+  \item Im \lstinline{followPerson} -Zustand: Wegpunkte $(x,y,yaw)$ werden in gewissen Abständen $d_{save}$ gespeichert
+  \begin{itemize}
+    \item sobald $ \overline{ s_{act}-s_{last} } > d_{save} $ \todoprivate{Fehler im Code??? Euklidischer Abstand stattdessen verwenden?}
+  \end{itemize}
+	\item Im \lstinline{returnHome} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde; umgekehrte Reihenfolge
+  \begin{itemize}
+    \item sobald $ d( s_{foll} - s_{act} ) > d( s_{nxt} - s_{act} ) $, Euklidischer Abstand
+  \end{itemize}
+	\item Im \lstinline{loadPath} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde
+    \begin{itemize}
+    \item sobald $ d( s_{foll} - s_{act} ) > d( s_{nxt} - s_{act} ) $, Euklidischer Abstand
+  \end{itemize}
+  \item Eigene Klasse zum File-Handling: \lstinline{fileUtil}
+  \begin{itemize}
+    \item Mehrere dump-files möglich
+    \item Auslesen der Wegpunkte in normaler und umgekehrter Reihenfolge
+  \end{itemize}
+  \item \lstinline{yaw} wird unabhängig von Datei berechnet, sodass Roboter immer Menschen anschaut
 \end{itemize}
 
 
@@ -154,6 +175,17 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \subsubsection{Algorithmen}
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
+
+% 
+% % -----------------------------------------------------------------------------
+% %													Transformationen
+% \subsection{Transformationen}
+% \label{transformationen_subsec}
+% 
+% \authorsection{\editorjulian}
+% \todo[inline]{Julian: Sollen wir (also du ;-) ) noch so einen Abschnitt machen?}
+
+
 
 
 % -----------------------------------------------------------------------------
