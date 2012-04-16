@@ -55,7 +55,7 @@ Nach Robotertyp:
 
 Nach dem Zustandsraum wo die Planung stattfindet:
 \begin{itemize}
-\item Gelenkwinkelzustandsraum (Konfigurationsraum)
+\item Gelenkwinkelzustandsraum (\gls{Konfigurationsraum} )
 \item Euklidischer Raum (Arbeitsraum, 3D / 6D)
 \item Sensorzustandsraum
 \item Objektzustandsraum
@@ -68,11 +68,11 @@ Nach Vollständigkeit:
 )
 \end{itemize}
 
-Weil die explizite Berechnung des Konfigurationsraum (C-Space) bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in Konfigurationsraum stattfindet, aber die Kollisionen und Abstände werden in Arbeitsraum berechnet und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
+Weil die explizite Berechnung des \gls{Konfigurationsraum} bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in \gls{Konfigurationsraum} stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
 
 Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
 \begin{enumerate}
-\item Eine Roadmap oder Graph aufbauen mittels Voronoi, Sichtgraphen, Zellenzerlegung oder zufällige Knoten (für PRM Verfahren z.B.).
+\item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten (für \gls{PRM} Verfahren z.B.).
 \item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus bspw.
 \end{enumerate}
 
