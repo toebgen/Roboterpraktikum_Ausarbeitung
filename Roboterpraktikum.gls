@@ -1,0 +1,6 @@
+\glossarysection[\glossarytoctitle]{\glossarytitle}\glossarypreamble
+\begin{theglossary}\glossaryheader
+\glsgroupheading{F}\relax \glsresetentrylist %
+\glossaryentryfield{fzi}{\glsnamefont{\acronymfont {FZI}}}{Forschungszentrum Informatik}{\relax }{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{17}}}%
+\end{theglossary}\glossarypostamble

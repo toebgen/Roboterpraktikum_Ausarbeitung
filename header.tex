@@ -43,6 +43,15 @@
             pdfpagelabels=true,
             pdfborder={0 0 0.5}]{hyperref}
 
+% Glossar und Akronyme
+% Übersetzung:
+%		1. pdflatex
+%		2. makeglossaries
+%		3. pdflatex
+\usepackage[toc, footnote]{glossaries}		% [acronym] -option legt ein Extra-Verzeichnis für Abkürzungen an
+\makeglossaries
+
+
 \renewcommand{\labelitemi}{$\triangleright$} 	% Aufzählungszeichen verändern
 \newcommand{\authorsection}[1]{\begin{flushright}\textit{Autor: #1}\end{flushright}}
 \newcommand{\todoprivate}[1]{\todo[color=green]{#1}}
@@ -64,6 +73,8 @@
 \newcommand{\editorjulian}{Julian~Wormer}
 
 \newcommand{\editordummy}{Dummy~Dummy}
+
+\newcommand{\hollie}{HoLLiE}
 
 \newcommand{\headtitle}{Projektpraktikum mit mobilen Robotern}
 \newcommand{\floatingtitle}{Projektpraktikum mit mobilen Robotern}

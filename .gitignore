@@ -1,11 +1,17 @@
+*.acn
+*.acr
+*.alg
 *.aux
 *.bit
 *.bbl
 *.blg
 *.dvi
+*.fls
 *.idx
 *.ilg
 *.ind
+*.ist
+*.glg
 *.glo
 *.idx
 *.lof
