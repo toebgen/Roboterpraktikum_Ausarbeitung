@@ -42,7 +42,40 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
 
-\todo[inline]{Oier: Schreiben}
+Bahnplanung befaßt sich mit dem Problem, eine kollisionsfreie Bahn zu finden die  ein Robotersystem
+von der aktuellen Position in die Zielposition überführt. Damit gehört es zu einer der Basisprobleme der Robotik. Die Verfahren kann man unterschiedlich klassifizieren \cite{rob1}.
+
+Nach Robotertyp:
+\begin{itemize}
+\item Bahnplanung für Manipulatoren (Schweißen bei Industrierobotern z.B.)
+\item Bahnplanung für mobile Roboter
+\item Bahnplanung für Laufmaschinen und anthropomorphe Systeme
+\item Greif- und Montageplanung
+\end{itemize}
+
+Nach dem Zustandsraum wo die Planung stattfindet:
+\begin{itemize}
+\item Gelenkwinkelzustandsraum (Konfigurationsraum)
+\item Euklidischer Raum (Arbeitsraum, 3D / 6D)
+\item Sensorzustandsraum
+\item Objektzustandsraum
+\end{itemize}
+
+Nach Vollständigkeit:
+\begin{itemize}
+\item Vollständige Verfahren (liefern immer eine Korrekte Lösung und können ermitteln ob keine Lösung existiert)
+\item Probabilistisch Vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden.
+)
+\end{itemize}
+
+Weil die explizite Berechnung des Konfigurationsraum (C-Space) bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in Konfigurationsraum stattfindet, aber die Kollisionen und Abstände werden in Arbeitsraum berechnet und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
+
+Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
+\begin{enumerate}
+\item Eine Roadmap oder Graph aufbauen mittels Voronoi, Sichtgraphen, Zellenzerlegung oder zufällige Knoten (für PRM Verfahren z.B.).
+\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus bspw.
+\end{enumerate}
+
 
 
 % ********************************************************************************
