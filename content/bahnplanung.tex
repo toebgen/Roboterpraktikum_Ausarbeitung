@@ -113,9 +113,9 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \begin{itemize}
 	\item Struktur der zu berechnenden Trajektorie duch \lstinline{OmniDriveAlongPath} \todoprivate{ref zu LowLevel?}\ vorgegeben:
 	\begin{itemize}
-		\item Start $(x,y)$, Koordinaten in der Ebene
-		\item Following $(x,y,yaw)$, Koordinaten und Orientierung in der Ebene \todoprivate{Skizze zu x-y-z-roll-pitch-yaw ?}
-		\item Next $(x,y)$, Koordinaten in der Ebene
+		\item Start $(x,y)$, Koordinaten
+		\item Following $(x,y,yaw)$, Koordinaten und Orientierung \todoprivate{Skizze zu x-y-z-roll-pitch-yaw ?}
+		\item Next $(x,y)$, Koordinaten
 	\end{itemize}
 	\item Modul bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
 	\item Berechnung einer neuen Trajektorie, sobald neue Mensch-Daten vorliegen
@@ -124,6 +124,7 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 	  \item Start: aktuelle Roboterposition
 	  \item Next: Pose auf Roboter-Mensch-Vektor, die sich im Abstand $d$ vor dem Mensch befindet; yaw wird gesondert berechnet, sodass Roboter immer zu Mensch schaut
 	  \item Following: Position auf next-estimated-Vektor, die sich $d$ vor geschätzter Mensch-Position befindet
+	  \item erfolgt alles in absoluten Weltkoordinaten
   \end{itemize}
   \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $2m$
   \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
@@ -144,23 +145,31 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \begin{itemize}
   \item Im \lstinline{followPerson} -Zustand: Wegpunkte $(x,y,yaw)$ werden in gewissen Abständen $d_{save}$ gespeichert
   \begin{itemize}
-    \item sobald $ \overline{ s_{act}-s_{last} } > d_{save} $ \todoprivate{Fehler im Code??? Euklidischer Abstand stattdessen verwenden?}
-  \end{itemize}
-	\item Im \lstinline{returnHome} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde; umgekehrte Reihenfolge
-  \begin{itemize}
-    \item sobald $ d( s_{foll} - s_{act} ) > d( s_{nxt} - s_{act} ) $, Euklidischer Abstand
+    \item sobald $ \overline{ s_{act} - s_{last} } > d_{save} $ \todoprivate{Fehler im Code??? Euklidischer Abstand stattdessen verwenden?}
   \end{itemize}
 	\item Im \lstinline{loadPath} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde
-    \begin{itemize}
+  \begin{itemize}
+		\item Im \lstinline{returnHome} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde; umgekehrte Reihenfolge
     \item sobald $ d( s_{foll} - s_{act} ) > d( s_{nxt} - s_{act} ) $, Euklidischer Abstand
+  	\item \lstinline{yaw} wird unabhängig von Datei berechnet, sodass Roboter immer Menschen anschaut
   \end{itemize}
   \item Eigene Klasse zum File-Handling: \lstinline{fileUtil}
   \begin{itemize}
     \item Mehrere dump-files möglich
     \item Auslesen der Wegpunkte in normaler und umgekehrter Reihenfolge
   \end{itemize}
-  \item \lstinline{yaw} wird unabhängig von Datei berechnet, sodass Roboter immer Menschen anschaut
 \end{itemize}
+
+
+
+% 
+% % -----------------------------------------------------------------------------
+% %													Transformationen
+% \subsection{Transformationen}
+% \label{transformationen_subsec}
+% 
+% \authorsection{\editorjulian}
+% \todo[inline]{Julian: Sollen wir (also du ;-) ) noch so einen Abschnitt machen?}
 
 
 % -----------------------------------------------------------------------------
@@ -172,18 +181,39 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \authorsection{\editortobias}
 \todo[inline]{Tobi: Schreiben}
 
+\begin{itemize}
+ 
+  \item Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um Hindernisse
+  \item Ausgaben von \lstinline{GenerateTrajectory} und \lstinline{LoadFromFile} werden geMUXt
+  \begin{itemize}
+    \item je nach Modus (\lstinline{followPerson} bzw. \lstinline{returnHome} / \lstinline{followPath}) schaltet MUX andere Eingänge durch
+  	\item Die Ausgabe des MUX wird dann widerum komplett durch das Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) geschleift
+    \item Dadurch wird jede Trajektorie auf Hindernisse überprüft, keine kommt \glqq daran vorbei\grqq
+  \end{itemize}
+  \item Innerhalb des Moduls wird jede Trajektorie auf Hindernisse überprüft
+	\begin{itemize}
+	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt- in Bildkoordinaten)
+	  \item Überprüfung für jeden einzelnen Punkt, ob er innerhalb eines Hindernisses liegt
+	  \item Verwendung der \lstinline{ObstacleMap} \todoprivate{ref zu Lokalisierung}
+	\end{itemize}
+  \item Ohne Hindernis werden Trajektorien-Punkte nur durchgeschleift
+  \item Wenn Hindernis erkannt, dann wird eine neue Trajektorie ermittelt
+  \begin{itemize}
+    \item Verwendung des A*-Algorithmus
+    \item Ermittlung des Start- und Endpunktes für A*
+    \item ggf. gesonderte Behandlung für Endpunkt (\lstinline{choosePointAfterObstacle})
+    \item Aufruf A*
+    \item Transformation der nuen Trajektorie IK $\rightarrow$ WK
+  \end{itemize}
+
+\end{itemize}
+
+
+
 \subsubsection{Algorithmen}
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
-% 
-% % -----------------------------------------------------------------------------
-% %													Transformationen
-% \subsection{Transformationen}
-% \label{transformationen_subsec}
-% 
-% \authorsection{\editorjulian}
-% \todo[inline]{Julian: Sollen wir (also du ;-) ) noch so einen Abschnitt machen?}
 
 
 
