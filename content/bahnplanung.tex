@@ -15,13 +15,13 @@ Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man
 LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung.
 Außerdem sollte man das alles auch Simulieren können.
 
-Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung.
-Sonst waren inverse Kinematik, Bahnplanung/Steuerung, Kollisionsvermeidung und Simulationsumgebung nicht vorhanden.
+Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung und die inverse Kinematik. Sonst waren, Bahnplanung/Steuerung und Kollisionsvermeidung zunächst nicht vorhanden. Eine Simulationsumgebung war vorhanden, es fehlte aber noch die Programmierung der Gui .
 
 Nach dem Bottom-Up Prinzip hat man zunächst, die LowLevel-Ansteuerung von der Odete angepasst und mittels Simulation getestet.
-Da die Simulationsumgebung für die SegwayOmni Plattform nicht vorhanden war, musste diese auch eingerichtet werden.
 
-Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus Koordinaten die nötige Geschwindigkeiten für \textit{OmniDrive} zu berechnen.
+\todo[inline]{inverse Kinematik richtig erklären, mit Diagramm} 
+
+Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus eine Trajektorie aus 3 Punkte die nötige Koordinaten für \textit{OmniDrive} zu berechnen.
 Falls es sich bspw. um ein Industrieroboter handeln würde, dann würde die inverse Kinematik die nötige Gelenkwinkeleinstellungen berechnen, um mit dem Greifer eine neue Position zu erreichen.
 Danach würde die inverse Dynamik die entsprechende Motor-Kräfte und Momente berechnen.
 
@@ -30,7 +30,7 @@ Außerdem werden hier diverse Transformationen von Welt zu Roboter bzw. Bild-Koo
 Nebenbei, wird der Pfad gespeichert damit der Roboter es später alleine abfahren kann.
 
 Zum Schluß wird eine ständige Überprüfung der geplante Trajektorie gemacht, um Kollisionen zu vermeiden.
-Um Hindernisse zu umfahren, werden der A*-Algorithmus und ein Anti-Gravitationsfeld eingesetzt.
+Um Hindernisse zu umfahren, werden der A*-Algorithmus und ein Potentialfeld eingesetzt.
 Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hindernisse zu fahren.
 
 
@@ -38,12 +38,13 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 % ********************************************************************************
 % 										Grundlagen Bahnplanung
 % ********************************************************************************
-\section{Grundlagen Bahnplanung}
+\section{Grundlagen der Bahnplanung und Steuerung}
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
 
+
 Bahnplanung befaßt sich mit dem Problem, eine kollisionsfreie Bahn zu finden die  ein Robotersystem
-von der aktuellen Position in die Zielposition überführt. Damit gehört es zu einer der Basisprobleme der Robotik. Die Verfahren kann man unterschiedlich klassifizieren \cite{rob1}.
+von der aktuellen Position in die Zielposition überführt. Damit gehört es zu einer der Basisprobleme der Robotik. Die Verfahren kann man nach unterschiedliche Gesichtspunkte klassifizieren \cite{rob1}.
 
 Nach Robotertyp:
 \begin{itemize}
@@ -64,17 +65,26 @@ Nach dem Zustandsraum wo die Planung stattfindet:
 Nach Vollständigkeit:
 \begin{itemize}
 \item Vollständige Verfahren (liefern immer eine Korrekte Lösung und können ermitteln ob keine Lösung existiert)
-\item Probabilistisch Vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden.
+\item Probabilistisch Vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden
 )
 \end{itemize}
 
-Weil die explizite Berechnung des \gls{Konfigurationsraum} bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in \gls{Konfigurationsraum} stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
+Nach Navigationsart:
+\begin{itemize}
+\item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen wenn dem Roboter eine Karte der Umgebung bevorliegt und er sich dort lokalisieren kann.
+\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Konbination mit einem globalen Planer benutzt. 
+\end{itemize}
+
+Weil die explizite Berechnung des kollisionsfreien \gls{Konfigurationsraum} bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in \gls{Konfigurationsraum} stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
 
 Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
 \begin{enumerate}
-\item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten (für \gls{PRM} Verfahren z.B.).
-\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus bspw.
+\item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling Strategie(für \gls{PRM} Verfahren z.B.).
+\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen für Graphen.
 \end{enumerate}
+
+Weil die gefundene Trajektorie normalerweise nicht glatt ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
+\todo[inline]{Interpolationsarten erklären}
 
 
 
