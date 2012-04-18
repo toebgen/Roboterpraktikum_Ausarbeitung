@@ -1,5 +1,72 @@
 
 \chapter{Integration}
+\label{integration_cha}
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
+\section{Aufgabenstellung}
+\label{aufgabenstellung_integration_sec}
+
+\begin{itemize}
+	\item Überblick was alles unter Integration fällt
+	\item Zusammenführen der einzelnen Teilprojekte
+	\item Zustandsmaschinen zur Steuerung/Beobachtung der einzelnen Teile
+	\item Planer um auf Umwelteinflüsse zu reagieren
+	\item Userinterface zur Steuerung des Roboters
+\end{itemize}
+
+\section{Grundlagen der Planung}
+\label{grundlagen_integration_sec}
+
+\begin{itemize}
+	\item Generell Planen: sense -> plan -> act (loop)
+	\item Unterschiedliche Problemstellungen
+	\item Mögliche Ansätze
+	\item State of the Art
+	\item Umsetzung durch Statemachines
+\end{itemize}
+
+\section{Umsetzung}
+\label{umsetzung_integration_sec}
+
+\subsection{Architektur}
+\label{integration_architektur_sec}
+
+\begin{itemize}
+	\item Highlevel Architektur, insbesondere Zusammenspiel Planer, Bahnplanung, Kinect
+	\item Aufteilung in sense und control
+	\item Bild!
+\end{itemize}
+
+\subsection{Planer}
+\label{planer_integration_sec}
+
+\begin{itemize}
+	\item Einordnung des konkreten Problems mit Attributen (siehe RobI F20):
+	\begin{itemize}
+		\item Determinismus
+		\item Endlicher Zustandsraum
+		\item Diskreter Zustandsraum
+		\item Statischer Zustandsraum
+	\end{itemize}
+	\item Umsetzung mit Zustandsmaschine
+	\item Sense Plan Act loop konkret
+\end{itemize}
+
+\subsection{Benutzerschnittstelle}
+\label{benutzerschnittstelle_integration_cha}
+
+\begin{itemize}
+	\item Ausführbare Handlungen
+	\item Steuerung über Gesten
+	\item Ausführen der entsprechenden Handlung
+	\item Steuerung der einzelnen Statemachines
+\end{itemize}
+
+\section{Probleme}
+\label{probleme_integration_sec}
+
+\begin{itemize}
+	\item Definition der Schnittstellen
+	\item Definition der Funktionen des Roboters
+\end{itemize}
