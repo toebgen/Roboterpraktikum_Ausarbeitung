@@ -42,6 +42,7 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
 
+\subsection{Bahnplanung}
 
 Bahnplanung befaßt sich mit dem Problem, eine kollisionsfreie Bahn zu finden die  ein Robotersystem
 von der aktuellen Position in die Zielposition überführt. Damit gehört es zu einer der Basisprobleme der Robotik. Die Verfahren kann man nach unterschiedliche Gesichtspunkte klassifizieren \cite{rob1}.
@@ -56,7 +57,7 @@ Nach Robotertyp:
 
 Nach dem Zustandsraum wo die Planung stattfindet:
 \begin{itemize}
-\item Gelenkwinkelzustandsraum (\gls{Konfigurationsraum} )
+\item Gelenkwinkelzustandsraum (Konfigurationsraum, der Raum alle möglichen Gelenkwinkelkonfigurationen des Roboters )
 \item Euklidischer Raum (Arbeitsraum, 3D / 6D)
 \item Sensorzustandsraum
 \item Objektzustandsraum
@@ -75,7 +76,7 @@ Nach Navigationsart:
 \item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Konbination mit einem globalen Planer benutzt. 
 \end{itemize}
 
-Weil die explizite Berechnung des kollisionsfreien \gls{Konfigurationsraum} bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in \gls{Konfigurationsraum} stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
+Weil die explizite Berechnung des kollisionsfreien Konfigurationsraum bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in Konfigurationsraum stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
 
 Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
 \begin{enumerate}
@@ -83,8 +84,50 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
 \item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen für Graphen.
 \end{enumerate}
 
-Weil die gefundene Trajektorie normalerweise nicht glatt ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
-\todo[inline]{Interpolationsarten erklären}
+\subsection{Steuerung}
+
+Weil die gefundene Trajektorie normalerweise nicht glatt ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet. Die Bahnsteuerung kann in Kartesischen Raum oder im Konfigurationsraum stattfinden. In Kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen. Die Steuerung in Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher. Vor und Nachteile beider Optionen kann man auf der Tabelle \ref{fig:steurungProContra} sehen.
+
+
+\begin{table}[h]
+		\centering
+		\begin{tabular}{| p{7cm} | p{7cm}|}
+\hline
+\textbf{Kartesischer Raum} & \textbf{Konfigurationsraum}\\
+\hline
++ Bahn einfacher zu formulieren & + Ansteuerung der Gelenke ist
+einfacher\\
++ Interpolation ist einfacher & + Trajektorie ist eindeutig und
+berücksichtigt Grenzen\\
+
+- Inverse Kinematik ist für jeden Trajektorienpunkt zu lösen & - Interpolation für mehrere
+Gelenke\\
+- Geplante Trajektorie nicht immer ausführbar & - Formulierung der Trajektorie umständlicher\\
+\hline
+		\end{tabular}
+		\caption{\label{fig:steurungProContra} Vor und Nachteile der Steuerung im Kartesischen und Konfigurationsraum Quelle: \citep{rob1}}
+		\end{table}	
+Es gibt unterschiedliche Interpolationsarten:  Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
+Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert wie man auf der Abbildung \ref{fig:linearinterpolation} sehen kann.
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.35]{graphics/linearinterpolation.png}
+\caption{\label{fig:linearinterpolation} Beispiel der Linearinterpolation Quelle: \citep{rob1}}
+\end{figure}
+ Die Zirkularinterpolation schafft hingegen kreisförmige Verfahrwege zwischen zwei Punkte. Wenn man hingegen  Segmentweise interpoliert, werden die Endbedingungen der Teiltrajektorie i-1 und die Anfangsbedingungen der Teiltrajektorie i aneinander angepasst, so dass die Teiltrajektorien durch Splines beschrieben werden wie man auf der Abbildung \ref{fig:segmentinterpolation} sehen kann.
+ \begin{figure}[h]
+\center
+\includegraphics[scale=0.35]{graphics/segmentinterpolation.png}
+\caption{\label{fig:segmentinterpolation} Beispiel der Segmentweise Bahninterpolation Quelle: \citep{rob1}}
+\end{figure}
+ 
+ 
+ Bei der approximative Bahnsteuerung werden anders als bei der Bahninterpolation, nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert. Neben Bernsteinpolynome werden hier besonders Überschleifen benutzt um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht. Letzteres wurde auch in Praktikum eingesetzt.
+ \begin{figure}[h]
+\center
+\includegraphics[scale=0.35]{graphics/ueberschleifeninterpolation.png}
+\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierte Bahnsteuerung mit Überschleifen Quelle: \citep{rob1}}
+\end{figure}
 
 
 
