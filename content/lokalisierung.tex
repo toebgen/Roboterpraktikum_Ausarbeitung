@@ -2,37 +2,128 @@
 %															Hinderniskarte und Lokalisierung
 % #############################################################################
 \chapter{Hinderniskarte und Lokalisierung}
-\authorsection{\editordummy}
-\todo[inline]{Lokalisierungs-Gruppe: Schreiben}
+\label{lokalisierung_cha}
 % ********************************************************************************
 % 										Aufgabenstellung
 % ********************************************************************************
 \section{Aufgabenstellung}
 \label{lokalisierung_aufgabenstellung_sec}
-\authorsection{\editordummy}
-
+\authorsection{\editorandreas}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
-
+Die Aufgabe der Lokalisierung, im Kontext der Robotik, ist die Bestimmung der
+Roboter Pose, welche die Position und Orientierung des Roboters in seiner Umgebung vollständig beschreibt.
+ Um Bahnplanung und Steuerung zu ermöglichen muss die Pose des Roboters bekannt sein,
+ damit sich dieser gefahrlos fortbewegen und sicher mit der Umwelt interagieren kann.
+ Für einen Menschen ist die Lokalisierung selbstverständlich, für einen Roboter
+ stellt sie allerdings eine Herausforderung dar.
+ Aufgrund einer unbekannter Startposition oder von Messungenauigkeiten während
+ der Fortbewegung kann die Pose eines Roboters nur in den seltensten Fällen genau bestimmt werden. Für eine Lokalisierung wird weiterhin eine Karte der Umgebung benötigt,
+ da ohne diese die Pose nicht bestimmte werden kann. Von lokaler Lokalisierung wird gesprochen wenn die aktuelle Pose des Roboters
+ in seiner Umwelt bekannt ist und sie bei einer Bewegung des Roboters
+ fortlaufend aktualisiert wird um sie auf dem neusten Stand zu halten. Hier
+ werden Schätzungen der Bewegung aufgrund der Odometrie Sensorik mit Hilfe von weiteren Daten zur Posenbestimmung korrigiert. Dieses Vorgehen soll eine Aufsummierung von Fehlern bei der
+ Schätzung der Bewegung durch die Odometrie verhindern. Im Gegensatz dazu ist
+ bei der globalen Lokalisierung die aktuelle Pose des Roboters in seiner Umwelt
+ nicht bekannt und muss zum Beispiel anhand von Kartenmaterial geschätzt werden.
+ Man sieht leicht ein, dass bei dieser Art der Lokalisierung die Initiale
+ Schätzung einen beliebig großen Fehler aufweisen kann. Wie wir gesehen haben
+ ist es also notwendig eine Lokalisierung durchzuführen um es unserem Roboter zu
+ ermöglichen sich fortzubewegen.
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
-
+Abgesehen von der Lokalisierung gibt es noch einen weiteren Grund warum es für einen mobilen Roboter unumgänglich ist,
+ dass eine interne Repräsentation seiner Umgebung existiert. Karten, die zur Lokalisierung eingesetzt werden,
+ enthalten meist nicht alle statischen Hindernisse, da diese Karten zu einem gewissen Zeitpunkt erstellt wurden und
+ in der Zwischenzeit wahrscheinlich neue Objekte hinzugekommen oder bereits Vorhandene versetzt worden sind.
+ Außerdem enthalten solche Karten offensichtlich keine Hindernisse die sich bewegen können, wie beispielsweise Menschen.
+ Ein Hindernis ist ganz allgemein ein Bereich der von dem Roboter nicht befahren werden kann. Eine Darstellung der Hindernisse
+ relativ zur Roboterpose wird als Hinderniskarte bezeichnet. Eine solche Karte
+ kann zum Beispiel mit Hilfe von Laser- oder Kameradaten erstellt werden.
+ Eine Kombination des Materials mehrerer Sensoren ist normalerweise das Sinnvollste,
+ da Laser beispielsweise keine negativen Hindernisse erkennen können.
+ Als negative Hindernisse werden Bereiche bezeichnet die im Vergleich zur
+ gegenwärtigen Position eine geringere Höhe aufweisen.
+ Ein Beispiel für ein solches Hindernis ist eine Treppe in ein tiefer gelegenes
+ Stockwerk. Das erstellen einer Hinderniskarte ist aus den oben genannten
+ Gründen essentiell um eine Bahnplanung für einen mobilen Roboter durchzuführen.
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
-
+Die Aufgabe der Bahnplanung besteht darin auf Grundlage der Lokalisierung und der Hinderniskarte einen Weg zu einer
+ bestimmten Position zu finden. Danach wird dieser Weg vom Roboter abgefahren. Allerdings kann es während dem Abfahren der gefundenen
+ Route Aufgrund eines Hindernisses, dass sich in den Weg des Roboters bewegt bevor erneut geplant werden kann oder
+ schlicht Aufgrund eines Fehlers in der Planung dazu kommen, dass der Roboter mit einem Hindernis kollidiert.
+ Daher wird eine Möglichkeit benötigt auf einer tieferen Ebene wie der Bahnplanung das unbeabsichtigte kollidieren mit einem Hindernis
+ zu verhindern. An dieser Stelle kommt das sogenannte „Virtual protective Field“ ins Spiel, von welchem ein Bereich um den Roboter auf
+ Hindernisse überprüft und beim Auffinden eines Solchen ein Signal erzeugt wird, damit der Roboter gestoppt werden kann bevor er
+ auf das Hindernis trifft. Dieser Bereich muss mit der Geschwindigkeit des
+ Roboters wachsen bzw. schrumpfen so das sichergestellt ist, dass auf jeden
+ Fall eine Kollision verhindert werden kann.
 % ********************************************************************************
 % 										Grundlagen Lokalisierung
 % ********************************************************************************
 \section{Grundlagen Hinderniskarte und Lokalisierung}
 \label{lokalisierung_grundlagen_sec}
 \authorsection{\editordummy}
-
+\todo[inline]{Lokalisierungs-Gruppe: Schreiben}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
+ Odometrie
+
+Ein einfacher Ansatz zur Positionsbestimmung ist die Verwendung von Schrittzählern, welche die Bewegung der Roboterräder oder -Beine misst. Über eine Umrechnungsfunktion (meist: lineare Abbildung) lässt sich aus der Anzahl der zurückgelegten Schritte eine Pose relativ zur Ausgangspose berechnen.
+Vorteile
+
+    Relativ Stör-unanfällig unter Normalbedingungen (Ausnahmen: glatter, weicher, unebener Untergrund)
+    Vernachlässigbarer Rechenaufwand
+    Vernachlässigbarer Implementations-Aufwand 
+
+Nachteile ¶
+
+    Offset-Fehler steigt linear mit dem Betrag der Schrittzahl
+    Ursprungsposition muss bekannt sein (vorgegeben werden)
+    Fehler abhängig vom Untergrund
+    Bei auf Schlupf basierenden (omnidirektionalen) Plattformen Fehler höher 
+    
+Kartenbasierte Lokalisierung
+
+Anhand von gegebenem Kartenmaterial kann aus einem Sensorbild der Umgebung die Position des Roboter geschätzt werden. Dazu werden zum Beispiel markante Punkte aus dem Sensorbild mit den Daten des Kartenmaterials abgeglichen. Im bestmöglichen Fall existiert nur eine mögliche Übereinstimmung, anhand derer der Roboter seine eigene Position bestimmen kann.
+Vorteile
+
+    Keine Fehlerakkumulation über Zeitverlauf
+    Keine Ursprungsposition notwendig 
+
+Nachteile
+
+    Störanfällig (spiegelnde Oberflächen, bewegende Objekte)
+    Benötigt aktuelles Kartenmaterial
+    hoher Rechenaufwand
+    hoher Implementierungs-Aufwand 
+    
+Landmarkbasierte Lokalisierung
+
+In einer bekannten Umgebung können Landmarks (QR-Codes, Bodenlinien, GPS-Satelliten) angebracht werden. Diese können durch Sensoren am Roboter wiedererkannt werden und ermöglichen die Lokalisierung z.B. mittels Triangulierung.
+Vorteile
+
+    Fehler niedrig (durchschnittlicher Fehler niedrig)
+    Keine Fehlerakkumulation über Zeitverlauf
+    Zuverlässig (max. Fehler niedrig) 
+
+Nachteile
+
+    Landmarks notwendig
+    Landmarks müssen von überall sichtbar sein
+    Kartenmaterial u.U. notwendig 
+    
+Kombination der Messverfahren
+
+Um die Nachteile der verschiedenen Lokalisierungsmethoden zu verringern werden in der Regel mindestens zwei Methoden miteinander kombiniert. Aufgrund der einfachen Implementierung und der geringen Störanfälligkeit ist meistens die Odometrie in Kombination mit anderen Systemen vorzufinden. Bei Verwendung mehrerer Methoden sind dementsprechend viele fehlerbehaftete Annahmen der aktuellen Roboterpose gegeben. Aus diesen Annahmen wird bestmöglichst die aktuelle Roboterpose bestimmt. Ein Verfahren, um den gesamten Fehler zu minimieren ist das Kalman-Filter. 
+ Das Kalman-Filter
+
+    TODO: Kurze Erläuterung / Einführung in das Kalman-Filter
 
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
@@ -52,15 +143,49 @@
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
+Vorhandene Implementierung der Lokalisierung anhand von Odometrie und Laserdaten
+im Odete-Projekt
+Hardware Abstraction Layer (Hal) und (später) Scanner Abstraction Layer (Sal)
+aus dem bereits bestehenden Segway Omni Projekt
+
+Übernahme der MCA2-Struktur zur Lokalisierung von Odete
+
+Adaption der Vorhanden Gruppen und Module zur Lokalisierung 
+Anpassung von LLSP, HLSP, Hal \& Sal an das Segway Omni Projekt
+Erweiterung auf beliebige Menge von Scannern
+Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
+Keine Hinderniskarte vorhanden
 
+Erzeugung der Hindernisskarte aus den Laserdaten
+Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
+            Gute Visualisierung
+            Einfache Anpassung
+            Verwendung von Standard-Filtern
+         Repräsentation als Schwarz-Weiß-Bitmap
+        Hindernisse auf den Radius des Roboters aufgebläht
+        Anschließende Schließen Operation
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
+Virtual Protective Field lediglich für Differentialantrieb implementiert
 
+    Erstellen eines neuen Virtual Protective Fields aufgrund der Fähigkeit zur omnidirektionalen Bewegung
+        Ausnutzen der bereits bestehenden Hindernisskarte
+            Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
+
+Implementierung als Schwarz-Weiß-Bitmap
+
+        3 unterschiedliche Virtual Protective Fields
+            Sideward
+            Forward
+            Combined
+        Dynamische Ausdehnung proportional zu (Geschwindigkeit)ins quadrat
+        AND-Operation zwischen Hindernis- und Feldpixeln
+        Ausgabe von Controller Output bei erkannten Hindernissen
 % -----------------------------------------------------------------------------
 %													Simulation
 \subsection{Simulation}
