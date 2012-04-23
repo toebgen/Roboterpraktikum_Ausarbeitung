@@ -72,6 +72,8 @@ Die Aufgabe der Bahnplanung besteht darin auf Grundlage der Lokalisierung und de
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
+\todo[inline]{Geplanter Aufbau -> Theorie, kurze Beschreibung der Vorhandenen
+und zur Umsetzung verwendbaren Gruppe und Module}
  Odometrie
 
 Ein einfacher Ansatz zur Positionsbestimmung ist die Verwendung von Schrittzählern, welche die Bewegung der Roboterräder oder -Beine misst. Über eine Umrechnungsfunktion (meist: lineare Abbildung) lässt sich aus der Anzahl der zurückgelegten Schritte eine Pose relativ zur Ausgangspose berechnen.
@@ -128,10 +130,15 @@ Um die Nachteile der verschiedenen Lokalisierungsmethoden zu verringern werden i
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
-
+\todo[inline]{Geplanter Aufbau -> Theorie, kurze Beschreibung der Vorhandenen
+und zur Umsetzung verwendbaren Gruppe und Module}
+Keine Hinderniskarte vorhanden
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
+\todo[inline]{Geplanter Aufbau -> Theorie, kurze Beschreibung der Vorhandenen
+und zur Umsetzung verwendbaren Gruppe und Module}
+Virtual Protective Field lediglich für Differentialantrieb implementiert
 
 % ********************************************************************************
 % 										Umsetzung
@@ -143,8 +150,9 @@ Um die Nachteile der verschiedenen Lokalisierungsmethoden zu verringern werden i
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
-Vorhandene Implementierung der Lokalisierung anhand von Odometrie und Laserdaten
-im Odete-Projekt
+\todo[inline]{Geplanter Aufbau -> Grundlegende Idee für die Umsetzung, Bild der
+Gruppe, erläutern der Funktion der Module} Vorhandene Implementierung der
+Lokalisierung anhand von Odometrie und Laserdaten im Odete-Projekt
 Hardware Abstraction Layer (Hal) und (später) Scanner Abstraction Layer (Sal)
 aus dem bereits bestehenden Segway Omni Projekt
 
@@ -158,7 +166,8 @@ Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
-Keine Hinderniskarte vorhanden
+\todo[inline]{Geplanter Aufbau -> Grundlegende Idee für die Umsetzung, Bild der
+Gruppe, erläutern der Funktion der Module}
 
 Erzeugung der Hindernisskarte aus den Laserdaten
 Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
@@ -171,8 +180,8 @@ Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
-Virtual Protective Field lediglich für Differentialantrieb implementiert
-
+\todo[inline]{Geplanter Aufbau -> Grundlegende Idee für die Umsetzung, Bild der
+Gruppe, erläutern der Funktion der Module}
     Erstellen eines neuen Virtual Protective Fields aufgrund der Fähigkeit zur omnidirektionalen Bewegung
         Ausnutzen der bereits bestehenden Hindernisskarte
             Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
@@ -186,6 +195,3 @@ Implementierung als Schwarz-Weiß-Bitmap
         Dynamische Ausdehnung proportional zu (Geschwindigkeit)ins quadrat
         AND-Operation zwischen Hindernis- und Feldpixeln
         Ausgabe von Controller Output bei erkannten Hindernissen
-% -----------------------------------------------------------------------------
-%													Simulation
-\subsection{Simulation}
