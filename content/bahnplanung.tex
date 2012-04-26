@@ -164,55 +164,114 @@ Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpol
 \subsection{Bahnplanung}
 \label{bahnplanung_subsec}
 \authorsection{\editortobias}
-\todo[inline]{Tobi: Schreiben}
 
 
+% \begin{itemize}
+% 	\item Kurzer Grobüberblick über die Behaviours-Gruppe, hier werden Bahnplanungs-Aufgaben bearbeitet\todoprivate{ref zu behaviours-Bild}
+% 	\begin{itemize}
+% 		\item Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit (Kinect)
+% 		\item Schätzung der zukünftigen Position des Menschen
+% 		\item Transformation von Welt- in Roboter- bzw. Bildkoordinaten und zurück\todoprivate{evtl. auch weg lassen}
+% 		\item Abspeichern von Pfaden
+% 		\item Abfahren von Pfaden
+% 	\end{itemize}
+% 	\item Module werden im Folgenden kurz beschrieben
+% 	\item Kollisionsvermeidung als eigener Abschnitt
+% \end{itemize}
+
+Die Aufgaben der Bahnplanung werden in der \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniBehaviours} bearbeitet.\todoprivate{ref zu behaviours-Bild}
+Im Einzelnen sind dies:
 \begin{itemize}
-	\item Kurzer Grobüberblick über die Behaviours-Gruppe, hier werden Bahnplanungs-Aufgaben bearbeitet\todoprivate{ref zu behaviours-Bild}
-	\begin{itemize}
-		\item Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit (Kinect)
-		\item Schätzung der zukünftigen Position des Menschen
-		\item Transformation von Welt- in Roboter- bzw. Bildkoordinaten und zurück\todoprivate{evtl. auch weg lassen}
-		\item Abspeichern von Pfaden
-		\item Abfahren von Pfaden
-	\end{itemize}
-	\item Module werden im Folgenden kurz beschrieben
-	\item Kollisionsvermeidung als eigener Abschnitt
+	\item Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit: \lstinline{GenerateTrajectory}
+	\item Schätzung der zukünftigen Position des Menschen: \lstinline{HumanPosition}
+	\item Abspeichern von Pfaden: \lstinline{StoreRoboterPositionsToFile}
+	\item Abfahren von Pfaden: \lstinline{LoadRoboterPositionsFromFile}
+	\item Kollisionsvermeidung: \lstinline{ObstacleAvoidance}
 \end{itemize}
+
+Die Module innerhalb der Gruppe werden im Folgenden beschrieben.
+Die Kollisionsvermeidung wird in einem gesonderten Abschnitt (s. Abs. \ref{kollisionsvermeidung_subsec}) behandelt.
 
 \missingfigure[figwidth=0.7\textwidth]{Behaviours}
 
 
 \subsubsection{Position des Menschen}
 
-\begin{itemize}
-    \item bekommt aktuelle Position und Geschwindigkeit des Menschen von Kinect
-    \item schätzt die zukünftige Position des Menschen anhand dieser Daten
-    \item gibt aktuelle und geschätzte Position des Menschen aus
-    \item Zeit-Parameter für die Schätzung: $t_{est}$
-    \item Berechnung nach der Formel: $s_{est} = s_{act} + v \cdot t_{est}$
-\end{itemize}
+% \begin{itemize}
+%     \item bekommt aktuelle Position und Geschwindigkeit des Menschen von Kinect
+%     \item schätzt die zukünftige Position des Menschen anhand dieser Daten
+%     \item gibt aktuelle und geschätzte Position des Menschen aus
+%     \item Zeit-Parameter für die Schätzung: $t_{est}$
+%     \item Berechnung nach der Formel: $s_{est} = s_{act} + v \cdot t_{est}$
+% \end{itemize}
+
+Das Modul \lstinline{HumaPosition} bekommt als Parameter die aktuelle Position sowie die aktuelle Geschwindigkeit der vom Roboter verfolgten Person übergeben.
+Anhand dieser Daten wird die zukünftige Position des Menschen geschätzt.
+Als Resultat gibt das Modul die geschätzte zukünftige Position des Menschen aus.
+Die aktuelle Position wird ebenfalls mit ausgegeben.
+
+Für die Berechnung der zukünftigen Position wird die Formel
+\begin{equation}
+	s_{est} = s_{act} + v \cdot t_{est}
+\end{equation}
+angewendet.
+$s_{est}$ ist dabei die geschätzte zukünftige Position, $s_{act}$ beschreibt die aktuelle Position und $v$ die Bewegungsgeschwindigkeit des Menschen.
+$t_{est}$ ist ein Parameter für die Zeitspanne, die in die Zukunft prädiziert werden soll.
+Dieser Parameter wird aus einer externen Konfigurationsdatei geladen.
 
 
 \subsubsection{Berechnung der Trajektorie}
 
+Die Berechnung der Trajektorie erfolgt im Modul \lstinline{GenerateTrajectory}.
+Die aktuelle und geschätzte Position des Menschen, sowie die aktuelle Position des Menschen werden als Parameter übergeben, und dienen als Grundlage für die Berechnung der Trajektorie.
+Die Struktur der zu berechnenden Trajektorie $s$ ist durch das Modul \lstinline{OmniDriveAlongPath} (s. Abs. \ref{bahnplanung_lowlevel_subsec}) \todoprivate{ref richtig?}\ vorgegeben:
+
+\begin{equation}
+	s =
+	\begin{pmatrix} start \\ next \\ following \end{pmatrix} =
+	\begin{pmatrix} x_{st} & y_{st} & 0 \\ x_{nx} & y_{nx} & yaw_{nx} \\ x_{fl} & y_{fl} & 0 \end{pmatrix}
+\end{equation}
+
+\todo[inline]{welche Variante nehmen?}
+
+\begin{equation}
+	s =	\begin{pmatrix} start \\ next \\ following \end{pmatrix}
+\end{equation}
+mit 
+\begin{equation}
+	start = 		\begin{pmatrix}	x_{start} \\ y_{start}							\end{pmatrix},
+	next = 			\begin{pmatrix} x_{next} \\ y_{next} \\ yaw_{next}	\end{pmatrix},
+	following =	\begin{pmatrix}	x_{following} \\ y_{following}							\end{pmatrix}
+\end{equation}
+Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate, während $following$ zusätzliche eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters) beinhaltet.\todoprivate{Skizze zu x-y-z-roll-pitch-yaw?}
+
+Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten vom Modul \lstinline{HumanPosition} vorliegen.
+Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
+$next$ ist eine Roboter-Pose, die sich im Abstand $d_{hum}$ vor dem Menschen auf dem Vektor Roboter-Mensch befindet.
+Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem Vektor next-estimated befindet sich der dritte Punkt der Trajektorie.
+Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig $1,75m$.
+In Abb. \ref{fig:trajektorie}\todoprivate{ref setzen}\ wird dies dargestellt.
+
+\missingfigure{Vektor-Zeichnung}
+
+
 \begin{itemize}
-	\item Struktur der zu berechnenden Trajektorie duch \lstinline{OmniDriveAlongPath} \todoprivate{ref zu LowLevel?}\ vorgegeben:
-	\begin{itemize}
-		\item Start $(x,y)$, Koordinaten
-		\item Following $(x,y,yaw)$, Koordinaten und Orientierung \todoprivate{Skizze zu x-y-z-roll-pitch-yaw ?}
-		\item Next $(x,y)$, Koordinaten
-	\end{itemize}
-	\item Modul bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
-	\item Berechnung einer neuen Trajektorie, sobald neue Mensch-Daten vorliegen
-	\item Berechnung der Trajektorien-Punkte im Einzelnen:
-	\begin{itemize}
-	  \item Start: aktuelle Roboterposition
-	  \item Next: Pose auf Roboter-Mensch-Vektor, die sich im Abstand $d$ vor dem Mensch befindet; yaw wird gesondert berechnet, sodass Roboter immer zu Mensch schaut
-	  \item Following: Position auf next-estimated-Vektor, die sich $d$ vor geschätzter Mensch-Position befindet
-	  \item erfolgt alles in absoluten Weltkoordinaten
-  \end{itemize}
-  \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $2m$
+% 	\item Modul bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
+% 	\item Struktur der zu berechnenden Trajektorie duch \lstinline{OmniDriveAlongPath} \todoprivate{ref zu LowLevel?}\ vorgegeben:
+% 	\begin{itemize}
+% 		\item Start $(x,y)$, Koordinaten
+% 		\item Following $(x,y,yaw)$, Koordinaten und Orientierung \todoprivate{Skizze zu x-y-z-roll-pitch-yaw ?}
+% 		\item Next $(x,y)$, Koordinaten
+% 	\end{itemize}
+% 	\item Berechnung einer neuen Trajektorie, sobald neue Mensch-Daten vorliegen
+% 	\item Berechnung der Trajektorien-Punkte im Einzelnen:
+% 	\begin{itemize}
+% 	  \item Start: aktuelle Roboterposition
+% 	  \item Next: Pose auf Roboter-Mensch-Vektor, die sich im Abstand $d$ vor dem Mensch befindet; yaw wird gesondert berechnet, sodass Roboter immer zu Mensch schaut
+% 	  \item Following: Position auf next-estimated-Vektor, die sich $d$ vor geschätzter Mensch-Position befindet
+% 	  \item erfolgt alles in absoluten Weltkoordinaten
+%   \end{itemize}
+%   \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $1,75m$
   \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
 
 % 	\item MUX für Trajektorie
@@ -221,6 +280,7 @@ Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpol
 % 		\item LoadFromFile
 % 	\end{itemize}
 \end{itemize}
+
 
 \todoprivate{Zeichnung mit Vektoren}
 
