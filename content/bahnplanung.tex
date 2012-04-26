@@ -11,6 +11,14 @@
 \label{bahnplanung_aufgabenstellung_sec}
 \authorsection{\editoroier}
 
+\todo[inline]{In Text ausformulieren!}
+\begin{itemize}
+	\item Aufgabenstellung gliedern in drei Ebenen (Direkte Ansteuerung der Motoren/Plattform abhängiger Teil, inverse Kinematik/ Berechnung von Geschwindigkeiten aus Trajektorie/Koordinaten, Bahnplanung)
+	\item Was alles im Motoransteuerungs-part zu tun ist: Plattformspezifische Ansteuerung der Motoren, bestimmen der Pose aus Odometrie, plattformspezifische Simulation.
+	\item Was alles in der inversen Kinematik zu tun ist: Umrechnung Trajektorie in Geschwindigkeiten, limitieren der Beschleunigung, limitieren der Geschwindigkeiten unter Beachtung des Protective Field (link zu Lokalisierer).
+	\item Was alles in der Bahnplanung zu tun ist: Verarbeitung der Menschdaten (siehe Kinect), Trajektorie auf der der Roboter fahren soll, kollisionsfreies Planen, Speichern der abgefahrenen Trajektorie, Laden der abgefahrenen Trajektorie.	
+\end{itemize}
+
 Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man das in Abstraktionsschichten einteilen:
 LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung.
 Außerdem sollte man das alles auch Simulieren können.
@@ -19,7 +27,7 @@ Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Anste
 
 Nach dem Bottom-Up Prinzip hat man zunächst, die LowLevel-Ansteuerung von der Odete angepasst und mittels Simulation getestet.
 
-\todo[inline]{inverse Kinematik richtig erklären, mit Diagramm} 
+\todo[inline]{Hier kommen keine Erklärungen LEDIGLICH DIE AUFGABENSTELLUNG!} 
 
 Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus eine Trajektorie aus 3 Punkte die nötige Koordinaten für \textit{OmniDrive} zu berechnen.
 Falls es sich bspw. um ein Industrieroboter handeln würde, dann würde die inverse Kinematik die nötige Gelenkwinkeleinstellungen berechnen, um mit dem Greifer eine neue Position zu erreichen.
@@ -41,7 +49,8 @@ Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hinderniss
 \section{Grundlagen der Bahnplanung und Steuerung}
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
-
+\todo[inline]{Hier kommen Details zur inversen Kinematik/ Kinematik, z.B. warum man das überhaupt benötigt und wie es funktioniert.}
+\todo[inline]{Reihenfolge ist genau wie in Aufgabenstellung -> Bottom Up Steuerung, Bahnplanung}
 \subsection{Bahnplanung}
 
 Bahnplanung befaßt sich mit dem Problem, eine kollisionsfreie Bahn zu finden die  ein Robotersystem
@@ -84,7 +93,13 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
 \item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen für Graphen.
 \end{enumerate}
 
+\subsubsection{Lokale Planer}
+\label{bahnplanung_lokale_planer_sec}
+
+\todo[inline]{Drei gängige Planer vorstellen, state of the art am Ende.}
+
 \subsection{Steuerung}
+\label{bahnplanung_steuerung_sec}
 
 Weil die gefundene Trajektorie normalerweise nicht glatt ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet. Die Bahnsteuerung kann in Kartesischen Raum oder im Konfigurationsraum stattfinden. In Kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen. Die Steuerung in Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher. Vor und Nachteile beider Optionen kann man auf der Tabelle \ref{fig:steurungProContra} sehen.
 
@@ -140,11 +155,12 @@ Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpol
 
 % -----------------------------------------------------------------------------
 %													LowLevel-Ansteuerung
-\subsection{LowLevel-Ansteuerung}
-\label{bahnplanung_lowlevel_subsec}
+\subsection{Motoransteuerung}
+\label{bahnplanung_motoansteuerung_subsec}
 \authorsection{\editoroier}
 
 \todo[inline]{Oier: Schreiben}
+\todo[inline]{Was es schon gab im Motoransteuerungsteil (aus Odete/segway). SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattformspezifische Simulation Segway500RMPSimulation. Eingang sind Geschwindigkeiten und Ausgang sind Plattformspezifische Geschwindigkeiten).
 
 % evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
 %		bzw. Abb. 2.3 von WS09/10
@@ -373,3 +389,4 @@ Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum E
 \label{simulation_subsec}
 \authorsection{\editoroier}
 \todo[inline]{Oier: Schreiben}
+\todo{Oberfläche für MCAGui, warum Simulation (-> Testen am realen Roboter nicht möglich, Mensch pos durch klicken, Darstellung des Roboterzustandes, schnelle Möglichkeit zur Überprüfung von Änderungen im Bahnplanungsalgorithmus...}
