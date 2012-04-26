@@ -2,10 +2,10 @@
 \begin{theglossary}\glossaryheader
 \glsgroupheading{F}\relax \glsresetentrylist %
 \glossaryentryfield{fzi}{\glsnamefont{\acronymfont {FZI}}}{Forschungszentrum Informatik}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{19}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{21}}}\glsgroupskip
 \glsgroupheading{H}\relax \glsresetentrylist %
 \glossaryentryfield{hollie}{\glsnamefont{\acronymfont {HoLLiE}}}{House of Living Labs intelligent Escort}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{19}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{21}}}\glsgroupskip
 \glsgroupheading{P}\relax \glsresetentrylist %
 \glossaryentryfield{PRM}{\glsnamefont{PRM}}{Probabilistische Roadmaps erzeugen je nach Sampling-Strategie zuf\IeC {\"a}llig kollisionsfreie Punkte, mit welchen man einen Graphen aufspannt, die Start- und Zielknoten hinzuf\IeC {\"u}gt und danach mit einen lokalen Planer auf dem Graphen sucht}{\relax }{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{7}}}\glsgroupskip
