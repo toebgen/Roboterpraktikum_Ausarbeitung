@@ -98,8 +98,6 @@ Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpol
 
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
-\todo[inline]{Hier kommen Details zur inversen Kinematik/ Kinematik, z.B. warum man das überhaupt benötigt und wie es funktioniert.}
-\todo[inline]{Reihenfolge ist genau wie in Aufgabenstellung -> Bottom Up Steuerung, Bahnplanung}
 \subsection{Bahnplanung}
 
 Bahnplanung befaßt sich mit dem Problem, eine kollisionsfreie Bahn zu finden die  ein Robotersystem
@@ -136,9 +134,9 @@ Nach Navigationsart:
 
 Weil die explizite Berechnung des kollisionsfreien Konfigurationsraum bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in Konfigurationsraum stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
 
-Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt.
+Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russell2003}.
 \begin{enumerate}
-\item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling Strategie(für \gls{PRM} Verfahren z.B.).
+\item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling Strategie(für \gls{PRM} Verfahren\cite{Thrun2005} z.B.).
 \item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen für Graphen.
 \end{enumerate}
 
