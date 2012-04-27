@@ -179,10 +179,11 @@ Kalman-Filter}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
-\todo[inline]{Geplanter Aufbau -> kurze Beschreibung der
- Vorhandenen und zur Umsetzung verwendbaren Gruppe und Module
- --- Grundlegende Idee für die Umsetzung
+\todo[inline]{Geplanter Aufbau -> Grundlegende Idee für die Umsetzung
  --- Bild der Gruppe, erläutern der Funktion der Module}
+ \todo[inline]{Stuktur des Materials an die gewünschte form anpassen etwa
+ durch:die aussagen zur lokalisierung gelten generell für hollie und sowie da
+ bla bla und dann die ganzen erklärungen}
  
  Vorhandene
  Implementierung der Lokalisierung anhand von Odometrie und Laserdaten im Odete-Projekt
@@ -196,6 +197,107 @@ Anpassung von LLSP, HLSP, Hal \& Sal an das Segway Omni Projekt
 Erweiterung auf beliebige Menge von Scannern
 Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 
+
+Parametrisierung über Multiplexer und XML-Config-File ermöglichen
+Parameter anpassen auf neue Sensor-Anordnung
+
+Lokalisierung
+
+Die Odete verwendet zur Positionsschätzung eine Kombination aus kartenbasierter Lokalisierung und Odometrie.
+ Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer Synthese geschätzt.
+ Dem Kalman-Filter ist eine Queue (FIFO) vorgeschaltet, in der jede Schätzung mit einem Timestamp registriert wird.
+ So können die Messwerte in zeitlich korrekter Reihenfolge eingerechnet werden, selbst dann, wenn sie nach der
+ Verarbeitung in einer anderen Reihenfolge im Kalman-Filter registriert werden.
+ Die Kalman-Filterung findet (in MCA2) in der HAL-Gruppe im AbsoluteCoordinatesKLF-Modul statt (KLF = KalmanFilter?). 
+
+Hardware
+
+Die Odete verwendet folgende Sensoren:
+
+ %   2 × Winkelencoder (In Segway Omni)
+  %  1 × 270° SICK-Laserscanner (Scheibenförmiger Scan) 
+
+Odometrie
+
+Die Winkelschrittmessung der Räder wird direkt von der Segway-Antriebsplattform geliefert.
+ Es wird angenommen, dass der Fehler linear ansteigt mit der durch den Reifen zurückgelegten Strecke.
+ Falls eine gute Schätzung aus der kartenbasierten Lokalisierung in den Kalman-Filter übergeben wird,
+ wird die Pose korrigiert und der Odometriefehler wieder gesenkt.
+ 
+Kartenbasierte Lokalisierung
+
+Eine kartenbasierte Posen-Schätzung wird in folgenden Schritten ermittelt.
+
+    Scheibenförmiger Laser-Scan der Umgebung parallel zur Fahrbahn;
+    Gruppe: SAL
+    Ergebnis: Winkel-Abstand-Paare (Polarkoordinaten)
+    Koordinaten-Transformation polaren Sensorkoordinaten -> kartesische Sensorkoordinaten;
+    Gruppe: LLSP
+    Modul: ToRobotCS
+    Ergebnis: XY-Punkte (kartesische Sensorkoordinaten)
+    Koorginaten-Transformation kartesische Sensorkoordinaten -> kartesische Roboterkoordinaten;
+    Gruppe: LLSP
+    Modul: MergeScan?
+    Ergebnis: XY-Punkte (kartesische Roboterkoordinaten)
+    Löschen von Punkten mit zu hohem Abstand/schlechter Auflösung
+    Gruppe: LSSP
+    Modul: CutScan?
+    Ergebnis: XY-Punkte mit gültigem Abstand
+    Extraktion/Schätzung? von Kanten aus der Punktemenke
+    Gruppe: HLSP
+    Modul: ExtractEdges?
+    Ergebnis: Liniensegmente
+    Vergleich der Kanten mit der Karte und Schätzung einer Pose samt Fehlerkovarianz
+    Gruppe: HLSP
+    Modul: PoseCorrection?
+    Ergebnis: X,Y,Gierwinkel-Schätzung + Fehlerkovarianz 
+
+Hinderniserkennung (Virtual Protective Field)
+
+MCA2 Struktur
+
+Die MCA2 Struktur der Odete basiert auf einem bestimmten Paradigma. Ziel ist es eine hohe Flexibilität zu erreichen.
+ Sensoren und Plattformen sollen beliebig kombinierbar sein. Das Paradigma soll
+ auch beim Segway\_Omni Projekt weitergeführt werden. So können alte Programmsturkturen übernommen und/oder adaptiert werden und dieselbe Flexibilität
+ erreicht werden. Im Folgenden sollt die MCA2-Struktur der Odete - soweit sie
+ die Lokalisierung betrifft - erläutert werden.
+ 
+Die Kartenbasierte Lokaliserung findet in den MCA2-Gruppen LLSP und HLSP statt.
+ Die Laserscanner-Daten dazu werden aus der SAL-Gruppe bezogen. Die Erfassung und Verarbeitung der Odometrie-Daten findet
+ gemeinsam direkt in der HAL statt. Die Synthese von Odometrie und Lokalisierungsdaten und die Erfassung der geschätzten
+ Pose findet ebenfalls in der HAL statt. 
+ 
+HAL(Hardware abstraction Layer)
+
+Die HAL-Gruppe ist in der Odete für die plattformabhängige Hardware zuständig. Mit der Plattform sind jene
+ Hardwarekomponenten gemeint, die in der Regel nicht getauscht werden (Rechner, Omnidirektionaler Antrieb, Akummulatoren).
+ In MCA2 umfasst die HAL die Bewegungsplattformen, die dazugehörigen Winkelencoder und die Posenerfassung
+ (nicht Posenberechnung) des Roboters. Die HAL ist eine Abstraction Layer in dem Sinne, dass zwischen einer Simulierten
+ Hardware und der tatsächlichen Hardware gewechselt werden kann, ohne das andere MCA2-Gruppen angepasst werden müssen.
+ Prinzipiell können sogar die Plattformen (Omnidirektional <-> Differentiell) ausgetauscht werden. Die Odometrie hängt
+ direkt mit der Antriebsart zusammen und findet deswegen in der HAL statt.
+
+ SAL(Scanner abstraction Layer)
+
+Die SAL-Gruppe umfasst alle "angebauten" Scanner, nicht aber in Plattform integrierte Scanner (Winkelencoder).
+ Im Sinne der Abstraction Layer können auch hier Hardware- und Simulationsversion der SAL ausgewechselt werden.
+ 
+LLSP(Low-level Scanner Processing)
+
+Die LLSP dient der Verarbeitung der Scanner Rohdaten. Im Gegensatz zur HLSP macht die LLSP keine logische Auswertung
+ der Scannerdaten. Es werden lediglich grundlegende Operationen auf die einzelnen Messwerte angewandt
+ (Koordinatentransformationen, Löschen ungültiger Werte,...).
+
+Das Virtual Protective Field ist in der LLSP realisiert.
+
+HLSP(High-level Scanner Processing)
+
+In der HLSP werden logische Operationen auf die Messwerte angewandt (Kantenextraktion, Posenkorrektur-Schätzung).
+
+Der ScanStrategyMultiplexer? dient als zentrale Schaltstelle für die Controllerinputs der HLSP Module.
+ Über einen einzelnen controller input in den ScanTrategyMultiplexer? kann ein Setup geladen werden,
+ welches die Controllerinputs der einzelnen HLSP module setzt.  
+
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
@@ -204,16 +306,15 @@ Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
  diesem Grund war es notwendig im Vorfeld intensivere Überlegungen über die möglichen
  Umsetzungen und Repräsentationen anzustellen.
  Nach einigen Diskussionen entschieden wir uns für die Nutzung von
- Bildverarbeitungs"=Modulen aus SenseIVT \todoprivate{ref setzen} und einer
- Repräsentation der Hinderniskarte als Schwarzweiß-Bitmap. Der Grund für diese Wahl lag vor allem an der guten
+ Bildverarbeitungs"=Modulen aus \textcolor{green}{\textbf{SenseIVT}} \todoprivate{ref setzen} und
+ einer Repräsentation der Hinderniskarte als Schwarzweiß-Bitmap. Der Grund für diese Wahl lag vor allem an der guten
  Visualisierung, die dadurch erhalten werden kann, außerdem wird eine einfache Anpassung und die Verwendung
  von Standard-Filtern ermöglicht. 
-\missingfigure{Hinderniskarte}
-%\begin{figure}[h]
-%\center
-%\includegraphics[]{}
-%\caption{\label{fig:hinderniskarte} Hindernisskarte als Schwarzweiß-Bitmap}
-%\end{figure}
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.7]{graphics/hinderniskarte.jpg}
+\caption{\label{fig:hinderniskarte} Hindernisskarte als Schwarzweiß-Bitmap}
+\end{figure}
  In Abbildung \ref{fig:hinderniskarte} ist ein Beispiel eines solches Bitmaps
  zu sehen. Mit der Semantik, dass weiße Areale Hindernisse darstellen und schwarze Bereiche entweder befahrbar
  oder von dieser Position aus nicht einsehbar sind. Diese von uns gewählte Abbildung der Werte
@@ -228,7 +329,7 @@ Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 %\begin{figure}[h]
 %\center
 %\includegraphics[]{}
-%\caption{\label{fig:obstacleExtractor} Hindernisskarte als Schwarzweiß-Bitmap}
+%\caption{\label{fig:obstacleExtractor} Gruppe \lstinline{Obstacle Extractor}}
 %\end{figure}
  In Abbildung \ref{obstacleExtractor} ist die die Gruppe (\lstinline{Obstacle Extractor}),
  durch welche die gewünschte Funktionalität implementiert wurde zu sehen.
@@ -237,11 +338,11 @@ Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 \todo[inline]{Erläutern der Funktion der Module}
 
 \begin{description}
-\item[from to gedöns]
-\item[bla bla]
-\item[bla bla bla]
-\item[aaa]
-\item[aaa]
+\item[Modul X] Beschreibung
+\item[Modul Y] Beschreibung
+\item[Modul Z] Beschreibung
+\item[Modul A] Beschreibung
+\item[Modul B] Beschreibung
 \end{description}
 
 
@@ -249,23 +350,48 @@ Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
-\todo[inline]{Geplanter Aufbau -> kurze Beschreibung der
- Vorhandenen und zur Umsetzung verwendbaren Gruppe und Module
- --- Grundlegende Idee für die Umsetzung
- --- Bild der Gruppe, erläutern der Funktion der Module}
- 
- Virtual Protective Field lediglich für Differentialantrieb implementiert
- 
-    Erstellen eines neuen Virtual Protective Fields aufgrund der Fähigkeit zur omnidirektionalen Bewegung
-        Ausnutzen der bereits bestehenden Hindernisskarte
-            Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
+Ein Virtual protective Field, was die Letzte von uns zu lösenden Aufgabe darstellte war bereits im Odete-Projekt
+ realisiert, allerdings war dieses lediglich für einen Differentialantrieb implementiert.
+ Nach einer Begutachtung des bestehenden Moduls entschieden wir uns dafür
+ dieses nicht für omnidirektionale Bewegung anzupassen sondern eine neue Gruppe mit der gewünschten Funktionalität
+ zu erstellen, da uns dies effizienter erschien. Die Wahl der für die Umsetzung benötigten Primitiven viel, aufgrund
+ der von uns gewonnen Erfahrungen mit den Bildverarbeitungs-Modulen und der Möglichkeit die bereits bestehende
+ Hinderniskarte auszunutzen auch hier auf die \textcolor{green}{\textbf{SenseIVT}} \todoprivate{ref setzen} Bibliothek.
+ Als Repräsentation wurde wieder ein Schwarzweiß-Bitmap gewählt. Auf anfrage der Bahnplanungs und Steuerungs
+ Gruppe implementierten wir 3 unterschiedliche Virtual Protective Fields siehe
+ Abbildung \ref{fig:virtualprotectivefields}.
+ \begin{figure}[h]
+\center
+\includegraphics[scale=0.5]{graphics/virtualprotectivefields.jpg}
+\caption{\label{fig:virtualprotectivefields} Darstellung der unterschiedlichen Protective
+Fields}
+\end{figure}
+ Die Varianten \emph{Sideward} sowie \emph{Forward} sollen es \gls{hollie}
+ ermöglichen eine Bewegung in zumindest eine Richtung durchzuführen wenn die Kombination zu einer Kollision führen würde.
+ Die Virtual Protective Fields unterliegen einer dynamischen Ausdehnung zum Quadrat der Geschwindigkeit
+ um ein erfolgreiches Anhalten vor einer Kollision zu gewährleisten. Aufgrund der Nutzung von Bildverarbeitungs-Modulen
+ konnte die Erkennung einer möglichen Kollision durch eine AND-Operation auf der Hinderniskarte und dem entsprechenden
+ Virtual Protective Field realisiert werden. Sollten nach dieser Operation noch weiße Pixel im resultierenden Bitmap
+ vorhanden sein gilt dies als erkannte Kollision. Aufgrund von Fehlern der Laserdaten wird verlangt, dass mehr als ein
+ weißer Pixel vorhanden ist, um das Verfahren etwas robuster zu machen.
+ \missingfigure{MCA2 Virtual Protective Bitmap}
+%\begin{figure}[h]
+%\center
+%\includegraphics[]{}
+%\caption{\label{fig:virtualprotectivebitmap} Gruppe \lstinline{Virtual
+% Protective Bitmap}}
+%\end{figure}
+ Wie bereits in den beiden vorigen Abschnitten  ist auch hier in Abbildung \ref{virtualprotectivebitmap}
+ die beschriebene Gruppe dargestellt und es folgt eine nähere Betrachtung der Module.
+ Wobei wir allerdings nicht erneut näher auf die Module, die bereits zuvor
+ vorgestellt wurden eingehen werden.
 
-Implementierung als Schwarz-Weiß-Bitmap
+\todo[inline]{Erläutern der Funktion der Module}
 
-        3 unterschiedliche Virtual Protective Fields
-            Sideward
-            Forward
-            Combined
-        Dynamische Ausdehnung proportional zu (Geschwindigkeit)ins quadrat
-        AND-Operation zwischen Hindernis- und Feldpixeln
-        Ausgabe von Controller Output bei erkannten Hindernissen
+\begin{description}
+\item[Modul X] Beschreibung
+\item[Modul Y] Beschreibung
+\item[Modul Z] Beschreibung
+\item[Modul A] Beschreibung
+\item[Modul B] Beschreibung
+\end{description}
