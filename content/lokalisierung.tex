@@ -199,21 +199,53 @@ Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
-\todo[inline]{Geplanter Aufbau -> kurze Beschreibung der
- Vorhandenen und zur Umsetzung verwendbaren Gruppe und Module
- --- Grundlegende Idee für die Umsetzung
- --- Bild der Gruppe, erläutern der Funktion der Module}
- 
- Keine Hinderniskarte vorhanden
+ Im Gegensatz zur Lokalisierung gab es für die von uns gewünschte Lösung dieser
+ Aufgabenstellung noch keine Gruppen oder Module von älteren Projekten. Aus
+ diesem Grund war es notwendig im Vorfeld intensivere Überlegungen über die möglichen
+ Umsetzungen und Repräsentationen anzustellen.
+ Nach einigen Diskussionen entschieden wir uns für die Nutzung von
+ Bildverarbeitungs"=Modulen aus SenseIVT \todoprivate{ref setzen} und einer
+ Repräsentation der Hinderniskarte als Schwarzweiß-Bitmap. Der Grund für diese Wahl lag vor allem an der guten
+ Visualisierung, die dadurch erhalten werden kann, außerdem wird eine einfache Anpassung und die Verwendung
+ von Standard-Filtern ermöglicht. 
+\missingfigure{Hinderniskarte}
+%\begin{figure}[h]
+%\center
+%\includegraphics[]{}
+%\caption{\label{fig:hinderniskarte} Hindernisskarte als Schwarzweiß-Bitmap}
+%\end{figure}
+ In Abbildung \ref{fig:hinderniskarte} ist ein Beispiel eines solches Bitmaps
+ zu sehen. Mit der Semantik, dass weiße Areale Hindernisse darstellen und schwarze Bereiche entweder befahrbar
+ oder von dieser Position aus nicht einsehbar sind. Diese von uns gewählte Abbildung der Werte
+ auf die entsprechenden Bedeutungen ist allerdings beliebig und hat keinen besonderen Grund.
+ Die Roboterposition ist der Mittelpunkt der Karte. Bevor Hindernisse in eine solche Karte eingezeichnet werden
+ können müssen sie offensichtlich zuvor durch Sensoren detektiert worden sein. Es lag nahe die Laserdaten,
+ welche auch zur Lokalisierung eingesetzt und bereits in geeigneter Form vorhanden waren zu nutzen.
+ Da ein Roboter in der Realität eine größere Fläche als ein Punkt aufweist entschieden wir uns bereits an dieser
+ Stelle zu einer Expansion der Hindernisse auf Robotergröße, damit solche Berechnungen an anderer Stelle vermieden
+ werden können.
+\missingfigure{MCA2 Obstacle Extractor}
+%\begin{figure}[h]
+%\center
+%\includegraphics[]{}
+%\caption{\label{fig:obstacleExtractor} Hindernisskarte als Schwarzweiß-Bitmap}
+%\end{figure}
+ In Abbildung \ref{obstacleExtractor} ist die die Gruppe (\lstinline{Obstacle Extractor}),
+ durch welche die gewünschte Funktionalität implementiert wurde zu sehen.
+ Im Folgenden wollen wir auch hier die einzelnen Module kurz vorstellen:
 
-Erzeugung der Hindernisskarte aus den Laserdaten
-Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
-            Gute Visualisierung
-            Einfache Anpassung
-            Verwendung von Standard-Filtern
-         Repräsentation als Schwarz-Weiß-Bitmap
-        Hindernisse auf den Radius des Roboters aufgebläht
-        Anschließende Schließen Operation
+\todo[inline]{Erläutern der Funktion der Module}
+
+\begin{description}
+\item[from to gedöns]
+\item[bla bla]
+\item[bla bla bla]
+\item[aaa]
+\item[aaa]
+\end{description}
+
+
+
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
