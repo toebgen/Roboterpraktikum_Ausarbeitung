@@ -8,35 +8,40 @@
 \label{aufgabenstellung_integration_sec}
 
 \begin{itemize}
-	\item Überblick was alles unter Integration fällt
-	\item Zusammenführen der einzelnen Teilprojekte
-	\item Zustandsmaschinen zur Steuerung/Beobachtung der einzelnen Teile
-	\item Planer um auf Umwelteinflüsse zu reagieren
-	\item Userinterface zur Steuerung des Roboters
+\item Überblick was alles unter Integration fällt
+\item Zusammenführen der einzelnen Teilprojekte
+\item Zustandsmaschinen zur Steuerung/Beobachtung der einzelnen Teile
+\item Planer um auf Umwelteinflüsse zu reagieren
+\item Userinterface zur Steuerung des Roboters
 \end{itemize}
 
 Die Aufgaben im Bereich der Integration lassen sich in die folgenden Unterpunkte einordnen:
-\begin{description}
-	\item[Code Zusammenführen]
-	Um das Auseinanderdriften der einzelnen Teilprojekte zu vermeiden ist ein regelmäßiges Zusammenführen und Konflikt beheben mittels Git notwendig. Außerdem ist die Integration von Code der außerhalb des SegwayOmni-Projektes entsteht, wie etwa der Kinect Anteil, notwendig. Weiterhin muss die Kompatibilität der Schnittstellen zwischen den Teilprojekten gepflegt werden.
-	\item[Benutzerschnittstelle]
-	Die Funktionen (für Benutzer) des Roboters müssen, entsprechend dem Konzept (siehe \ref{motivation_sec}) des Roboters durch verschiedene Gesten aktivierbar sein.
-	
-	\item[Reaktion auf Zustandsänderungen]
 
+\begin{description}
+\item[Code Zusammenführen]
+Um das Auseinanderdriften der einzelnen Teilprojekte zu vermeiden ist ein regelmäßiges Zusammenführen mittels Git notwendig. Zusätzlich ist die Integration von Code der außerhalb des SegwayOmni-Projektes entsteht, wie etwa der Kinect Anteil, notwendig. Weiterhin muss die Kompatibilität der Schnittstellen zwischen den Teilprojekten gepflegt werden.
+
+\item[Benutzerschnittstelle]
+Zur Kontrolle des Roboters durch Benutzer muss eine Benutzerschnittstelle implementiert werden die es erlaubt die einzelnen Funktionen der Software zu aktivieren.
+
+\item[Reaktion auf Zustandsänderungen]
+Der vorherrschende Umweltzustand muss erkannt und eine entsprechende Reaktion ausgeführt werden.
 \end{description}
+
+
 
 
 \section{Grundlagen der Planung}
 \label{grundlagen_integration_sec}
 
 \begin{itemize}
-	\item Generell Planen: sense -> plan -> act (loop)
-	\item Unterschiedliche Problemstellungen
-	\item Mögliche Ansätze
-	\item State of the Art
-	\item Umsetzung durch Statemachines
+\item Generell Planen: sense -> plan -> act (loop)
+\item Unterschiedliche Problemstellungen
+\item Mögliche Ansätze
+\item State of the Art
 \end{itemize}
+
+
 
 \section{Umsetzung}
 \label{umsetzung_integration_sec}
@@ -45,40 +50,40 @@ Die Aufgaben im Bereich der Integration lassen sich in die folgenden Unterpunkte
 \label{integration_architektur_sec}
 
 \begin{itemize}
-	\item Highlevel Architektur, insbesondere Zusammenspiel Planer, Bahnplanung, Kinect
-	\item Aufteilung in sense und control
-	\item Bild!
+\item Highlevel Architektur, insbesondere Zusammenspiel Planer, Bahnplanung, Kinect
+\item Aufteilung in sense und control
+\item Bild!
 \end{itemize}
 
 \subsection{Planer}
 \label{planer_integration_sec}
 
 \begin{itemize}
-	\item Einordnung des konkreten Problems mit Attributen (siehe RobI F20):
-	\begin{itemize}
-		\item Determinismus
-		\item Endlicher Zustandsraum
-		\item Diskreter Zustandsraum
-		\item Statischer Zustandsraum
-	\end{itemize}
-	\item Umsetzung mit Zustandsmaschine
-	\item Sense Plan Act loop konkret
+\item Einordnung des konkreten Problems mit Attributen (siehe RobI F20):
+\begin{itemize}
+\item Determinismus
+\item Endlicher Zustandsraum
+\item Diskreter Zustandsraum
+\item Statischer Zustandsraum
+\end{itemize}
+\item Umsetzung mit Zustandsmaschine
+\item Sense Plan Act loop konkret
 \end{itemize}
 
 \subsection{Benutzerschnittstelle}
 \label{benutzerschnittstelle_integration_cha}
 
 \begin{itemize}
-	\item Ausführbare Handlungen
-	\item Steuerung über Gesten
-	\item Ausführen der entsprechenden Handlung
-	\item Steuerung der einzelnen Statemachines
+\item Ausführbare Handlungen
+\item Steuerung über Gesten
+\item Ausführen der entsprechenden Handlung
+\item Steuerung der einzelnen Statemachines
 \end{itemize}
 
 \section{Probleme}
 \label{probleme_integration_sec}
 
 \begin{itemize}
-	\item Definition der Schnittstellen
-	\item Definition der Funktionen des Roboters
+\item Definition der Schnittstellen
+\item Definition der Funktionen des Roboters
 \end{itemize}
