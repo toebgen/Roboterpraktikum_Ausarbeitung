@@ -391,5 +391,15 @@ Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum E
 \subsection{Simulation}
 \label{simulation_subsec}
 \authorsection{\editoroier}
-\todo[inline]{Oier: Schreiben}
-\todo{Oberfläche für MCAGui, warum Simulation (-> Testen am realen Roboter nicht möglich, Mensch pos durch klicken, Darstellung des Roboterzustandes, schnelle Möglichkeit zur Überprüfung von Änderungen im Bahnplanungsalgorithmus...}
+
+Für die Simulation war schon eine Simulationsumgebung vorhanden, Aufgabe war eine grafische Oberfläche mit Mcagui zu basteln.
+Warum ist die Simulation nützlich oder notwendig? In erster Linie konnte man am Anfang an dem realen Roboter nicht testen, weil der Roboter noch gebaut wurde oder zum Beispiel nicht alle von uns programmierte Komponente, wie bspw. die Lokalisierung, funktionsfähig waren. Dank der Simulation wurde das testen von einzelne Funktionalitäten und die Darstellung des Roboterzustands möglich wie man auf der Abbildung \ref{fig:mcagui} sehen kann. Zum Beispiel wurde die Simulation sehr oft benutzt um schnell Änderungen im Bahnplanungsalgorithmus zu testen.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{graphics/mcagui_screenshot.png}		
+\caption{\label{fig:mcagui} Die entwickelte Simulationsoberfläche
+}
+\end{figure}
+
+Ein Problem am Anfang war, wie man den zu verfolgenden Mensch simulieren sollte. Um dies zu lösen, benutzt man einfach Mausklicks auf der Karte.
