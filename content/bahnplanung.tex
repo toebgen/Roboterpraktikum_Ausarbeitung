@@ -162,9 +162,19 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russel
 \authorsection{\editoroier}
 
 \todo[inline]{Oier: Schreiben}
-\todo[inline]{Was es schon gab im Motoransteuerungsteil (aus Odete/segway).
-SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattformspezifische Simulation Segway500RMPSimulation. Eingang sind Geschwindigkeiten und Ausgang sind Plattformspezifische Geschwindigkeiten)}.
+Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete. Unsere Aufgabe bestand daran, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen. Als Eingang erhält es Geschwindigkeiten und Ausgang sind die Plattformspezifische Geschwindigkeiten. Auf der Abbildung \ref{fig:mca2architecture} sieht man die Gesamte Struktur oder Architektur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
 
+\begin{figure}[h]
+	\center
+	\includegraphics[scale=0.5]{graphics/mca2architecture.png}
+	\caption{\label{fig:mca2architecture} Architektur der Software wo man die Vernetzung der einzelnen Module sehen kann}
+\end{figure}
+
+\begin{figure}[h]
+	\center
+	\includegraphics[scale=0.5]{graphics/segwayHal.png}
+	\caption{\label{fig:segwayHal} Das Modul \lstinline{SegwayOmniHal}, welches für die Motoransteuerung zuständig ist}
+\end{figure}
 % evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
 %		bzw. Abb. 2.3 von WS09/10
 
