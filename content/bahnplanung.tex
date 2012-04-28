@@ -160,7 +160,7 @@ Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpol
 \authorsection{\editoroier}
 
 \todo[inline]{Oier: Schreiben}
-\todo[inline]{Was es schon gab im Motoransteuerungsteil (aus Odete/segway). SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattformspezifische Simulation Segway500RMPSimulation. Eingang sind Geschwindigkeiten und Ausgang sind Plattformspezifische Geschwindigkeiten).
+\todo[inline]{Was es schon gab im Motoransteuerungsteil (aus Odete/segway). SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattformspezifische Simulation Segway500RMPSimulation. Eingang sind Geschwindigkeiten und Ausgang sind Plattformspezifische Geschwindigkeiten).}
 
 % evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
 %		bzw. Abb. 2.3 von WS09/10
@@ -242,13 +242,13 @@ Die Berechnung der Trajektorie erfolgt im Modul \lstinline{GenerateTrajectory}.
 Die aktuelle und geschätzte Position des Menschen, sowie die aktuelle Position des Menschen werden als Parameter übergeben, und dienen als Grundlage für die Berechnung der Trajektorie.
 Die Struktur der zu berechnenden Trajektorie $s$ ist durch das Modul \lstinline{OmniDriveAlongPath} (s. Abs. \ref{bahnplanung_lowlevel_subsec}) \todoprivate{ref richtig?}\ vorgegeben:
 
-\begin{equation}
-	s =
-	\begin{pmatrix} start \\ next \\ following \end{pmatrix} =
-	\begin{pmatrix} x_{st} & y_{st} & 0 \\ x_{nx} & y_{nx} & yaw_{nx} \\ x_{fl} & y_{fl} & 0 \end{pmatrix}
-\end{equation}
-
-\todo[inline]{welche Variante nehmen?}
+% \begin{equation}
+% 	s =
+% 	\begin{pmatrix} start \\ next \\ following \end{pmatrix} =
+% 	\begin{pmatrix} x_{st} & y_{st} & 0 \\ x_{nx} & y_{nx} & yaw_{nx} \\ x_{fl} & y_{fl} & 0 \end{pmatrix}
+% \end{equation}
+% 
+% \todo[inline]{welche Variante nehmen?}
 
 \begin{equation}
 	s =	\begin{pmatrix} start \\ next \\ following \end{pmatrix}
