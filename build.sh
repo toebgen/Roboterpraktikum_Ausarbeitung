@@ -1,0 +1,7 @@
+pdflatex Roboterpraktikum
+bibtex Roboterpraktikum
+makeglossaries Roboterpraktikum
+pdflatex Roboterpraktikum
+pdflatex Roboterpraktikum
+killall AdobeReader
+open Roboterpraktikum.pdf
