@@ -176,18 +176,58 @@ SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattforms
 \authorsection{\editorjulian}
 
 \todo[inline]{Julian: Schreiben}
-\begin{itemize}
-	\item Was konkret passiert -> Umwandlung der Trajektorie in (Plattformunabhängige) Geschwindigkeiten.
-	\item Limitierung der Beschleunigung
-	\item Was geht rein, was kommt raus
-	\item Virtual Protective Field verwenden um kollisionsfrei zu fahren.
-	\item was gab es schon
+
+Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind möglich:
+
+\begin{description}
+	\item[Differentiell] Die Steuerung des Roboters erfolgt indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
+	\item[Omni] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen. 
+\end{description}
+
+\todo[inline]{Schematisches Bild input, output}
+
+Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht um plattformspezifische Geschwindigkeiten zu berechnen.
+
+Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
+
+Zuletzt findet mit Hilfe des Virtual Protective Field (siehe \ref{lokalisierung_umsetzung_sec}) eine Kollisionsvermeidung statt.
+
+\todo[inline]{Bild der Gruppe mit kurzer Erläuterung bzgl. wo was passiert}
+
+\subsubsection{Vorhandene Software}
+\label{bahnplanung_inv_kinem_vorhandene_software_sec}
+
+Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war. Insbesondere der zentrale Teil, die Module \lstinline{DriveAlongPath} bzw. \lstinline{OmniDriveAlongPath} welche für die inverse Kinematik zuständig sind wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden und konnten ohne Veränderung integriert werden.
+
+\subsubsection{Erweiterungen}
+\label{bahnplanung_inv_kinem_erweiterung_sec}
+
+Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle das Modul \lstinline{AutoReflexesManager}. Dieses Modul vereinfacht und automatisiert verschiedene Funktionen der Module \lstinline{DriveAlongPath}, \lstinline{OmniDriveAlongPath}, \lstinline{Safety} und \lstinline{VirtualProtectiveSafety}:
+\todo[inline]{Richtige Namen der modul nachschauen}
+\begin{description}
+	\item[DriveAlongPath]
 	\begin{itemize}
-		\item Modul Reflexes von Odete Projekt
-		\item Bewegungsart abhängige Konvertierung einer Trajektorie
-		\item Differential Drive, Omni Drive
-		\item Safety Modul für Beschleunigung
+		\item Setzen der maximal Geschwindigkeit
+		\item Aktualisieren des Zählers zum Signalisieren das eine neue Trajektorie anliegt
+		\item Aktivieren/Deaktivieren des Moduls
 	\end{itemize}
+	\item[Safety] Aktivieren/Deaktivieren des Moduls
+	\item[VirtualProtectiveSafety] Aktivieren/Deaktivieren des Moduls
+\end{description}
+
+
+\begin{itemize}
+%	\item Was konkret passiert -> Umwandlung der Trajektorie in (Plattformunabhängige) Geschwindigkeiten.
+%	\item Limitierung der Beschleunigung
+%	\item Was geht rein, was kommt raus
+%	\item Virtual Protective Field verwenden um kollisionsfrei zu fahren.
+%	\item was gab es schon
+%	\begin{itemize}
+%		\item Modul Reflexes von Odete Projekt
+%		\item Bewegungsart abhängige Konvertierung einer Trajektorie
+%		\item Differential Drive, Omni Drive
+%		\item Safety Modul für Beschleunigung
+%	\end{itemize}
 	\item Erweitert um Sicherheitsmodul welches das Virtual Protective Field berücksichtigt
 \end{itemize}
 
