@@ -137,13 +137,23 @@ Weil die explizite Berechnung des kollisionsfreien Konfigurationsraum bei Robote
 Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russell2003}.
 \begin{enumerate}
 \item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling Strategie(für \gls{PRM} Verfahren\cite{Thrun2005} z.B.).
-\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen für Graphen.
+\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen.
 \end{enumerate}
 
 \subsubsection{Lokale Planer}
 \label{bahnplanung_lokale_planer_sec}
 
-\todo[inline]{Drei gängige Planer vorstellen, state of the art am Ende.}
+In diesem Abschnitt werden ein Paar gängige lokale Planer vorgestellt.
+
+Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse von informierten Suchalgorithmen. Dies heißt, dass es eine Schätzungsfunktion benutzt um die Suche zu lenken. Die Grundidee ist, immer den Knoten zu untersuchen der wahrscheinlich am schnellsten ins Ziel führt. Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannte Knoten mit einer \textit{f(x)} Funktion bewertet und von kleinsten \textit{f}-Wert zum größten sortiert. Der Knoten mit dem kleinsten \textit{f}-Wert wird als nächstes untersucht. 
+
+Um den vielversprechendsten Knoten zu ermitteln wird die Formel
+\begin{equation}
+ f(x) = g(x) + h(x)
+\end{equation}
+benutzt. Dabei sind \textit{g(x)} die Pfadkosten von Startknoten bis um \textit{x} zu erreichen und \textit{h(x)} ist die Heuristik, sprich, die Schätzung der Pfadkosten von \textit{x} um den Ziel zu erreichen. Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss, das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist. Als Heuristik wird oft der Euklidische Abstand oder die Manhattan Distanz benutzt.
+
+Der \textit{A*-Algorithmus}, obwohl es nicht mehr als state-of-the-art gilt\citep{innoKonz}},  ist als lokaler Planer, vor allem in 2D, sehr gut. Mit mehr Dimensionen oder Freiheitsgrade performt es viel schlechter. Außerdem kann man den Grundalgorithmus noch sehr viel optimieren. Zum Beispiel mit dem Hierarchischen \textit{A*}, damit es wenn es keine Hindernisse in der nähe liegen größere Schritte und sonst kleinere Schritte macht. Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten. Man könnte auch den Algorithmus stoppen sobald man ein Weg gefunden hat abbrechen, dann ist der Algorithmus natürlich nicht mehr optimal. Diese Erweiterungen sind von den zu lösende Aufgabe abhängig, mehre Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich.
 
 
 
