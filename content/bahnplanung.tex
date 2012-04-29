@@ -184,7 +184,7 @@ wo \textit{U(q)} die Summe von den Abstoßungs- und Anziehungspotential ist. Die
 \caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften. Quelle: \citep{innoKonz}}
 \end{figure}
 
-Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für die Pfadplanung, das die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, welches die allgemeine Steuerungsstruktur vereinfacht. Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich, man muss die nicht mehr glätten. Ein Nachteil hingegen ist, das es im lokalen Minima stecken bleiben kann. Dies ist einer der Grunde warum es als lokaler Planer benutzt wird. Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen.
+Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für die Pfadplanung, das die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, welches die allgemeine Steuerungsstruktur vereinfacht. Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich, man muss die nicht mehr glätten. Ein Nachteil hingegen ist, das es im lokalen Minima stecken bleiben kann. Dies ist einer der Grunde warum es als lokaler Planer benutzt wird. Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen. Eine andere Möglichkeit zur Flucht, welches von Rimon und Koditschek vorgestellt wurde, ist den Zielpunkt als einziges lokales Minimum im Potentialfeld zu definieren.
 
 
 
@@ -202,7 +202,7 @@ Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für di
 \label{bahnplanung_motoansteuerung_subsec}
 \authorsection{\editoroier}
 
-\todo[inline]{Oier: Schreiben}
+
 Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete. Unsere Aufgabe bestand daran, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen. Als Eingang erhält es Geschwindigkeiten und Ausgang sind die Plattformspezifische Geschwindigkeiten. Auf der Abbildung \ref{fig:mca2architecture} sieht man die Gesamte Struktur oder Architektur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
 
 \begin{figure}[h]
