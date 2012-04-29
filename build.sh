@@ -1,3 +1,4 @@
+sh clean.sh
 pdflatex Roboterpraktikum
 bibtex Roboterpraktikum
 makeglossaries Roboterpraktikum
