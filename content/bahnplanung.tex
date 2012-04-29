@@ -74,15 +74,15 @@ Gelenke\\
 Es gibt unterschiedliche Interpolationsarten:  Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
 Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert wie man auf der Abbildung \ref{fig:linearinterpolation} sehen kann.
 \begin{figure}[h]
-\center
-\includegraphics[scale=0.35]{graphics/linearinterpolation.png}
-\caption{\label{fig:linearinterpolation} Beispiel der Linearinterpolation Quelle: \citep{rob1}}
+	\center
+	\includegraphics[scale=0.35]{graphics/linearinterpolation.png}
+	\caption{\label{fig:linearinterpolation} Beispiel der Linearinterpolation Quelle: \citep{rob1}}
 \end{figure}
  Die Zirkularinterpolation schafft hingegen kreisförmige Verfahrwege zwischen zwei Punkte. Wenn man hingegen  Segmentweise interpoliert, werden die Endbedingungen der Teiltrajektorie i-1 und die Anfangsbedingungen der Teiltrajektorie i aneinander angepasst, so dass die Teiltrajektorien durch Splines beschrieben werden wie man auf der Abbildung \ref{fig:segmentinterpolation} sehen kann.
- \begin{figure}[h]
-\center
-\includegraphics[scale=0.35]{graphics/segmentinterpolation.png}
-\caption{\label{fig:segmentinterpolation} Beispiel der Segmentweise Bahninterpolation Quelle: \citep{rob1}}
+\begin{figure}[h]
+	\center
+	\includegraphics[scale=0.35]{graphics/segmentinterpolation.png}
+	\caption{\label{fig:segmentinterpolation} Beispiel der Segmentweise Bahninterpolation Quelle: \citep{rob1}}
 \end{figure}
  
  
@@ -137,13 +137,54 @@ Weil die explizite Berechnung des kollisionsfreien Konfigurationsraum bei Robote
 Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russell2003}.
 \begin{enumerate}
 \item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling Strategie(für \gls{PRM} Verfahren\cite{Thrun2005} z.B.).
-\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen für Graphen.
+\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen.
 \end{enumerate}
 
 \subsubsection{Lokale Planer}
 \label{bahnplanung_lokale_planer_sec}
 
-\todo[inline]{Drei gängige Planer vorstellen, state of the art am Ende.}
+
+In diesem Abschnitt werden ein Paar gängige lokale Planer vorgestellt.
+
+\paragraph{*-Algorithmus} 
+
+
+Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse von informierten Graphensuchalgorithmen. Dies heißt, dass es eine Schätzungsfunktion benutzt um die Suche zu lenken. Die Grundidee ist, immer den Knoten zu untersuchen der wahrscheinlich am schnellsten ins Ziel führt. Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannte Knoten mit einer \textit{f(x)} Funktion bewertet und von kleinsten \textit{f}-Wert zum größten sortiert. Der Knoten mit dem kleinsten \textit{f}-Wert wird als nächstes untersucht. 
+
+Um den vielversprechendsten Knoten zu ermitteln wird die Formel
+\begin{equation}
+ f(x) = g(x) + h(x)
+\end{equation}
+benutzt. Dabei sind \textit{g(x)} die Pfadkosten von Startknoten bis um \textit{x} zu erreichen und \textit{h(x)} ist die Heuristik, sprich, die Schätzung der Pfadkosten von \textit{x} um den Ziel zu erreichen. Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss, das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist. Als Heuristik wird oft der Euklidische Abstand oder die Manhattan Distanz benutzt. Auf der Abbildung \ref{fig:a*} kann man eine erfolgreich beendete \textit{A*}-Suche mit angaben zum Ablauf.
+
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.3]{graphics/A*.png}
+\caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}. Quelle: \citep{innoKonz}}
+\end{figure}
+
+
+Der \textit{A*-Algorithmus}, obwohl es nicht mehr als state-of-the-art gilt\citep{innoKonz},  ist als lokaler Planer, vor allem in 2D, sehr gut. Mit mehr Dimensionen oder Freiheitsgrade performt es viel schlechter. Außerdem kann man den Grundalgorithmus noch sehr viel optimieren. Zum Beispiel mit dem Hierarchischen \textit{A*}, damit es wenn es keine Hindernisse in der nähe liegen größere Schritte und sonst kleinere Schritte macht. Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten. Man könnte auch den Algorithmus stoppen sobald man ein Weg gefunden hat abbrechen, dann ist der Algorithmus natürlich nicht mehr optimal. Diese Erweiterungen sind von den zu lösende Aufgabe abhängig, mehre Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich.
+
+\paragraph{Potentialfelder}
+
+Bei diesen Verfahren bewegt sich der Roboter unter dem Einfluss von Kräften, welches ein
+Potentialfeld auf ihn ausübt. Die Grundidee ist, dass Hindernisse eine Abstoßungspotential auf den Roboter ausüben und der Ziel hingegen einen Anziehungspotential. Der negative Gradient der resultierende Potentialkraft bestimmt die künstliche Kraft die auf dem Roboter ausgeübt wird.
+
+\begin{equation}
+F(q) = - \nabla U(q)
+\end{equation}
+
+wo \textit{U(q)} die Summe von den Abstoßungs- und Anziehungspotential ist. Diese Summe ist auf der Abbildung \ref{fig:potentialfeld} dargestellt.
+
+
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.4]{graphics/potentialfeld.png}
+\caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften. Quelle: \citep{innoKonz}}
+\end{figure}
+
+Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für die Pfadplanung, das die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, welches die allgemeine Steuerungsstruktur vereinfacht. Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich, man muss die nicht mehr glätten. Ein Nachteil hingegen ist, das es im lokalen Minima stecken bleiben kann. Dies ist einer der Grunde warum es als lokaler Planer benutzt wird. Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen. Eine andere Möglichkeit zur Flucht, welches von Rimon und Koditschek vorgestellt wurde, ist den Zielpunkt als einziges lokales Minimum im Potentialfeld zu definieren.
 
 
 
@@ -156,7 +197,7 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russel
 
 
 % -----------------------------------------------------------------------------
-%													LowLevel-Ansteuerung
+%													Motoransteuerung
 \subsection{Motoransteuerung}
 \label{bahnplanung_motoansteuerung_subsec}
 \authorsection{\editoroier}
@@ -164,6 +205,19 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russel
 \todo[inline]{Oier: Schreiben}
 \todo[inline]{Was es schon gab im Motoransteuerungsteil (aus Odete/segway). SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattformspezifische Simulation Segway500RMPSimulation. Eingang sind Geschwindigkeiten und Ausgang sind Plattformspezifische Geschwindigkeiten).
 
+Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete. Unsere Aufgabe bestand daran, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen. Als Eingang erhält es Geschwindigkeiten und Ausgang sind die Plattformspezifische Geschwindigkeiten. Auf der Abbildung \ref{fig:mca2architecture} sieht man die Gesamte Struktur oder Architektur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
+
+\begin{figure}[h]
+	\center
+	\includegraphics[scale=0.5]{graphics/mca2architecture.png}
+	\caption{\label{fig:mca2architecture} Architektur der Software wo man die Vernetzung der einzelnen Module sehen kann}
+\end{figure}
+
+\begin{figure}[h]
+	\center
+	\includegraphics[scale=0.5]{graphics/segwayHal.png}
+	\caption{\label{fig:segwayHal} Das Modul \lstinline{SegwayOmniHal}, welches für die Motoransteuerung zuständig ist}
+\end{figure}
 % evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
 %		bzw. Abb. 2.3 von WS09/10
 
@@ -251,7 +305,7 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 % 	\item Kollisionsvermeidung als eigener Abschnitt
 % \end{itemize}
 
-Die Aufgaben der Bahnplanung werden in der \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniBehaviours} bearbeitet.\todoprivate{ref zu behaviours-Bild}
+Die Aufgaben der Bahnplanung werden in der \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniBehaviours} bearbeitet (s. Abb. \ref{fig:behaviours}).
 Im Einzelnen sind dies:
 \begin{itemize}
 	\item Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit: \lstinline{GenerateTrajectory}
@@ -261,10 +315,15 @@ Im Einzelnen sind dies:
 	\item Kollisionsvermeidung: \lstinline{ObstacleAvoidance}
 \end{itemize}
 
+\begin{figure}[h]
+	\center
+	\includegraphics[width=0.8\textwidth]{graphics/behaviours}
+	\caption{Die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniBehaviours}}
+	\label{fig:behaviours}
+\end{figure}
+
 Die Module innerhalb der Gruppe werden im Folgenden beschrieben.
 Die Kollisionsvermeidung wird in einem gesonderten Abschnitt (s. Abs. \ref{kollisionsvermeidung_subsec}) behandelt.
-
-\missingfigure[figwidth=0.7\textwidth]{Behaviours}
 
 
 \subsubsection{Position des Menschen}
@@ -282,7 +341,7 @@ Anhand dieser Daten wird die zukünftige Position des Menschen geschätzt.
 Als Resultat gibt das Modul die geschätzte zukünftige Position des Menschen aus.
 Die aktuelle Position wird ebenfalls mit ausgegeben.
 
-Für die Berechnung der zukünftigen Position wird die Formel
+Für die Berechnung der zukünftigen Position es Menschen wird die Formel
 \begin{equation}
 	s_{est} = s_{act} + v \cdot t_{est}
 \end{equation}
@@ -296,15 +355,15 @@ Dieser Parameter wird aus einer externen Konfigurationsdatei geladen.
 
 Die Berechnung der Trajektorie erfolgt im Modul \lstinline{GenerateTrajectory}.
 Die aktuelle und geschätzte Position des Menschen, sowie die aktuelle Position des Menschen werden als Parameter übergeben, und dienen als Grundlage für die Berechnung der Trajektorie.
-Die Struktur der zu berechnenden Trajektorie $s$ ist durch das Modul \lstinline{OmniDriveAlongPath} (s. Abs. \ref{bahnplanung_lowlevel_subsec}) \todoprivate{ref richtig?}\ vorgegeben:
+Die Struktur der zu berechnenden Trajektorie $s$ ist durch das Modul \lstinline{OmniDriveAlongPath} (s. Abs. \ref{bahnplanung_motoansteuerung_subsec}) vorgegeben:
 
-\begin{equation}
-	s =
-	\begin{pmatrix} start \\ next \\ following \end{pmatrix} =
-	\begin{pmatrix} x_{st} & y_{st} & 0 \\ x_{nx} & y_{nx} & yaw_{nx} \\ x_{fl} & y_{fl} & 0 \end{pmatrix}
-\end{equation}
-
-\todo[inline]{welche Variante nehmen?}
+% \begin{equation}
+% 	s =
+% 	\begin{pmatrix} start \\ next \\ following \end{pmatrix} =
+% 	\begin{pmatrix} x_{st} & y_{st} & 0 \\ x_{nx} & y_{nx} & yaw_{nx} \\ x_{fl} & y_{fl} & 0 \end{pmatrix}
+% \end{equation}
+% 
+% \todo[inline]{welche Variante nehmen?}
 
 \begin{equation}
 	s =	\begin{pmatrix} start \\ next \\ following \end{pmatrix}
@@ -315,19 +374,34 @@ mit
 	next = 			\begin{pmatrix} x_{next} \\ y_{next} \\ yaw_{next}	\end{pmatrix},
 	following =	\begin{pmatrix}	x_{following} \\ y_{following}							\end{pmatrix}
 \end{equation}
-Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate, während $following$ zusätzliche eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters) beinhaltet.\todoprivate{Skizze zu x-y-z-roll-pitch-yaw?}
+Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate.
+$following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
+
+\begin{figure}
+	\center
+	\includegraphics[width=0.4\textwidth]{graphics/roll-pitch-yaw.png}
+	\caption{Roll-Pitch-Yaw-Winkel \cite{rollPitchYaw}}
+	\label{fig:roll_pitch_yaw}
+\end{figure}
 
 Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten vom Modul \lstinline{HumanPosition} vorliegen.
 Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
 $next$ ist eine Roboter-Pose, die sich im Abstand $d_{hum}$ vor dem Menschen auf dem Vektor Roboter-Mensch befindet.
-Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem Vektor next-estimated befindet sich der dritte Punkt der Trajektorie.
+Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem Vektor next-estimated befindet sich der dritte Punkt der Trajektorie: $following$.
 Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig $1,75m$.
-In Abb. \ref{fig:trajektorie}\todoprivate{ref setzen}\ wird dies dargestellt.
+In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 
-\missingfigure{Vektor-Zeichnung}
+\begin{figure}
+	\center
+	\input{graphics/trajectory}
+	\caption{Berechnung der Trajektorien-Punkte}
+	\label{fig:trajektorie}
+\end{figure}
+
+Der $yaw$-Wert wird so berechnet, dass der Roboter sich immer in Richtung des Menschen ausrichtet.
 
 
-\begin{itemize}
+% \begin{itemize}
 % 	\item Modul bekommt aktuelle und geschätzte Position des Menschen, sowie aktuelle Position des Roboters
 % 	\item Struktur der zu berechnenden Trajektorie duch \lstinline{OmniDriveAlongPath} \todoprivate{ref zu LowLevel?}\ vorgegeben:
 % 	\begin{itemize}
@@ -344,18 +418,14 @@ In Abb. \ref{fig:trajektorie}\todoprivate{ref setzen}\ wird dies dargestellt.
 % 	  \item erfolgt alles in absoluten Weltkoordinaten
 %   \end{itemize}
 %   \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $1,75m$
-  \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
+%   \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
 
 % 	\item MUX für Trajektorie
 % 	\begin{itemize}
 % 		\item GenerateTrajectory
 % 		\item LoadFromFile
 % 	\end{itemize}
-\end{itemize}
-
-
-\todoprivate{Zeichnung mit Vektoren}
-
+% \end{itemize}
 
 
 \subsubsection{Pfadspeichern und -laden}
