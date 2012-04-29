@@ -6,6 +6,8 @@
 \usepackage[absolute,overlay]{textpos}
 \usepackage{vmargin}          % Adjust margins in a simple way
 \usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
 
 \usepackage{listings}
 \lstset{numbers=left,					% where to put the line-numbers
@@ -101,3 +103,20 @@
 % A graphic best describing your thesis
 \newcommand{\titlefig}{\includegraphics[width=0.4\textwidth]{graphics/FZI-Logo}}
 
+\usepackage[outermarks]{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}
+  {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}
+  {\normalfont\normalsize\bfseries}{\thesubparagraph}{1em}{}
+  
+\titlespacing*{\section}      {0pt}{3.5ex plus 1ex minus .2ex} {2.3ex plus .2ex}
+\titlespacing*{\subsection}   {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph}    {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subparagraph} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
