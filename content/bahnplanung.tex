@@ -164,12 +164,27 @@ benutzt. Dabei sind \textit{g(x)} die Pfadkosten von Startknoten bis um \textit{
 \end{figure}
 
 
-Der \textit{A*-Algorithmus}, obwohl es nicht mehr als state-of-the-art gilt\citep{innoKonz}},  ist als lokaler Planer, vor allem in 2D, sehr gut. Mit mehr Dimensionen oder Freiheitsgrade performt es viel schlechter. Außerdem kann man den Grundalgorithmus noch sehr viel optimieren. Zum Beispiel mit dem Hierarchischen \textit{A*}, damit es wenn es keine Hindernisse in der nähe liegen größere Schritte und sonst kleinere Schritte macht. Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten. Man könnte auch den Algorithmus stoppen sobald man ein Weg gefunden hat abbrechen, dann ist der Algorithmus natürlich nicht mehr optimal. Diese Erweiterungen sind von den zu lösende Aufgabe abhängig, mehre Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich.
+Der \textit{A*-Algorithmus}, obwohl es nicht mehr als state-of-the-art gilt\citep{innoKonz},  ist als lokaler Planer, vor allem in 2D, sehr gut. Mit mehr Dimensionen oder Freiheitsgrade performt es viel schlechter. Außerdem kann man den Grundalgorithmus noch sehr viel optimieren. Zum Beispiel mit dem Hierarchischen \textit{A*}, damit es wenn es keine Hindernisse in der nähe liegen größere Schritte und sonst kleinere Schritte macht. Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten. Man könnte auch den Algorithmus stoppen sobald man ein Weg gefunden hat abbrechen, dann ist der Algorithmus natürlich nicht mehr optimal. Diese Erweiterungen sind von den zu lösende Aufgabe abhängig, mehre Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich.
 
 \paragraph{Potentialfelder}
 
-Potentialfelder
+Bei diesen Verfahren bewegt sich der Roboter unter dem Einfluss von Kräften, welches ein
+Potentialfeld auf ihn ausübt. Die Grundidee ist, dass Hindernisse eine Abstoßungspotential auf den Roboter ausüben und der Ziel hingegen einen Anziehungspotential. Der negative Gradient der resultierende Potentialkraft bestimmt die künstliche Kraft die auf dem Roboter ausgeübt wird.
 
+\begin{equation}
+F(q) = - \nabla U(q)
+\end{equation}
+
+wo \textit{U(q)} die Summe von den Abstoßungs- und Anziehungspotential ist. Diese Summe ist auf der Abbildung \ref{fig:potentialfeld} dargestellt.
+
+
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.4]{graphics/potentialfeld.png}
+\caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften. Quelle: \citep{innoKonz}}
+\end{figure}
+
+Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für die Pfadplanung, das die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, welches die allgemeine Steuerungsstruktur vereinfacht. Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich, man muss die nicht mehr glätten. Ein Nachteil hingegen ist, das es im lokalen Minima stecken bleiben kann. Dies ist einer der Grunde warum es als lokaler Planer benutzt wird. Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen.
 
 
 
@@ -308,7 +323,7 @@ $following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtu
 
 \begin{figure}
 	\center
-	\includegraphics[width=0.4\textwidth]{graphics/roll_pitch_yaw}
+	\includegraphics[width=0.4\textwidth]{graphics/roll-pitch-yaw.png}
 	\caption{Roll-Pitch-Yaw-Winkel \cite{rollPitchYaw}}
 	\label{fig:roll_pitch_yaw}
 \end{figure}
