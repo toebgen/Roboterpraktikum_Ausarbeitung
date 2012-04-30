@@ -234,10 +234,13 @@ Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{Se
 
 \begin{description}
 	\item[Differentiell] Die Steuerung des Roboters erfolgt indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
-	\item[Omni] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen. 
+	\item[Omnidirektional] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen.
 \end{description}
 
-\todo[inline]{Schematisches Bild input, output}
+\begin{figure}[h]
+\includegraphics[scale=0.9]{graphics/SCHEMA-invKinem.pdf}
+\caption{\label{fig:bahnpl_umsetz_schema_inv_kinem} Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
+\end{figure}
 
 Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht um plattformspezifische Geschwindigkeiten zu berechnen.
 
@@ -267,6 +270,14 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 	\item[Safety] Aktivieren/Deaktivieren des Moduls
 	\item[VirtualProtectiveSafety] Aktivieren/Deaktivieren des Moduls
 \end{description}
+
+Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem Virtual Protective Field mit ein, um kollisionsfreies Fahren zu ermöglichen.
+
+\subsubsection{Virtual Protective Field}
+\label{bahnplanung_virtual_protective_field_sec}
+
+Das Modul \lstinline{VIRTUALPROTECTIVEBLA} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Planung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
+\todo[inline]{Bild zur Verwendung des Virtual Protective Field}
 
 
 \begin{itemize}
