@@ -34,19 +34,22 @@
 \node at (hest) (H_est) {\Punkt};
 \node[scale=0.9] at (hest) [anchor=south west] {$H_{est}$};
 
-\node[scale=0.9] at (r) [anchor=west] {$A$};
+\node[scale=0.9] at (r) [anchor=west] {$start$};
 \node at (trajPointB) (B) {\Punkt};
-\node[scale=0.9] at (trajPointB) [anchor=north] {$B$};
+\node[scale=0.9] at (trajPointB) [anchor=north west] {$next$};
 \node at (trajPointC) (C) {\Punkt};
-\node[scale=0.9] at (trajPointC) [anchor=north] {$C$};
+\node[scale=0.9] at (trajPointC) [anchor=north west] {$following$};
 
 % Vektoren zwischen Positionen
-\path[name path global=rHact, -] (r) edge (hact);
+%\path[name path global=rHact, -] (r) edge (hact);
+\path[-] (r) edge (hact);
 \path[-] (hact) edge (hest);
 
 % d_{Hum} zeichnen
-\draw [name path global=hactCircle] (hact) circle (\dHum);
-\draw [name path global=hestCircle] (hest) circle (\dHum);
+%\draw [name path global=hactCircle] (hact) circle (\dHum);
+%\draw [name path global=hestCircle] (hest) circle (\dHum);
+\draw (hact) circle (\dHum);
+\draw (hest) circle (\dHum);
 \path[<->] (hact) edge node {$d_{hum}$} (\hActX,\hActY + \dHum);
 \path[<->] (hest) edge node {$d_{hum}$} (\hEstX,\hEstY + \dHum);
 
