@@ -18,10 +18,11 @@
 *.log
 *.lot
 *.out
-*.pdf
+Roboterpraktikum.pdf
 *.pre
 *.synctex.gz
 *.tdo
 *.thm
+*.tps
 *.toc
 temp*

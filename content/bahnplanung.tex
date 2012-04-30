@@ -146,7 +146,7 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russel
 
 In diesem Abschnitt werden ein Paar gängige lokale Planer vorgestellt.
 
-\paragraph{*-Algorithmus} 
+\paragraph{A*-Algorithmus} 
 
 
 Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse von informierten Graphensuchalgorithmen. Dies heißt, dass es eine Schätzungsfunktion benutzt um die Suche zu lenken. Die Grundidee ist, immer den Knoten zu untersuchen der wahrscheinlich am schnellsten ins Ziel führt. Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannte Knoten mit einer \textit{f(x)} Funktion bewertet und von kleinsten \textit{f}-Wert zum größten sortiert. Der Knoten mit dem kleinsten \textit{f}-Wert wird als nächstes untersucht. 
@@ -202,8 +202,7 @@ Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für di
 \label{bahnplanung_motoansteuerung_subsec}
 \authorsection{\editoroier}
 
-\todo[inline]{Oier: Schreiben}
-\todo[inline]{Was es schon gab im Motoransteuerungsteil (aus Odete/segway). SegwayOmniHal Modul gab es schon, wir haben das Modul ergänzt um die plattformspezifische Simulation Segway500RMPSimulation. Eingang sind Geschwindigkeiten und Ausgang sind Plattformspezifische Geschwindigkeiten).}
+
 
 Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete. Unsere Aufgabe bestand daran, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen. Als Eingang erhält es Geschwindigkeiten und Ausgang sind die Plattformspezifische Geschwindigkeiten. Auf der Abbildung \ref{fig:mca2architecture} sieht man die Gesamte Struktur oder Architektur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
 
@@ -338,6 +337,7 @@ Die Kollisionsvermeidung wird in einem gesonderten Abschnitt (s. Abs. \ref{kolli
 
 
 \subsubsection{Position des Menschen}
+\label{bahnplanung_humanPosition_subsubsec}
 
 % \begin{itemize}
 %     \item bekommt aktuelle Position und Geschwindigkeit des Menschen von Kinect
@@ -347,12 +347,12 @@ Die Kollisionsvermeidung wird in einem gesonderten Abschnitt (s. Abs. \ref{kolli
 %     \item Berechnung nach der Formel: $s_{est} = s_{act} + v \cdot t_{est}$
 % \end{itemize}
 
-Das Modul \lstinline{HumaPosition} bekommt als Parameter die aktuelle Position sowie die aktuelle Geschwindigkeit der vom Roboter verfolgten Person übergeben.
+Das Modul \lstinline{HumanPosition} bekommt als Parameter die aktuelle Position sowie die aktuelle Geschwindigkeit der vom Roboter verfolgten Person übergeben.
 Anhand dieser Daten wird die zukünftige Position des Menschen geschätzt.
 Als Resultat gibt das Modul die geschätzte zukünftige Position des Menschen aus.
 Die aktuelle Position wird ebenfalls mit ausgegeben.
 
-Für die Berechnung der zukünftigen Position es Menschen wird die Formel
+Für die Berechnung der zukünftigen Position des Menschen wird die Formel
 \begin{equation}
 	s_{est} = s_{act} + v \cdot t_{est}
 \end{equation}
@@ -363,6 +363,7 @@ Dieser Parameter wird aus einer externen Konfigurationsdatei geladen.
 
 
 \subsubsection{Berechnung der Trajektorie}
+\label{bahnplanung_trajektorie_subsubsec}
 
 Die Berechnung der Trajektorie erfolgt im Modul \lstinline{GenerateTrajectory}.
 Die aktuelle und geschätzte Position des Menschen, sowie die aktuelle Position des Menschen werden als Parameter übergeben, und dienen als Grundlage für die Berechnung der Trajektorie.
@@ -388,12 +389,12 @@ mit
 Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate.
 $following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
 
-\begin{figure}
+\begin{wrapfigure}{r}{0.4\textwidth}	%\begin{figure}[h]
 	\center
-	\includegraphics[width=0.4\textwidth]{graphics/roll-pitch-yaw.png}
+	\includegraphics[width=0.35\textwidth]{graphics/roll_pitch_yaw.pdf}
 	\caption{Roll-Pitch-Yaw-Winkel \cite{rollPitchYaw}}
 	\label{fig:roll_pitch_yaw}
-\end{figure}
+\end{wrapfigure}	%\end{figure}
 
 Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten vom Modul \lstinline{HumanPosition} vorliegen.
 Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
@@ -402,7 +403,7 @@ Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem V
 Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig $1,75m$.
 In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 
-\begin{figure}
+\begin{figure}[h]
 	\center
 	\input{graphics/trajectory}
 	\caption{Berechnung der Trajektorien-Punkte}
@@ -410,6 +411,7 @@ In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 \end{figure}
 
 Der $yaw$-Wert wird so berechnet, dass der Roboter sich immer in Richtung des Menschen ausrichtet.
+So kann gewährleistet werden, dass die Kinect den Menschen weiterhin tracken kann.
 
 
 % \begin{itemize}
@@ -440,6 +442,7 @@ Der $yaw$-Wert wird so berechnet, dass der Roboter sich immer in Richtung des Me
 
 
 \subsubsection{Pfadspeichern und -laden}
+\label{bahnplanung_pfadSpeichernLaden_subsubsec}
 
 \begin{itemize}
   \item Im \lstinline{followPerson} -Zustand: Wegpunkte $(x,y,yaw)$ werden in gewissen Abständen $d_{save}$ gespeichert
@@ -459,6 +462,28 @@ Der $yaw$-Wert wird so berechnet, dass der Roboter sich immer in Richtung des Me
   \end{itemize}
 \end{itemize}
 
+Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Module verwendet:
+\begin{itemize}
+	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}) aktiv\todoprivate{evtl. ref noch auf subsec}
+	\item \lstinline{LoadRoboterPositionsFromFile}: Während dem Modus Während dem Modus \lstinline{followPath} (s. Abs. \ref{umsetzung_integration_sec}) aktiv\todoprivate{evtl. ref noch auf subsec}
+\end{itemize}
+
+Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec} für weitere Informationen zur globalen Zustandsmaschine\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
+Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
+Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand des euklidischen Abstands festgelegt:
+Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherungspose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
+$d_{save}$ kann als externer Parameter definiert werden.
+\begin{equation}
+	\overline{ s_{act} - s_{last} } > d_{save}
+\end{equation}
+
+
+Eine beispielhafter Pfad ist in Listing \ref{lst:dump_file} dargestellt.
+\todoprivate{Beispiel-Ausschnitt aus dump-file}
+\begin{lstlisting}[caption=Beispiel für ein dump-file zur Speicherung eines Pfades, label=lst:dump_file]
+	1111:2222:3333
+	999:888.8:77.77
+\end{lstlisting}
 
 
 % 

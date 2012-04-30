@@ -178,52 +178,73 @@ Kalman-Filter}
 \authorsection{\editordummy}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
-\subsection{Lokalisierung}
+\subsection{Lokalisierung} 
+In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
+ Lokalisierung beschäftigen. Wie sie wahrscheinlich schon aus Kapitel
+ \ref{grundlagen_cha} wissen, verfügen die beiden Roboter HoLLiE und
+ Odete über sehr ähnliche Sensoren, die zur Lokalisierung verwendet werden
+ können. Der Roboter, Odete weist 2 Winkelencoder (in Segway
+ Omni\todoprivate{in Wirklichkeit ? eventuell schon in Grundlagen besprochen
+ dann hier unnötig}) und ein 270 Grad Sick Laserscanner (Scheibenförmiger Scan)
+ auf.
+ HoLLiE verfügt über ?\todoprivate{in Wirklichkeit ?} Winkelencoder und zwei
+ ?\todoprivate{in Wirklichkeit ?} Grad Sick Laserscanner. Offensichtlich musste,
+ um ein sicheres Fortbewegen des Roboters zu gewährleisten, für das Odete Projekt
+ ebenfalls eine Lokalisierung implementiert werden.
+ Im Folgenden wollen wir kurz auf die Idee bei der Wahl der Gruppen
+ und Module für die Lokalisierung im Odete Projekt eingehen.
+ Die verwendete MCA2 Struktur der Odete basiert auf einem bestimmten Paradigma.
+ Ziel ist es eine hohe Flexibilität zu erreichen. Sensoren und Plattformen sollen
+ beliebig kombinierbar sein. Wir entschieden uns daher dazu diese Struktur auch
+ beim Segway Omni Projekt weiterzuführen. Dadurch konnten alte Programmstrukturen
+ übernommen und/oder adaptiert und außerdem dieselbe Flexibilität wie im Odete Projekt
+ erreicht werden. Daher gelten die folgenden Erläuterungen zur Lokalisierung
+ auch fast uneingeschränkt für beide Robotersysteme.
+ Zur Positionsschätzung wir bei beiden Systemen eine Kombination aus kartenbasierter Lokalisierung
+ und Odometrie verwendet. Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer
+ Synthese geschätzt. Dem Kalman-Filter ist eine Queue (FIFO) vorgeschaltet, in der jede Schätzung
+ mit einem Timestamp registriert wird. So können die Messwerte in zeitlich korrekter Reihenfolge
+ eingerechnet werden, selbst dann, wenn sie nach der Verarbeitung in einer anderen Reihenfolge
+ im Kalman-Filter registriert werden. Die für die Odometrie benötigte Winkelschrittmessung der Räder wird direkt
+ von der Segway-Antriebsplattform geliefert.
+ Es wird angenommen, dass der Fehler linear ansteigt mit der durch den Reifen zurückgelegten Strecke.
+ Falls eine gute Schätzung aus der kartenbasierten Lokalisierung in den Kalman-Filter übergeben wird,
+ wird die Pose korrigiert und der Odometriefehler wieder gesenkt.
+
+
+
 \todo[inline]{Geplanter Aufbau -> Grundlegende Idee für die Umsetzung
  --- Bild der Gruppe, erläutern der Funktion der Module}
  \todo[inline]{Stuktur des Materials an die gewünschte form anpassen etwa
  durch:die aussagen zur lokalisierung gelten generell für hollie und sowie da
  bla bla und dann die ganzen erklärungen}
- 
- Vorhandene
- Implementierung der Lokalisierung anhand von Odometrie und Laserdaten im Odete-Projekt
+
+
+Im bereits bestehenden Odete Projekt wurde die Lokalisierung mit Hilfe von Odometrie und Laserdaten durchgeführt. 
+
+
+Die Verarbeitung der Odometrie und die anschließende Korrektur durch die Kombination mit den
+ Laserdaten XXmit hilfeXX eines Kalmanfilters fand in der Hal Gruppe (Hardwar Abstraction Layer)
+ und die Verarbeitung der Laserdaten in der Sal Gruppe (Scanner Abstraction Layer) statt.
+ Eine ähnliche Hal Gruppe existiert in der uns zur Verfügung gestellten Projektstruktur Segway Omni.
+ Nach einer Unterredung mit unserem Betreuer Jan Oberländer bekamen wir auch einige Zeit danach eine
+  ähnliche Sal Gruppe zur Vorverarbeitung und Simulation der Laserdaten der angebrachten Sickscanner. 
+
+
 Hardware Abstraction Layer (Hal) und (später) Scanner Abstraction Layer (Sal)
 aus dem bereits bestehenden Segway Omni Projekt
 
-Übernahme der MCA2-Struktur zur Lokalisierung von Odete
 
 Adaption der Vorhanden Gruppen und Module zur Lokalisierung 
 Anpassung von LLSP, HLSP, Hal \& Sal an das Segway Omni Projekt
 Erweiterung auf beliebige Menge von Scannern
-Einbindung eines PixelRemovers zur Wegnahme fehlerhafter Scanner-Pixel
 
 
 Parametrisierung über Multiplexer und XML-Config-File ermöglichen
 Parameter anpassen auf neue Sensor-Anordnung
 
-Lokalisierung
 
-Die Odete verwendet zur Positionsschätzung eine Kombination aus kartenbasierter Lokalisierung und Odometrie.
- Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer Synthese geschätzt.
- Dem Kalman-Filter ist eine Queue (FIFO) vorgeschaltet, in der jede Schätzung mit einem Timestamp registriert wird.
- So können die Messwerte in zeitlich korrekter Reihenfolge eingerechnet werden, selbst dann, wenn sie nach der
- Verarbeitung in einer anderen Reihenfolge im Kalman-Filter registriert werden.
- Die Kalman-Filterung findet (in MCA2) in der HAL-Gruppe im AbsoluteCoordinatesKLF-Modul statt (KLF = KalmanFilter?). 
 
-Hardware
-
-Die Odete verwendet folgende Sensoren:
-
- %   2 × Winkelencoder (In Segway Omni)
-  %  1 × 270° SICK-Laserscanner (Scheibenförmiger Scan) 
-
-Odometrie
-
-Die Winkelschrittmessung der Räder wird direkt von der Segway-Antriebsplattform geliefert.
- Es wird angenommen, dass der Fehler linear ansteigt mit der durch den Reifen zurückgelegten Strecke.
- Falls eine gute Schätzung aus der kartenbasierten Lokalisierung in den Kalman-Filter übergeben wird,
- wird die Pose korrigiert und der Odometriefehler wieder gesenkt.
- 
 Kartenbasierte Lokalisierung
 
 Eine kartenbasierte Posen-Schätzung wird in folgenden Schritten ermittelt.
@@ -252,15 +273,6 @@ Eine kartenbasierte Posen-Schätzung wird in folgenden Schritten ermittelt.
     Modul: PoseCorrection?
     Ergebnis: X,Y,Gierwinkel-Schätzung + Fehlerkovarianz 
 
-Hinderniserkennung (Virtual Protective Field)
-
-MCA2 Struktur
-
-Die MCA2 Struktur der Odete basiert auf einem bestimmten Paradigma. Ziel ist es eine hohe Flexibilität zu erreichen.
- Sensoren und Plattformen sollen beliebig kombinierbar sein. Das Paradigma soll
- auch beim Segway\_Omni Projekt weitergeführt werden. So können alte Programmsturkturen übernommen und/oder adaptiert werden und dieselbe Flexibilität
- erreicht werden. Im Folgenden sollt die MCA2-Struktur der Odete - soweit sie
- die Lokalisierung betrifft - erläutert werden.
  
 Die Kartenbasierte Lokaliserung findet in den MCA2-Gruppen LLSP und HLSP statt.
  Die Laserscanner-Daten dazu werden aus der SAL-Gruppe bezogen. Die Erfassung und Verarbeitung der Odometrie-Daten findet
@@ -276,6 +288,9 @@ Die HAL-Gruppe ist in der Odete für die plattformabhängige Hardware zuständig
  Hardware und der tatsächlichen Hardware gewechselt werden kann, ohne das andere MCA2-Gruppen angepasst werden müssen.
  Prinzipiell können sogar die Plattformen (Omnidirektional <-> Differentiell) ausgetauscht werden. Die Odometrie hängt
  direkt mit der Antriebsart zusammen und findet deswegen in der HAL statt.
+Die Kalman-Filterung findet (in MCA2) in der HAL-Gruppe im
+AbsoluteCoordinatesKLF-Modul statt (KLF = KalmanFilter?). 
+
 
  SAL(Scanner abstraction Layer)
 
@@ -301,7 +316,6 @@ Der ScanStrategyMultiplexer? dient als zentrale Schaltstelle für die Controller
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
-<<<<<<< HEAD
  Im Gegensatz zur Lokalisierung gab es für die von uns gewünschte Lösung dieser
  Aufgabenstellung noch keine Gruppen oder Module von älteren Projekten. Aus
  diesem Grund war es notwendig im Vorfeld intensivere Überlegungen über die möglichen
@@ -345,26 +359,27 @@ Der ScanStrategyMultiplexer? dient als zentrale Schaltstelle für die Controller
 \item[Modul A] Beschreibung
 \item[Modul B] Beschreibung
 \end{description}
+ObstacleExtractor
+
+ci control
 
 
+SenseIvtErode
 
-=======
-\todo[inline]{Geplanter Aufbau -> kurze Beschreibung der
- Vorhandenen und zur Umsetzung verwendbaren Gruppe und Module
- --- Grundlegende Idee für die Umsetzung
- --- Bild der Gruppe, erläutern der Funktion der Module}
- 
- Keine Hinderniskarte vorhanden
+ci Erode Mask Size
 
-Erzeugung der Hindernisskarte aus den Laserdaten
-Verwendung von Bildverarbeitungs-Modulen (SenseIVT)
-            Gute Visualisierung
-            Einfache Anpassung
-            Verwendung von Standard-Filtern
-         Repräsentation als Schwarz-Weiß-Bitmap
-        Hindernisse auf den Radius des Roboters aufgebläht
-        Anschließende Schließen Operation
->>>>>>> parent of e5b417c... Umsetzung Hindernisskarte weiter ausformuliert
+
+segwayomnioesmultiplexer
+ci control
+
+co Dilate Deactivate Filter
+Dilate Mask Size
+Erode Deactivate Filter
+Erode Mask Size
+Update
+Sense Update Mode
+
+Hlsp Scan Strategy -> Control
 % -----------------------------------------------------------------------------
 %													Virtual protective Field
 \subsection{Virtual protective Field}
@@ -414,3 +429,89 @@ Fields}
 \item[Modul A] Beschreibung
 \item[Modul B] Beschreibung
 \end{description}
+Virtual protective bitmap
+Sensor in:
+Lateral Velocity
+Omni Forward Velocity
+
+controller in:
+Control
+
+controller out
+Obstacle Forward
+Obstacle Sideward
+Obstacle Combined
+
+SegwayomnivbpMultiplexer
+ci Control
+co Update
+Sense Update Mode
+
+senseivtandprotectivefield 
+
+ci Deactivate Filter
+Last
+
+co Last
+Obstacle
+
+sensebitmapsource 
+ci Update Source
+so Sense Data Type
+   Sense Data Changed Counter
+   Sense Data Index Left
+   Sense Data Index Right
+
+SenseIvtScanToBitmap
+ci Deactivate Filter
+	Last
+co Last
+
+so Sense Data Output Type
+   Sense Data Output Counter
+   Sense Data Output Left
+   Sense Data Output Right
+	Last
+si Sense Data Input Type
+   Sense Data Input Counter
+   Sense Data Input Index
+   Sense Data Input Right Index
+	Last
+
+Parameter
+Amount of pixels per mm
+
+Avoidance radius (mm)
+
+SenseIvtProtectiveFieldSource
+ci Deactivate Filter
+	Last
+co Last
+
+so Sense Data Output Type
+   Sense Data Output Counter
+   Sense Data Output Left
+   Sense Data Output Right
+	Last
+si Sense Data Input Type
+   Sense Data Input Counter
+   Sense Data Input Index
+   Sense Data Input Right Index
+	Last
+	Velocity
+SenseIvtAndProtectiveField
+ci Deactivate Filter
+	Last
+co Last
+	Obstacle
+
+so Sense Data Output Type
+   Sense Data Output Counter
+   Sense Data Output Left
+   Sense Data Output Right
+	Last
+si Sense Data Input Type
+   Sense Data Input Counter
+   Sense Data Input Index
+   Sense Data Input Right Index
+	Last
