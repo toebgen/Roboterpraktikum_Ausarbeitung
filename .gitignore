@@ -18,7 +18,7 @@
 *.log
 *.lot
 *.out
-*.pdf
+Roboterpraktikum.pdf
 *.pre
 *.synctex.gz
 *.tdo
