@@ -85,8 +85,7 @@ Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpol
 	\caption{\label{fig:segmentinterpolation} Beispiel der Segmentweise Bahninterpolation Quelle: \citep{rob1}}
 \end{figure}
  
- 
- Bei der approximative Bahnsteuerung werden anders als bei der Bahninterpolation, nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert. Neben Bernsteinpolynome werden hier besonders Überschleifen benutzt um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht. Letzteres wurde auch in Praktikum eingesetzt.
+Bei der approximative Bahnsteuerung werden anders als bei der Bahninterpolation, nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert. Neben Bernsteinpolynome werden hier besonders Überschleifen benutzt um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht. Letzteres wurde auch in Praktikum eingesetzt.
  \begin{figure}[h]
 \center
 \includegraphics[scale=0.35]{graphics/ueberschleifeninterpolation.png}
@@ -143,11 +142,9 @@ Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russel
 \subsubsection{Lokale Planer}
 \label{bahnplanung_lokale_planer_sec}
 
-
 In diesem Abschnitt werden ein Paar gängige lokale Planer vorgestellt.
 
 \paragraph{A*-Algorithmus} 
-
 
 Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse von informierten Graphensuchalgorithmen. Dies heißt, dass es eine Schätzungsfunktion benutzt um die Suche zu lenken. Die Grundidee ist, immer den Knoten zu untersuchen der wahrscheinlich am schnellsten ins Ziel führt. Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannte Knoten mit einer \textit{f(x)} Funktion bewertet und von kleinsten \textit{f}-Wert zum größten sortiert. Der Knoten mit dem kleinsten \textit{f}-Wert wird als nächstes untersucht. 
 
@@ -233,7 +230,6 @@ In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die 
 Zur manuellen Steuerung kommt die zur Simulation erstellte \lstinline{MCAGUI} Oberfläche zum Einsatz; beim Test am realen Roboter ein Gamepad.
 
 Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind möglich:
-
 \begin{description}
 	\item[Differentiell] Die Steuerung des Roboters erfolgt indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
 	\item[Omnidirektional] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen.
@@ -578,13 +574,17 @@ Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gl
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
-Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones zurückgegriffen.\todoprivate{Website und ref angeben}
+Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones zurückgegriffen.
+\todoprivate{Website und ref angeben}
+Diese Implementierung kann einfach eingebunden und erweitert werden. Zur Einbindung des Algorithmus sind drei wesentliche Änderungen bzw. Erweiterungen notwendig:
+\begin{description}
+	\item[Hinderniskarte] Eine Schnittstelle zur Verwendung eines \lstinline{CByteImage} als Hinderniskarte.
+	\item[Heuristik] Ersetzen der ursprünglichen Heuristik durch die Euler-Distanz.
+	\item[Antigravitationsfeld] Erweiterung um ein Antigravitationsfeld.
+\end{description}
 
 
-\begin{itemize}
-		\item Anpassungen an bestehender Implementierung: Bitmap karte, Heuristik
-		\item Erweiterung durch Gravitationsfeld
-\end{itemize}
+
 
 % -----------------------------------------------------------------------------
 %													Simulation
