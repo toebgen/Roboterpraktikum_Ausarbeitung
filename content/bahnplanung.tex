@@ -228,7 +228,10 @@ Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul
 \authorsection{\editorjulian}
 
 \todo[inline]{Julian: Schreiben}
-In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters. Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung. Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb nicht aktiviert kommt wiederum die Ausgabe der Gruppe \lstinline{SegwayOmniAutoReflexes} zur Verwendung. Durch 
+In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters. Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung. Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb nicht aktiv kommt die Ausgabe der Gruppe \lstinline{SegwayOmniAutoReflexes} zur Verwendung. So ist es möglich zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
+
+Zur manuellen Steuerung kommt die zur Simulation erstellte \lstinline{MCAGUI} Oberfläche zum Einsatz; beim Test am realen Roboter ein Gamepad.
+
 Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind möglich:
 
 \begin{description}
@@ -275,11 +278,12 @@ Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{VIRTUALPROTECTIVEBLA} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Planung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
+Das Modul \lstinline{VIRTUALPROTECTIVEBLA} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
+
 \todo[inline]{Bild zur Verwendung des Virtual Protective Field}
 
 
-\begin{itemize}
+%\begin{itemize}
 %	\item Was konkret passiert -> Umwandlung der Trajektorie in (Plattformunabhängige) Geschwindigkeiten.
 %	\item Limitierung der Beschleunigung
 %	\item Was geht rein, was kommt raus
@@ -291,8 +295,8 @@ Das Modul \lstinline{VIRTUALPROTECTIVEBLA} ist speziell für den Einsatz beim om
 %		\item Differential Drive, Omni Drive
 %		\item Safety Modul für Beschleunigung
 %	\end{itemize}
-	\item Erweitert um Sicherheitsmodul welches das Virtual Protective Field berücksichtigt
-\end{itemize}
+%	\item Erweitert um Sicherheitsmodul welches das Virtual Protective Field berücksichtigt
+%\end{itemize}
 
 
 % -----------------------------------------------------------------------------
