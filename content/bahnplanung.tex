@@ -503,6 +503,7 @@ Für die Aufgaben des Datei-Handlings wurde eine eigene Klasse implementiert, di
 Hier werden die Daten aus der Datei gepuffert, sodass beispielsweise im Fall des Pfad-Lesens nur ein einmaliger Dateizugriff auf Betriebssystem-Ebene erfolgt.
 Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 
+
 % 
 % % -----------------------------------------------------------------------------
 % %													Transformationen
@@ -513,6 +514,7 @@ Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 % \todo[inline]{Julian: Sollen wir (also du ;-) ) noch so einen Abschnitt machen?}
 
 
+
 % -----------------------------------------------------------------------------
 %													Kollisionsvermeidung
 \subsection{Kollisionsvermeidung}
@@ -520,37 +522,55 @@ Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 
 \subsubsection{Modul}
 \authorsection{\editortobias}
-\todo[inline]{Tobi: Schreiben}
 
-\begin{itemize}
- 
-  \item Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um Hindernisse
-  \item Ausgaben von \lstinline{GenerateTrajectory} und \lstinline{LoadFromFile} werden geMUXt
-  \begin{itemize}
-    \item je nach Modus (\lstinline{followPerson} bzw. \lstinline{returnHome} / \lstinline{followPath}) schaltet MUX andere Eingänge durch
-  	\item Die Ausgabe des MUX wird dann widerum komplett durch das Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) geschleift
-    \item Dadurch wird jede Trajektorie auf Hindernisse überprüft, keine kommt \glqq daran vorbei\grqq
-  \end{itemize}
-  \item Innerhalb des Moduls wird jede Trajektorie auf Hindernisse überprüft
-	\begin{itemize}
-	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt- in Bildkoordinaten)
-	  \item Überprüfung für jeden einzelnen Punkt, ob er innerhalb eines Hindernisses liegt
-	  \item Verwendung der \lstinline{ObstacleMap} \todoprivate{ref zu Lokalisierung}
-	\end{itemize}
-  \item Ohne Hindernis werden Trajektorien-Punkte nur durchgeschleift
-  \item Wenn Hindernis erkannt, dann wird eine neue Trajektorie ermittelt
-  \begin{itemize}
-    \item Verwendung des A*-Algorithmus
-    \item Ermittlung des Start- und Endpunktes für A*
-    \item ggf. gesonderte Behandlung für Endpunkt (\lstinline{choosePointAfterObstacle})
-    \item Aufruf A*
-    \item Transformation der nuen Trajektorie IK $\rightarrow$ WK
-  \end{itemize}
+% \begin{itemize}
+%   \item Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um Hindernisse
+%   \item Ausgaben von \lstinline{GenerateTrajectory} und \lstinline{LoadFromFile} werden geMUXt
+%   \begin{itemize}
+%     \item je nach Modus (\lstinline{followPerson} bzw. \lstinline{returnHome} / \lstinline{followPath}) schaltet MUX andere Eingänge durch
+%   	\item Die Ausgabe des MUX wird dann widerum komplett durch das Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) geschleift
+%     \item Dadurch wird jede Trajektorie auf Hindernisse überprüft, keine kommt \glqq daran vorbei\grqq
+%   \end{itemize}
+%   \item Innerhalb des Moduls wird jede Trajektorie auf Hindernisse überprüft
+% 	\begin{itemize}
+% 	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt- in Bildkoordinaten)
+% 	  \item Überprüfung für jeden einzelnen Punkt, ob er innerhalb eines Hindernisses liegt
+% 	  \item Verwendung der \lstinline{ObstacleMap} \todoprivate{ref zu Lokalisierung}
+% 	\end{itemize}
+%   \item Ohne Hindernis werden Trajektorien-Punkte nur durchgeschleift
+%   \item Wenn Hindernis erkannt, dann wird eine neue Trajektorie ermittelt
+%   \begin{itemize}
+%     \item Verwendung des A*-Algorithmus
+%     \item Ermittlung des Start- und Endpunktes für A*
+%     \item ggf. gesonderte Behandlung für Endpunkt (\lstinline{choosePointAfterObstacle})
+%     \item Aufruf A*
+%     \item Transformation der nuen Trajektorie IK $\rightarrow$ WK
+%   \end{itemize}
+% \end{itemize}
 
-\end{itemize}
+Das Modul \lstinline{ObstacleAvoidance} überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um ein Hindernis herum, um Kolissionen zu vermeiden.
+Jede von \lstinline{GenerateTrajectory} bzw. \lstinline{LoadRoboterPositionsFromFile} (s. Abs. \ref{bahnplanung_trajektorie_subsubsec}) ausgegebene Trajektorie wird innerhalb des Moduls \lstinline{ObstacleAvoidance} auf Hindernisse überprüft, bevor sie an tiefer liegende Schichten weiter gegeben wird.
+Dies wird durch einen \gls{mux} erreicht, der je nach globalem Modus die entsprechenden Eingänge an das Modul \lstinline{ObstacleAvoidance} durchschaltet.
+So wird sichergestellt, dass ungeprüfte Trajektorien nicht an die Motoransteuerung weiter gegeben werden.
+In Abb. \ref{fig:behaviours} (S. \pageref{fig:behaviours}) ist das Modul innerhalb der \lstinline{Behaviours}-Gruppe sichtbar.
+
+Für die Hindernis-Überprüfung innerhalb des Moduls werden die Trajektorienpunkte, die alle in \gls{wk} vorliegen, in \gls{bk} transformiert.
+So werden $start$, $next$ und $following$ auf entsprechende Punkte der \lstinline{ObstacleMap} (s. Abs. \ref{hinderniskarte_subsec}, S: \pageref{hinderniskarte_subsec}) abgebildet.
+In einem weiteren Schritt werden alle \glstext{bk}, die zwischen den drei Trajektorienpunkten liegen, berechnet und in eine Liste geschrieben.
+Die Punkte dieser Liste werden anschließend anhand der \lstinline{ObstacleMap} auf Hindernisse überprüft.
+
+Falls für keinen der Punkte ein Hindernis festgestellt werden konnte, wird die Trajektorie (in \gls{wk}) unverändert weiter gegeben.
+
+Liegt jedoch mindestens einer der Punkte innerhalb eines Hindernisses, so wird eine neue Trajektorie ermittelt, die um das Hindernis plant.
+Hierfür wird der A*-Algorithmus verwendet.
+Dieser benötigt einen Start- und einen Endpunkt, welche nicht innerhalb eines Hindernisses und auch nicht außerhalb des Bildes (\lstinline{ObstacleMap}) liegen dürfen.
+Die Implementierung dieses Algorithmus wird im nächsten Abschnitt beschrieben.
+
+Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gls{wk} umgerechnet, und an die Motoransteuerung weiter gegeben.
 
 
-\subsubsection{Algorithmen}
+
+\subsubsection{Algorithmus}
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
