@@ -389,9 +389,9 @@ mit
 Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate.
 $following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
 
-\begin{wrapfigure}{r}{0.4\textwidth}	%\begin{figure}[h]
+\begin{wrapfigure}{r}{0.35\textwidth}	%\begin{figure}[h]
 	\center
-	\includegraphics[width=0.35\textwidth]{graphics/roll_pitch_yaw.pdf}
+	\includegraphics[width=0.3\textwidth]{graphics/roll_pitch_yaw.pdf}
 	\caption{Roll-Pitch-Yaw-Winkel \cite{rollPitchYaw}}
 	\label{fig:roll_pitch_yaw}
 \end{wrapfigure}	%\end{figure}
@@ -411,7 +411,7 @@ In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 \end{figure}
 
 Der $yaw$-Wert wird so berechnet, dass der Roboter sich immer in Richtung des Menschen ausrichtet.
-So kann gewährleistet werden, dass die Kinect den Menschen weiterhin tracken kann.
+So kann gewährleistet werden, dass die Kinect den Menschen weiterhin im Fokus hat.
 
 
 % \begin{itemize}
@@ -444,46 +444,64 @@ So kann gewährleistet werden, dass die Kinect den Menschen weiterhin tracken ka
 \subsubsection{Pfadspeichern und -laden}
 \label{bahnplanung_pfadSpeichernLaden_subsubsec}
 
-\begin{itemize}
-  \item Im \lstinline{followPerson} -Zustand: Wegpunkte $(x,y,yaw)$ werden in gewissen Abständen $d_{save}$ gespeichert
-  \begin{itemize}
-    \item sobald $ \overline{ s_{act} - s_{last} } > d_{save} $ \todoprivate{Fehler im Code??? Euklidischer Abstand stattdessen verwenden?}
-  \end{itemize}
-	\item Im \lstinline{loadPath} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde
-  \begin{itemize}
-		\item Im \lstinline{returnHome} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde; umgekehrte Reihenfolge
-    \item sobald $ d( s_{foll} - s_{act} ) > d( s_{nxt} - s_{act} ) $, Euklidischer Abstand
-  	\item \lstinline{yaw} wird unabhängig von Datei berechnet, sodass Roboter immer Menschen anschaut
-  \end{itemize}
-  \item Eigene Klasse zum File-Handling: \lstinline{fileUtil}
-  \begin{itemize}
-    \item Mehrere dump-files möglich
-    \item Auslesen der Wegpunkte in normaler und umgekehrter Reihenfolge
-  \end{itemize}
-\end{itemize}
+% \begin{itemize}
+%   \item Im \lstinline{followPerson} -Zustand: Wegpunkte $(x,y,yaw)$ werden in gewissen Abständen $d_{save}$ gespeichert
+%   \begin{itemize}
+%     \item sobald $ \overline{ s_{act} - s_{last} } > d_{save} $ \todoprivate{Fehler im Code??? Euklidischer Abstand stattdessen verwenden?}
+%   \end{itemize}
+% 	\item Im \lstinline{loadPath} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde
+%   \begin{itemize}
+% 		\item Im \lstinline{returnHome} -Zustand: Nächster Wegpunkt wird geladen, sobald vorheriger erreicht wurde; umgekehrte Reihenfolge
+%     \item sobald $ d( s_{foll} - s_{act} ) < d( s_{nxt} - s_{act} ) $, Euklidischer Abstand
+%   	\item \lstinline{yaw} wird unabhängig von Datei berechnet, sodass Roboter immer Menschen anschaut
+%   \end{itemize}
+%   \item Eigene Klasse zum File-Handling: \lstinline{fileUtil}
+%   \begin{itemize}
+%     \item Mehrere dump-files möglich
+%     \item Auslesen der Wegpunkte in normaler und umgekehrter Reihenfolge
+%   \end{itemize}
+% \end{itemize}
 
-Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Module verwendet:
+Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Module, sowie eine Helfer-Klasse verwendet:
 \begin{itemize}
-	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}) aktiv\todoprivate{evtl. ref noch auf subsec}
+	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec} für weitere Informationen zur globalen Zustandsmaschine) aktiv\todoprivate{evtl. ref noch auf subsec}
 	\item \lstinline{LoadRoboterPositionsFromFile}: Während dem Modus Während dem Modus \lstinline{followPath} (s. Abs. \ref{umsetzung_integration_sec}) aktiv\todoprivate{evtl. ref noch auf subsec}
+	\item \lstinline{fileUtil}
 \end{itemize}
 
-Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec} für weitere Informationen zur globalen Zustandsmaschine\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
+Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
 Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
 Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand des euklidischen Abstands festgelegt:
-Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherungspose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
-$d_{save}$ kann als externer Parameter definiert werden.
+Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
+$d_{save}$ kann als Parameter in einer externen Konfigurationsdatei definiert werden.
 \begin{equation}
-	\overline{ s_{act} - s_{last} } > d_{save}
+	\| s_{act} - s_{last}\|_2 \quad > \quad d_{save}
 \end{equation}
 
-
-Eine beispielhafter Pfad ist in Listing \ref{lst:dump_file} dargestellt.
+Innerhalb des \lstinline{dumpFile}s werden die $x$, $y$ bzw. $yaw$-Werte durch Doppelpunkte abgetrennt gespeichert.
+Eine beispielhafter abgespeicherter Pfad ist in Listing \ref{lst:dump_file} dargestellt.
 \todoprivate{Beispiel-Ausschnitt aus dump-file}
-\begin{lstlisting}[caption=Beispiel für ein dump-file zur Speicherung eines Pfades, label=lst:dump_file]
+\begin{lstlisting}[caption=Beispiel für ein \lstinline{dumpFile} zur Speicherung eines Pfades, label=lst:dump_file]
 	1111:2222:3333
 	999:888.8:77.77
 \end{lstlisting}
+
+Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
+Der euklidische Abstand findet wieder Verwendung, um den Zeitpunkt festzulegen, an welchem der nächste Punkt in die Trajektorie aufgenommen wird.
+Dies geschieht, sobald der Abstand des Roboters zu $following$ kleiner ist als der zu $next$:
+\begin{equation}
+	\| s_{foll} - s_{act} \|_2 \quad < \quad \| s_{next} - s_{act} \|_2
+\end{equation}
+Im Modus \lstinline{returnHome} werden die Punkte in umgekehrter Reihenfolge ausgegeben.
+
+In der aktuellen Implementierung werden die aus dem \lstinline{dumpFile} gelesenen $yaw$-Werte \emph{nicht} für die Trajektorie verwendet.
+Grund hierfür ist die Entscheidung, dass der Roboter (bzw. die darauf installierte Kinect) immer den Menschen im Fokus behalten soll, um evtl. kurzfristige Stop-Kommandos empfangen und umsetzen zu können.
+Die $yaw$-Werte, die während des Pfad-Einlernens abgespeichert wurden, beziehen sich auf die Standpunkte des Menschen zum dortigen Zeitpunkt, und nicht auf die aktuell relevanten Mensch-Positionen. 
+Aus diesem Grund werden die $yaw$-Werte innerhalb des \lstinline{LoadRoboterPositionsFromFile}-Moduls auf Basis der aktuellen Mensch-Position gesondert berechnet.
+
+Für die Aufgaben des Datei-Handlings wurde eine eigene Klasse implementiert, die Operationen wie Datei anlegen, öffnen, schließen, in die Datei schreiben, aus der Datei lesen etc. kapselt.
+Hier werden die Daten aus der Datei gepuffert, sodass beispielsweise im Fall des Pfad-Lesens nur ein einmaliger Dateizugriff auf Betriebssystem-Ebene erfolgt.
+Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 
 
 % 
@@ -496,6 +514,7 @@ Eine beispielhafter Pfad ist in Listing \ref{lst:dump_file} dargestellt.
 % \todo[inline]{Julian: Sollen wir (also du ;-) ) noch so einen Abschnitt machen?}
 
 
+
 % -----------------------------------------------------------------------------
 %													Kollisionsvermeidung
 \subsection{Kollisionsvermeidung}
@@ -503,37 +522,55 @@ Eine beispielhafter Pfad ist in Listing \ref{lst:dump_file} dargestellt.
 
 \subsubsection{Modul}
 \authorsection{\editortobias}
-\todo[inline]{Tobi: Schreiben}
 
-\begin{itemize}
- 
-  \item Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um Hindernisse
-  \item Ausgaben von \lstinline{GenerateTrajectory} und \lstinline{LoadFromFile} werden geMUXt
-  \begin{itemize}
-    \item je nach Modus (\lstinline{followPerson} bzw. \lstinline{returnHome} / \lstinline{followPath}) schaltet MUX andere Eingänge durch
-  	\item Die Ausgabe des MUX wird dann widerum komplett durch das Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) geschleift
-    \item Dadurch wird jede Trajektorie auf Hindernisse überprüft, keine kommt \glqq daran vorbei\grqq
-  \end{itemize}
-  \item Innerhalb des Moduls wird jede Trajektorie auf Hindernisse überprüft
-	\begin{itemize}
-	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt- in Bildkoordinaten)
-	  \item Überprüfung für jeden einzelnen Punkt, ob er innerhalb eines Hindernisses liegt
-	  \item Verwendung der \lstinline{ObstacleMap} \todoprivate{ref zu Lokalisierung}
-	\end{itemize}
-  \item Ohne Hindernis werden Trajektorien-Punkte nur durchgeschleift
-  \item Wenn Hindernis erkannt, dann wird eine neue Trajektorie ermittelt
-  \begin{itemize}
-    \item Verwendung des A*-Algorithmus
-    \item Ermittlung des Start- und Endpunktes für A*
-    \item ggf. gesonderte Behandlung für Endpunkt (\lstinline{choosePointAfterObstacle})
-    \item Aufruf A*
-    \item Transformation der nuen Trajektorie IK $\rightarrow$ WK
-  \end{itemize}
+% \begin{itemize}
+%   \item Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um Hindernisse
+%   \item Ausgaben von \lstinline{GenerateTrajectory} und \lstinline{LoadFromFile} werden geMUXt
+%   \begin{itemize}
+%     \item je nach Modus (\lstinline{followPerson} bzw. \lstinline{returnHome} / \lstinline{followPath}) schaltet MUX andere Eingänge durch
+%   	\item Die Ausgabe des MUX wird dann widerum komplett durch das Kollisionsvermeidungsmodul (\lstinline{ObstacleAvoidance}) geschleift
+%     \item Dadurch wird jede Trajektorie auf Hindernisse überprüft, keine kommt \glqq daran vorbei\grqq
+%   \end{itemize}
+%   \item Innerhalb des Moduls wird jede Trajektorie auf Hindernisse überprüft
+% 	\begin{itemize}
+% 	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt- in Bildkoordinaten)
+% 	  \item Überprüfung für jeden einzelnen Punkt, ob er innerhalb eines Hindernisses liegt
+% 	  \item Verwendung der \lstinline{ObstacleMap} \todoprivate{ref zu Lokalisierung}
+% 	\end{itemize}
+%   \item Ohne Hindernis werden Trajektorien-Punkte nur durchgeschleift
+%   \item Wenn Hindernis erkannt, dann wird eine neue Trajektorie ermittelt
+%   \begin{itemize}
+%     \item Verwendung des A*-Algorithmus
+%     \item Ermittlung des Start- und Endpunktes für A*
+%     \item ggf. gesonderte Behandlung für Endpunkt (\lstinline{choosePointAfterObstacle})
+%     \item Aufruf A*
+%     \item Transformation der nuen Trajektorie IK $\rightarrow$ WK
+%   \end{itemize}
+% \end{itemize}
 
-\end{itemize}
+Das Modul \lstinline{ObstacleAvoidance} überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um ein Hindernis herum, um Kolissionen zu vermeiden.
+Jede von \lstinline{GenerateTrajectory} bzw. \lstinline{LoadRoboterPositionsFromFile} (s. Abs. \ref{bahnplanung_trajektorie_subsubsec}) ausgegebene Trajektorie wird innerhalb des Moduls \lstinline{ObstacleAvoidance} auf Hindernisse überprüft, bevor sie an tiefer liegende Schichten weiter gegeben wird.
+Dies wird durch einen \gls{mux} erreicht, der je nach globalem Modus die entsprechenden Eingänge an das Modul \lstinline{ObstacleAvoidance} durchschaltet.
+So wird sichergestellt, dass ungeprüfte Trajektorien nicht an die Motoransteuerung weiter gegeben werden.
+In Abb. \ref{fig:behaviours} (S. \pageref{fig:behaviours}) ist das Modul innerhalb der \lstinline{Behaviours}-Gruppe sichtbar.
+
+Für die Hindernis-Überprüfung innerhalb des Moduls werden die Trajektorienpunkte, die alle in \gls{wk} vorliegen, in \gls{bk} transformiert.
+So werden $start$, $next$ und $following$ auf entsprechende Punkte der \lstinline{ObstacleMap} (s. Abs. \ref{hinderniskarte_subsec}, S: \pageref{hinderniskarte_subsec}) abgebildet.
+In einem weiteren Schritt werden alle \glstext{bk}, die zwischen den drei Trajektorienpunkten liegen, berechnet und in eine Liste geschrieben.
+Die Punkte dieser Liste werden anschließend anhand der \lstinline{ObstacleMap} auf Hindernisse überprüft.
+
+Falls für keinen der Punkte ein Hindernis festgestellt werden konnte, wird die Trajektorie (in \gls{wk}) unverändert weiter gegeben.
+
+Liegt jedoch mindestens einer der Punkte innerhalb eines Hindernisses, so wird eine neue Trajektorie ermittelt, die um das Hindernis plant.
+Hierfür wird der A*-Algorithmus verwendet.
+Dieser benötigt einen Start- und einen Endpunkt, welche nicht innerhalb eines Hindernisses und auch nicht außerhalb des Bildes (\lstinline{ObstacleMap}) liegen dürfen.
+Die Implementierung dieses Algorithmus wird im nächsten Abschnitt beschrieben.
+
+Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gls{wk} umgerechnet, und an die Motoransteuerung weiter gegeben.
 
 
-\subsubsection{Algorithmen}
+
+\subsubsection{Algorithmus}
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
