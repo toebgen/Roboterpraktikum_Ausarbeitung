@@ -14,13 +14,13 @@
 
 Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man das in Abstraktionsschichten einteilen:
 LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung.
-Außerdem sollte man das alles auch Simulieren können.
+Außerdem sollte man das alles auch simulieren können.
 
 Für die LowLevel Ansteuerung ist die plattformspezifische Ansteuerung und Simulation notwendig. Außerdem sollte man auch die Pose aus Odometriedaten bestimmen können.
 
-Die inverse Kinematik dient dazu um aus einer gegebene Pose, eine oder mehrere, bis hin zu unendlich vielen Roboterkonfigurationen zu berechnen. Letzteres passiert bei wenn es Raumpunkte gibt die zu Singularitäten führen. Das heißt,  dass zum Beispiel bei einem 6 Achsigen Roboter, zwei Achsen kollinear werden. Im Falle einer mobilen Plattform, würde man als inverse Kinematik die Berechnung einer Radstellung zu einer Pose (x, y, yaw) betrachten. Die Bestimmung der Geschwindigkeit wird danach durch inverse Odometrie gemacht. Zu lösende Aufgaben in Bereich der inverse Kinematik waren: die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Field \ref{sec:vpf}.
+Die inverse Kinematik dient dazu, aus einer gegebene Pose eine oder mehrere bis hin zu unendlich vielen Roboterkonfigurationen zu berechnen. Letzteres passiert, wenn es Raumpunkte gibt die zu Singularitäten führen. Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden. Im Falle einer mobilen Plattform würde man als inverse Kinematik die Berechnung einer Radstellung zu einer Pose (x, y, yaw) betrachten. Die Bestimmung der Geschwindigkeit wird danach durch inverse Odometrie gemacht. Zu lösende Aufgaben im Bereich der inversen Kinematik sind: die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
 
-Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Menschendaten, sprich, die Daten von der Kinect Kamera verarbeitet werden. Danach soll die Trajektorie auf der der Roboter fahren soll bestimmt werden, welches nebenbei kollisionsfrei sein sollte. Als letztes sollte das speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
+Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Menschendaten, sprich die Daten der Kinect-Kamera verarbeitet werden. Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, welches nebenbei kollisionsfrei sein sollte. Als letztes soll das Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
 
 
 %Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung und die inverse Kinematik. Sonst waren, Bahnplanung/Steuerung und Kollisionsvermeidung zunächst nicht vorhanden. Eine Simulationsumgebung war vorhanden, es fehlte aber noch die Programmierung der Gui .
@@ -50,7 +50,11 @@ Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die M
 \subsection{Steuerung}
 \label{bahnplanung_steuerung_sec}
 
-Weil die gefundene Trajektorie normalerweise nicht glatt ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet. Die Bahnsteuerung kann in Kartesischen Raum oder im Konfigurationsraum stattfinden. In Kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen. Die Steuerung in Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher. Vor und Nachteile beider Optionen kann man auf der Tabelle \ref{fig:steurungProContra} sehen.
+Weil die gefundene Trajektorie normalerweise nicht glatt, ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
+Die Bahnsteuerung kann im kartesischen Raum oder im Konfigurationsraum stattfinden.
+Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen.
+Die Steuerung im Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher.
+Vor und Nachteile beider Optionen kann man in der Tabelle \ref{fig:steurungProContra} sehen.
 
 
 \begin{table}[h]
@@ -71,25 +75,30 @@ Gelenke\\
 		\end{tabular}
 		\caption{\label{fig:steurungProContra} Vor und Nachteile der Steuerung im Kartesischen und Konfigurationsraum Quelle: \citep{rob1}}
 		\end{table}	
-Es gibt unterschiedliche Interpolationsarten:  Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
-Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert wie man auf der Abbildung \ref{fig:linearinterpolation} sehen kann.
+Es gibt unterschiedliche Interpolationsarten:
+Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
+Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert, wie man auf der Abbildung \ref{fig:linearinterpolation} sehen kann.
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.35]{graphics/linearinterpolation.png}
 	\caption{\label{fig:linearinterpolation} Beispiel der Linearinterpolation Quelle: \citep{rob1}}
 \end{figure}
- Die Zirkularinterpolation schafft hingegen kreisförmige Verfahrwege zwischen zwei Punkte. Wenn man hingegen  Segmentweise interpoliert, werden die Endbedingungen der Teiltrajektorie i-1 und die Anfangsbedingungen der Teiltrajektorie i aneinander angepasst, so dass die Teiltrajektorien durch Splines beschrieben werden wie man auf der Abbildung \ref{fig:segmentinterpolation} sehen kann.
+Die Zirkularinterpolation schafft hingegen kreisförmige Verfahrwege zwischen zwei Punkten.
+Wenn man allerdings segmentweise interpoliert, werden die Endbedingungen der Teiltrajektorie $i-1$ und die Anfangsbedingungen der Teiltrajektorie $i$ aneinander angepasst, so dass die Teiltrajektorien durch Splines beschrieben werden, wie man auf der Abbildung \ref{fig:segmentinterpolation} sehen kann.
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.35]{graphics/segmentinterpolation.png}
-	\caption{\label{fig:segmentinterpolation} Beispiel der Segmentweise Bahninterpolation Quelle: \citep{rob1}}
+	\caption{\label{fig:segmentinterpolation} Beispiel der segmentweisen Bahninterpolation \citep{rob1}}
 \end{figure}
  
-Bei der approximative Bahnsteuerung werden anders als bei der Bahninterpolation, nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert. Neben Bernsteinpolynome werden hier besonders Überschleifen benutzt um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht. Letzteres wurde auch in Praktikum eingesetzt.
- \begin{figure}[h]
-\center
-\includegraphics[scale=0.35]{graphics/ueberschleifeninterpolation.png}
-\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierte Bahnsteuerung mit Überschleifen Quelle: \citep{rob1}}
+ 
+Bei der approximativen Bahnsteuerung werden anders als bei der Bahninterpolation nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert.
+Neben Bernsteinpolynomen wird hier besonders Überschleifen benutzt, um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht.
+Letzteres wurde auch im Praktikum eingesetzt.
+\begin{figure}[h]
+	\center
+	\includegraphics[scale=0.35]{graphics/ueberschleifeninterpolation.png}
+	\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierten Bahnsteuerung mit Überschleifen \citep{rob1}}
 \end{figure}
 
 
@@ -99,12 +108,13 @@ Bei der approximative Bahnsteuerung werden anders als bei der Bahninterpolation,
 \authorsection{\editoroier}
 \subsection{Bahnplanung}
 
-Bahnplanung befaßt sich mit dem Problem, eine kollisionsfreie Bahn zu finden die  ein Robotersystem
-von der aktuellen Position in die Zielposition überführt. Damit gehört es zu einer der Basisprobleme der Robotik. Die Verfahren kann man nach unterschiedliche Gesichtspunkte klassifizieren \cite{rob1}.
+Bahnplanung befasst sich mit dem Problem, eine kollisionsfreie Bahn zu finden, die ein Robotersystem von der aktuellen Position in die Zielposition überführt.
+Damit gehört es zu einer der Basisprobleme der Robotik.
+Die Verfahren kann man nach unterschiedlichen Gesichtspunkten klassifizieren \cite{rob1}.
 
 Nach Robotertyp:
 \begin{itemize}
-\item Bahnplanung für Manipulatoren (Schweißen bei Industrierobotern z.B.)
+\item Bahnplanung für Manipulatoren (\zB Schweißen bei Industrierobotern)
 \item Bahnplanung für mobile Roboter
 \item Bahnplanung für Laufmaschinen und anthropomorphe Systeme
 \item Greif- und Montageplanung
@@ -112,7 +122,7 @@ Nach Robotertyp:
 
 Nach dem Zustandsraum wo die Planung stattfindet:
 \begin{itemize}
-\item Gelenkwinkelzustandsraum (Konfigurationsraum, der Raum alle möglichen Gelenkwinkelkonfigurationen des Roboters )
+\item Gelenkwinkelzustandsraum (Konfigurationsraum, der alle möglichen Gelenkwinkelkonfigurationen des Roboters beinhaltet)
 \item Euklidischer Raum (Arbeitsraum, 3D / 6D)
 \item Sensorzustandsraum
 \item Objektzustandsraum
@@ -120,68 +130,92 @@ Nach dem Zustandsraum wo die Planung stattfindet:
 
 Nach Vollständigkeit:
 \begin{itemize}
-\item Vollständige Verfahren (liefern immer eine Korrekte Lösung und können ermitteln ob keine Lösung existiert)
-\item Probabilistisch Vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden
-)
+\item Vollständige Verfahren (liefern immer eine korrekte Lösung und können ermitteln, ob keine Lösung existiert)
+\item Probabilistisch vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden)
 \end{itemize}
 
 Nach Navigationsart:
 \begin{itemize}
-\item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen wenn dem Roboter eine Karte der Umgebung bevorliegt und er sich dort lokalisieren kann.
+\item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen, wenn dem Roboter eine Karte der Umgebung vorliegt und er sich dort lokalisieren kann.
 \item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Konbination mit einem globalen Planer benutzt. 
 \end{itemize}
 
-Weil die explizite Berechnung des kollisionsfreien Konfigurationsraum bei Roboter mit mehr Freiheitsgrade als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum. D. h., dass die Bahnplanung in Konfigurationsraum stattfindet, aber die Kollisionen und Abstände in Arbeitsraum berechnet werden und ins diskretisierte Konfigurationsraum transformiert \citep{innoKonz}. So wird der Konfigurationsraum während der Suche exploriert.
+Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr Freiheitsgraden als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
+\Dh, dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
+So wird der Konfigurationsraum während der Suche exploriert.
 
-Der Ablauf eines Planungsverfahren ist normalerweise in zwei geteilt\cite{Russell2003}.
+Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell2003}.
 \begin{enumerate}
-\item Eine Roadmap oder Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling Strategie(für \gls{PRM} Verfahren\cite{Thrun2005} z.B.).
-\item Im Graph ein Weg von Startknoten zum Zielknoten finden mittels A*-Algorithmus oder andere Suchalgorithmen.
+\item Eine Roadmap oder einen Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling-Strategie (\zB für \gls{PRM} Verfahren\cite{Thrun2005}).
+\item Im Graph einen Weg vom Startknoten zum Zielknoten finden mittels A*-Algorithmus oder anderer Suchalgorithmen.
 \end{enumerate}
 
 \subsubsection{Lokale Planer}
 \label{bahnplanung_lokale_planer_sec}
 
-In diesem Abschnitt werden ein Paar gängige lokale Planer vorgestellt.
+
+In diesem Abschnitt werden einige gängige lokale Planer vorgestellt.
 
 \paragraph{A*-Algorithmus} 
 
-Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse von informierten Graphensuchalgorithmen. Dies heißt, dass es eine Schätzungsfunktion benutzt um die Suche zu lenken. Die Grundidee ist, immer den Knoten zu untersuchen der wahrscheinlich am schnellsten ins Ziel führt. Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannte Knoten mit einer \textit{f(x)} Funktion bewertet und von kleinsten \textit{f}-Wert zum größten sortiert. Der Knoten mit dem kleinsten \textit{f}-Wert wird als nächstes untersucht. 
 
-Um den vielversprechendsten Knoten zu ermitteln wird die Formel
+Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse der informierten Graphensuchalgorithmen.
+Dies heißt, dass eine Schätzungsfunktion benutzt wird, um die Suche zu lenken.
+Die Grundidee ist, immer den Knoten zu untersuchen, der wahrscheinlich am schnellsten ins Ziel führt.
+Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannten Knoten mit einer $f(x)$ Funktion bewertet und vom kleinsten $f$-Wert zum größten sortiert.
+Der Knoten mit dem kleinsten $f$-Wert wird als nächstes untersucht. 
+
+Um den vielversprechendsten Knoten zu ermitteln, wird die Formel
 \begin{equation}
  f(x) = g(x) + h(x)
 \end{equation}
-benutzt. Dabei sind \textit{g(x)} die Pfadkosten von Startknoten bis um \textit{x} zu erreichen und \textit{h(x)} ist die Heuristik, sprich, die Schätzung der Pfadkosten von \textit{x} um den Ziel zu erreichen. Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss, das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist. Als Heuristik wird oft der Euklidische Abstand oder die Manhattan Distanz benutzt. Auf der Abbildung \ref{fig:a*} kann man eine erfolgreich beendete \textit{A*}-Suche mit angaben zum Ablauf.
+benutzt.
+Dabei sind $g(x)$ die Pfadkosten, um $x$ vom Startknoten zu erreichen.
+$h(x)$ ist die Heuristik, sprich die Schätzung der Pfadkosten, das Ziel von $x$ aus zu erreichen.
+Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss, das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist.
+Als Heuristik wird oft der Euklidische Abstand oder die Manhattan Distanz benutzt.
+In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit Angaben zum Ablauf dargestellt.
 
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.3]{graphics/AStar.png}
-\caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}. Quelle: \citep{innoKonz}}
+\caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}  \citep{innoKonz}}
 \end{figure}
 
 
-Der \textit{A*-Algorithmus}, obwohl es nicht mehr als state-of-the-art gilt\citep{innoKonz},  ist als lokaler Planer, vor allem in 2D, sehr gut. Mit mehr Dimensionen oder Freiheitsgrade performt es viel schlechter. Außerdem kann man den Grundalgorithmus noch sehr viel optimieren. Zum Beispiel mit dem Hierarchischen \textit{A*}, damit es wenn es keine Hindernisse in der nähe liegen größere Schritte und sonst kleinere Schritte macht. Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten. Man könnte auch den Algorithmus stoppen sobald man ein Weg gefunden hat abbrechen, dann ist der Algorithmus natürlich nicht mehr optimal. Diese Erweiterungen sind von den zu lösende Aufgabe abhängig, mehre Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich.
+Der \textit{A*-Algorithmus}, obwohl er nicht mehr als state-of-the-art gilt\citep{innoKonz}, ist als lokaler Planer, vor allem in 2D, sehr gut.
+Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter.
+Außerdem kann man den Grundalgorithmus noch sehr viel optimieren.
+Zum Beispiel mit dem Hierarchischen \textit{A*}, damit er, wenn keine Hindernisse in der Nähe liegen, größere Schritte und sonst kleinere Schritte macht.
+Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
+Man könnte auch den Algorithmus stoppen, sobald man einen Weg gefunden hat, dann ist der Algorithmus natürlich nicht mehr optimal.
+Diese Erweiterungen sind von den zu lösenden Aufgabe abhängig, mehrere Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich sein.
 
 \paragraph{Potentialfelder}
 
-Bei diesen Verfahren bewegt sich der Roboter unter dem Einfluss von Kräften, welches ein
-Potentialfeld auf ihn ausübt. Die Grundidee ist, dass Hindernisse eine Abstoßungspotential auf den Roboter ausüben und der Ziel hingegen einen Anziehungspotential. Der negative Gradient der resultierende Potentialkraft bestimmt die künstliche Kraft die auf dem Roboter ausgeübt wird.
+Bei diesen Verfahren bewegt sich der Roboter unter dem Einfluss von Kräften, die ein Potentialfeld auf ihn ausübt.
+Die Grundidee ist, dass Hindernisse ein Abstoßungspotential auf den Roboter ausüben und das Ziel hingegen ein Anziehungspotential.
+Der negative Gradient der resultierenden Potentialkraft bestimmt die künstliche Kraft, die auf den Roboter ausgeübt wird.
 
 \begin{equation}
 F(q) = - \nabla U(q)
 \end{equation}
-
-wo \textit{U(q)} die Summe von den Abstoßungs- und Anziehungspotential ist. Diese Summe ist auf der Abbildung \ref{fig:potentialfeld} dargestellt.
+wobei $U(q)$ die Summe der Abstoßungs- und Anziehungspotentiale ist.
+Diese Summe ist in Abbildung \ref{fig:potentialfeld} dargestellt.
 
 
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.4]{graphics/potentialfeld.png}
-\caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften. Quelle: \citep{innoKonz}}
+\caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften \citep{innoKonz}}
 \end{figure}
 
-Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für die Pfadplanung, das die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, welches die allgemeine Steuerungsstruktur vereinfacht. Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich, man muss die nicht mehr glätten. Ein Nachteil hingegen ist, das es im lokalen Minima stecken bleiben kann. Dies ist einer der Grunde warum es als lokaler Planer benutzt wird. Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen. Eine andere Möglichkeit zur Flucht, welches von Rimon und Koditschek vorgestellt wurde, ist den Zielpunkt als einziges lokales Minimum im Potentialfeld zu definieren.
+Die Vorteile des Verfahrens wären zum Beispiel der geringe Rechenaufwand für die Pfadplanung, dass die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, was die allgemeine Steuerungsstruktur vereinfacht.
+Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich man muss sie nicht mehr glätten.
+Ein Nachteil hingegen ist, dass es im lokalen Minimum stecken bleiben kann.
+Dies ist einer der Gründe, warum es als lokaler Planer benutzt wird.
+Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen.
+Eine andere Möglichkeit zur Flucht, die von Rimon und Koditschek vorgestellt wurde, ist es, den Zielpunkt als einziges lokales Minimum im Potentialfeld zu definieren.
 
 
 
@@ -201,7 +235,10 @@ Die Vorteile des Verfahren wären zum Beispiel die geringe Rechenaufwand für di
 
 
 
-Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete. Unsere Aufgabe bestand daran, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen. Als Eingang erhält es Geschwindigkeiten und Ausgang sind die Plattformspezifische Geschwindigkeiten. Auf der Abbildung \ref{fig:mca2architecture} sieht man die Gesamte Struktur oder Architektur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
+Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete.
+Unsere Aufgabe bestand darin, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen.
+Als Eingaben erhält es Geschwindigkeiten, und Ausgaben sind die plattformspezifischen Geschwindigkeiten.
+Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
 
 \begin{figure}[h]
 	\center
@@ -230,6 +267,7 @@ In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die 
 Zur manuellen Steuerung kommt die zur Simulation erstellte \lstinline{MCAGUI} Oberfläche zum Einsatz; beim Test am realen Roboter ein Gamepad.
 
 Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind möglich:
+
 \begin{description}
 	\item[Differentiell] Die Steuerung des Roboters erfolgt indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
 	\item[Omnidirektional] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen.
@@ -583,17 +621,18 @@ Diese Implementierung kann einfach eingebunden und erweitert werden. Zur Einbind
 	\item[Antigravitationsfeld] Erweiterung um ein Antigravitationsfeld.
 \end{description}
 
-
-
-
 % -----------------------------------------------------------------------------
 %													Simulation
 \subsection{Simulation}
 \label{simulation_subsec}
 \authorsection{\editoroier}
 
-Für die Simulation war schon eine Simulationsumgebung vorhanden, Aufgabe war eine grafische Oberfläche mit Mcagui zu basteln.
-Warum ist die Simulation nützlich oder notwendig? In erster Linie konnte man am Anfang an dem realen Roboter nicht testen, weil der Roboter noch gebaut wurde oder zum Beispiel nicht alle von uns programmierte Komponente, wie bspw. die Lokalisierung, funktionsfähig waren. Dank der Simulation wurde das testen von einzelne Funktionalitäten und die Darstellung des Roboterzustands möglich wie man auf der Abbildung \ref{fig:mcagui} sehen kann. Zum Beispiel wurde die Simulation sehr oft benutzt um schnell Änderungen im Bahnplanungsalgorithmus zu testen.
+Für die Simulation war schon eine Simulationsumgebung vorhanden.
+Aufgabe war es, eine grafische Oberfläche mit Mcagui zu erstellen.
+Warum ist die Simulation nützlich oder notwendig?
+In erster Linie konnte man am Anfang am realen Roboter nicht testen, weil der Roboter noch gebaut wurde oder zum Beispiel nicht alle von uns programmierten Komponenten (wie bspw. die Lokalisierung) funktionsfähig waren.
+Dank der Simulation wurde das Testen von einzelnen Funktionalitäten und die Darstellung des Roboterzustands möglich, wie man in Abbildung \ref{fig:mcagui} sehen kann.
+\ZB wurde die Simulation sehr oft benutzt, um schnell Änderungen im Bahnplanungsalgorithmus zu testen.
 
 \begin{figure}[h]
 \centering
@@ -602,4 +641,5 @@ Warum ist die Simulation nützlich oder notwendig? In erster Linie konnte man am
 }
 \end{figure}
 
-Ein Problem am Anfang war, wie man den zu verfolgenden Mensch simulieren sollte. Um dies zu lösen, benutzt man einfach Mausklicks auf der Karte.
+Ein Problem am Anfang war, wie man den zu verfolgenden Menschen simulieren sollte.
+Um dies zu lösen, benutzt man einfach Mausklicks auf der Karte.
