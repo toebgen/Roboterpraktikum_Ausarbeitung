@@ -3,7 +3,7 @@
 \usepackage{graphicx} % Standardpaket zur Grafikeinbindung
 \usepackage{wrapfig}  % Textumflossene Bilder
 \usepackage{amsmath,amssymb} % Erweiterung des Mathematik-Modus
-\usepackage[colorinlistoftodos, german]{todonotes} % Option 'disable' entfernt alle ToDos
+\usepackage[colorinlistoftodos, german, textsize=tiny]{todonotes} % Option 'disable' entfernt alle ToDos
 \usepackage[absolute,overlay]{textpos}
 \usepackage{vmargin}          % Adjust margins in a simple way
 \usepackage{tikz}
@@ -61,6 +61,7 @@
 \renewcommand{\labelitemi}{$\triangleright$} 	% Aufzählungszeichen verändern
 \newcommand{\authorsection}[1]{\begin{flushright}\textit{Autor: #1}\end{flushright}}
 \newcommand{\todoprivate}[1]{\todo[color=green]{#1}}
+\newcommand{\comment}[1]{\todo[inline, color=blue]{#1}}
 
 \makeatletter
 \def\tagform@#1{\maketag@@@{\ignorespaces [#1]\unskip\@@italiccorr}}	% Anpassung der Formelnummerierung
@@ -110,3 +111,17 @@
 \titleformat{\paragraph}
   {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}    {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+% Abkürzungen etc.
+\newcommand{\ua}{\mbox{u.\,a.\ }}
+\newcommand{\Ua}{\mbox{U.\,a.\ }}
+\renewcommand{\dh}{\mbox{d.\,h.\ }}
+\newcommand{\Dh}{\mbox{D.\,h.\ }}
+\newcommand{\uvm}{\mbox{u.\,v.\,m.\ }}
+\newcommand{\va}{\mbox{v.\,a.\ }}
+\newcommand{\zB}{\mbox{z.\,B.\ }}
+\newcommand{\ZB}{\mbox{Z.\,B.\ }}
+\newcommand{\bs}{$\backslash$}
+\newcommand{\idR}{\mbox{i.\,d.\,R.\ }}
+\newcommand{\IdR}{\mbox{I.\,d.\,R.\ }}
