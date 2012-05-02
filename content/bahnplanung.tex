@@ -612,13 +612,36 @@ Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gl
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
-Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones zurückgegriffen.\todoprivate{Website und ref angeben}
+Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones zurückgegriffen.
+\todoprivate{Website und ref angeben}
+Diese Implementierung kann einfach eingebunden und erweitert werden. Zum Einbinden des Algorithmus sind drei wesentliche Änderungen bzw. Erweiterungen notwendig:
+\begin{description}
+	\item[Hinderniskarte] Eine Schnittstelle zur Verwendung eines \lstinline{CByteImage} als Hinderniskarte.
+	\item[Heuristik] Ersetzen der ursprünglichen Heuristik durch die Euler-Distanz.
+	\item[Antigravitationsfeld] Erweiterung um ein Antigravitationsfeld.
+\end{description}
+
+Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine Interface-Klasse geschaffen. Bei deren Umsetzung muss eine Funktion implementiert werden die für eine Koordinate auf der Hinderniskarte die Information liefert ob sich dort ein Hindernis befindet oder nicht. Eine entsprechende Implementierung wurde sowohl für ein \lstinline{CByteImage} als auch für ein \lstinline{IplImage} vorgenommen.
+
+In der ursprünglichen Implementierung wurde die Manhattan-Distanz zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann ist es sinnvoll stattdessen die Euler-Distanz zu verwenden.
+\todo[inline]{eventuell noch eine Fußnote dazu?}
+
+\begin{figure}
+	\centering
+	\label{fig:bahnplanung_umsetzung_algorithm_antigrav}
+	\includegraphics[scale=0.9]{graphics/BILD-AlgoAstar.png}
+	\caption{Darstellung der Hinderniskarte mit Antigravitationsfeld und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus.}
+\end{figure}
+
+\todo[inline]{Bild ohne Antig-Feld und mit einfacher Vergrößerung}
+
+In der Praxis stellte sich bei der Verwendung des A*-Algorithmus heraus, dass die verwendete Implementierung nicht den optimalen, also kürzesten Weg, findet und sich an Hindernissen entlang bewegt. Dieses Verhalten führte bereits in der Simulation zu erheblichen Problemen, konnte allerdings durch die Erweiterung um ein Antigravitationsfeld abgemildert werden.
+
+Um einen gewissen Abstand zu Hindernissen einzuhalten sind zwei Lösungen denkbar. Die einfachste Variante ist es die Hindernisse in der Hinderniskarte \glqq aufzublasen\grqq\ und so in der Realität für einen Mindestabstand zu sorgen. Alternativ gibt es die Möglichkeit ein Antigravitationsfeld einzusetzen. 
+
+Beim einfachen Vergrößern der Hindernisse kommt es an Passagen bei denen der Roboter, in der ursprünglichen Hinderniskarte, wenig Platz auf beiden Seiten hat, zum Verschluss dieser Durchgänge. Dies kann beispielsweise bei Türen der Fall sein. Das Finden eines kollisionsfreien Pfades ist unmöglich, da die Passage nunmehr ein Hindernis ist. Um diesem Problem zu begegnen kommt die zweite Lösungsmöglichkeit zur Verwendung. Das Antigravitationsfeld wird realisiert in dem das Fahren in der Nähe von Hindernissen mit Kosten verbunden ist. Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, welche die Kosten repräsentieren die es benötigt um \glqq auf\grqq\ diesen Pixel zu fahren. Der Algorithmus versucht den günstigsten Weg zu finden und vermeidet das fahren auf \glqq teueren\grqq\ Pixeln. Da es aber erlaubt ist auf diesen Pixeln zu fahren kann ein kollisionsfreier Pfad auch durch enge Passagen gefunden werden.
 
 
-\begin{itemize}
-		\item Anpassungen an bestehender Implementierung: Bitmap karte, Heuristik
-		\item Erweiterung durch Gravitationsfeld
-\end{itemize}
 
 % -----------------------------------------------------------------------------
 %													Simulation
