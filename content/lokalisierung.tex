@@ -183,25 +183,25 @@ In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  Lokalisierung beschäftigen. Wie sie wahrscheinlich schon aus Kapitel
  \ref{grundlagen_cha} wissen, verfügen die beiden Roboter HoLLiE und
  Odete über sehr ähnliche Sensoren, die zur Lokalisierung verwendet werden
- können. Der Roboter, Odete weist 2 Winkelencoder (in Segway
- Omni\todoprivate{in Wirklichkeit ? eventuell schon in Grundlagen besprochen
- dann hier unnötig}) und ein 270 Grad Sick Laserscanner (Scheibenförmiger Scan)
- auf.
- HoLLiE verfügt über ?\todoprivate{in Wirklichkeit ?} Winkelencoder und zwei
- ?\todoprivate{in Wirklichkeit ?} Grad Sick Laserscanner. Offensichtlich musste,
- um ein sicheres Fortbewegen des Roboters zu gewährleisten, für das Odete Projekt
+ können. Der Roboter, Odete weist 2 Winkelencoder und einen 270 Grad Sick
+ Laserscanner (Scheibenförmiger Scan) auf.
+ HoLLiE verfügt über 2 Winkelencoder und zwei
+ ?\todoprivate{Prüfen ob diese Angaben stimmen und Grad Zahl hinzufügen} Grad
+ Sick Laserscanner.
+ Offensichtlich musste, um ein sicheres Fortbewegen des Roboters zu gewährleisten, für das Odete Projekt
  ebenfalls eine Lokalisierung implementiert werden.
- Im Folgenden wollen wir kurz auf die Idee bei der Wahl der Gruppen
- und Module für die Lokalisierung im Odete Projekt eingehen.
- Die verwendete MCA2 Struktur der Odete basiert auf einem bestimmten Paradigma.
+ Im Folgenden wollen wir kurz auf die Idee für den Aufbau der Gruppen
+ und Module für die Lokalisierung eingehen.
+ Die verwendete \lstinline{MCA2} Struktur der Odete basiert auf einem bestimmten
+ Paradigma.
  Ziel ist es eine hohe Flexibilität zu erreichen. Sensoren und Plattformen sollen
  beliebig kombinierbar sein. Wir entschieden uns daher dazu diese Struktur auch
  beim Segway Omni Projekt weiterzuführen. Dadurch konnten alte Programmstrukturen
  übernommen und/oder adaptiert und außerdem dieselbe Flexibilität wie im Odete Projekt
  erreicht werden. Daher gelten die folgenden Erläuterungen zur Lokalisierung
  auch fast uneingeschränkt für beide Robotersysteme.
- Zur Positionsschätzung wir bei beiden Systemen eine Kombination aus kartenbasierter Lokalisierung
- und Odometrie verwendet. Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer
+ Zur Positionsschätzung wird bei beiden Systemen eine Kombination aus
+ kartenbasierter Lokalisierung und Odometrie verwendet. Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer
  Synthese geschätzt. Dem Kalman-Filter ist eine Queue (FIFO) vorgeschaltet, in der jede Schätzung
  mit einem Timestamp registriert wird. So können die Messwerte in zeitlich korrekter Reihenfolge
  eingerechnet werden, selbst dann, wenn sie nach der Verarbeitung in einer anderen Reihenfolge
@@ -210,108 +210,116 @@ In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  Es wird angenommen, dass der Fehler linear ansteigt mit der durch den Reifen zurückgelegten Strecke.
  Falls eine gute Schätzung aus der kartenbasierten Lokalisierung in den Kalman-Filter übergeben wird,
  wird die Pose korrigiert und der Odometriefehler wieder gesenkt.
+ Nach den Erläuterungen dazu wie die Lokalisierung durchgeführt wird wollen wir
+ jetzt die beteiligten Gruppen und Module etwas näher betrachten. 
 
-
-
-\todo[inline]{Geplanter Aufbau -> Grundlegende Idee für die Umsetzung
- --- Bild der Gruppe, erläutern der Funktion der Module}
- \todo[inline]{Stuktur des Materials an die gewünschte form anpassen etwa
- durch:die aussagen zur lokalisierung gelten generell für hollie und sowie da
- bla bla und dann die ganzen erklärungen}
-
-
-Im bereits bestehenden Odete Projekt wurde die Lokalisierung mit Hilfe von Odometrie und Laserdaten durchgeführt. 
-
-
-Die Verarbeitung der Odometrie und die anschließende Korrektur durch die Kombination mit den
- Laserdaten XXmit hilfeXX eines Kalmanfilters fand in der Hal Gruppe (Hardwar Abstraction Layer)
- und die Verarbeitung der Laserdaten in der Sal Gruppe (Scanner Abstraction Layer) statt.
- Eine ähnliche Hal Gruppe existiert in der uns zur Verfügung gestellten Projektstruktur Segway Omni.
- Nach einer Unterredung mit unserem Betreuer Jan Oberländer bekamen wir auch einige Zeit danach eine
-  ähnliche Sal Gruppe zur Vorverarbeitung und Simulation der Laserdaten der angebrachten Sickscanner. 
-
-
-Hardware Abstraction Layer (Hal) und (später) Scanner Abstraction Layer (Sal)
-aus dem bereits bestehenden Segway Omni Projekt
-
-
-Adaption der Vorhanden Gruppen und Module zur Lokalisierung 
-Anpassung von LLSP, HLSP, Hal \& Sal an das Segway Omni Projekt
-Erweiterung auf beliebige Menge von Scannern
-
-
-Parametrisierung über Multiplexer und XML-Config-File ermöglichen
-Parameter anpassen auf neue Sensor-Anordnung
-
-
-
-Kartenbasierte Lokalisierung
-
-Eine kartenbasierte Posen-Schätzung wird in folgenden Schritten ermittelt.
-
-    Scheibenförmiger Laser-Scan der Umgebung parallel zur Fahrbahn;
-    Gruppe: SAL
-    Ergebnis: Winkel-Abstand-Paare (Polarkoordinaten)
-    Koordinaten-Transformation polaren Sensorkoordinaten -> kartesische Sensorkoordinaten;
-    Gruppe: LLSP
-    Modul: ToRobotCS
-    Ergebnis: XY-Punkte (kartesische Sensorkoordinaten)
-    Koorginaten-Transformation kartesische Sensorkoordinaten -> kartesische Roboterkoordinaten;
-    Gruppe: LLSP
-    Modul: MergeScan?
-    Ergebnis: XY-Punkte (kartesische Roboterkoordinaten)
-    Löschen von Punkten mit zu hohem Abstand/schlechter Auflösung
-    Gruppe: LSSP
-    Modul: CutScan?
-    Ergebnis: XY-Punkte mit gültigem Abstand
-    Extraktion/Schätzung? von Kanten aus der Punktemenke
-    Gruppe: HLSP
-    Modul: ExtractEdges?
-    Ergebnis: Liniensegmente
-    Vergleich der Kanten mit der Karte und Schätzung einer Pose samt Fehlerkovarianz
-    Gruppe: HLSP
-    Modul: PoseCorrection?
-    Ergebnis: X,Y,Gierwinkel-Schätzung + Fehlerkovarianz 
-
- 
-Die Kartenbasierte Lokaliserung findet in den MCA2-Gruppen LLSP und HLSP statt.
- Die Laserscanner-Daten dazu werden aus der SAL-Gruppe bezogen. Die Erfassung und Verarbeitung der Odometrie-Daten findet
- gemeinsam direkt in der HAL statt. Die Synthese von Odometrie und Lokalisierungsdaten und die Erfassung der geschätzten
- Pose findet ebenfalls in der HAL statt. 
- 
-HAL(Hardware abstraction Layer)
-
-Die HAL-Gruppe ist in der Odete für die plattformabhängige Hardware zuständig. Mit der Plattform sind jene
- Hardwarekomponenten gemeint, die in der Regel nicht getauscht werden (Rechner, Omnidirektionaler Antrieb, Akummulatoren).
- In MCA2 umfasst die HAL die Bewegungsplattformen, die dazugehörigen Winkelencoder und die Posenerfassung
- (nicht Posenberechnung) des Roboters. Die HAL ist eine Abstraction Layer in dem Sinne, dass zwischen einer Simulierten
- Hardware und der tatsächlichen Hardware gewechselt werden kann, ohne das andere MCA2-Gruppen angepasst werden müssen.
+\begin{description}
+\item[HAL(Hardware abstraction Layer)] Die HAL-Gruppe ist in der Odete für die
+plattformabhängige Hardware zuständig.
+ Mit der Plattform sind jene Hardwarekomponenten gemeint, die in der Regel nicht getauscht werden 
+ (Rechner, Omnidirektionaler Antrieb, Akummulatoren).
+ In \lstinline{MCA2} umfasst die HAL die Bewegungsplattformen, die dazugehörigen
+ Winkelencoder und die Posenerfassung (nicht Posenberechnung) des Roboters. Die HAL ist eine Abstraction Layer in dem Sinne, dass zwischen einer Simulierten
+ Hardware und der tatsächlichen Hardware gewechselt werden kann, ohne das andere
+ \lstinline{MCA2}-Gruppen angepasst werden müssen.
  Prinzipiell können sogar die Plattformen (Omnidirektional <-> Differentiell) ausgetauscht werden. Die Odometrie hängt
  direkt mit der Antriebsart zusammen und findet deswegen in der HAL statt.
-Die Kalman-Filterung findet (in MCA2) in der HAL-Gruppe im
-AbsoluteCoordinatesKLF-Modul statt (KLF = KalmanFilter?). 
+ Auch die Kalman-Filterung findet in dieser Gruppe im
+ AbsoluteCoordinatesMecanumKLF-Modul statt (KLF = KalmanFilter). Für eine
+ Darstellung der Gruppe siehe Abbildung \ref{fig:segwayHal}.
+\item[SAL(Scanner abstraction Layer)] Die SAL-Gruppe umfasst alle ``angebauten''
+Scanner, nicht aber in Plattform integrierte Scanner (Winkelencoder).
+ Im Sinne der Abstraction Layer können auch hier Hardware- und
+ Simulationsversion der SAL ausgewechselt werden, siehe Abbildung
+ \ref{fig:SegwayOmniSal}
+\end{description}
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.7]{graphics/SegwayOmniSal.jpg}
+\caption{\label{fig:SegwayOmniSal} SegwayOmniSal}
+\end{figure}
 
+Diese Beiden Gruppen realisieren also unter anderem die erste benötigte
+ Abstraktion der Sensordaten sowie eine Simulation für den Testfall. Zu beginn
+ des Projektes existierte bereits eine Hal Gruppe im Segway Omni Projekt,
+ allerdings war darin noch keine kartenbasierte
+ Positionskorrektur durch den Kalman-Filter realisiert. Diese Funktionalität und die Sal Gruppe wurden
+ einige Zeit später durch einen unserer Betreuer, Jan Oberländer implementiert. Da wir Anfangs nicht wussten
+ welche Funktionalitäten von uns implementiert werden mussten hatte unserer Gruppe einige Schwierigkeiten
+ einen Einstieg zu finden. Dies äußerte sich vor allem darin, dass wir zu Beginn des Praktikums viel Zeit damit
+ verbrachten zu versuchen uns in alle Gruppen und Module einzuarbeiten.
 
- SAL(Scanner abstraction Layer)
-
-Die SAL-Gruppe umfasst alle "angebauten" Scanner, nicht aber in Plattform integrierte Scanner (Winkelencoder).
- Im Sinne der Abstraction Layer können auch hier Hardware- und Simulationsversion der SAL ausgewechselt werden.
+Nach der Feststellung der benötigten Anpassungen an die vorhandenen Gruppen und Module des Odete Projekts wurden
+ diese adaptiert. Außerdem wurden Erweiterungen integriert damit eine beliebige Menge von Scannern genutzt werden kann.
+ Eine Parametrisierung über einen Multiplexer und ein XML-Config-File
+ ermöglichen eine Anpassung auf eine neue Sensor-Anordnung. Abschließend erfolgt
+ nun noch eine detailliertere Erläuterung der für die kartenbasierten
+ Lokalisierung nötigen Schritte und der involvierten Gruppen und Module. Die kartenbasierte Lokaliserung
+ findet in den \lstinline{MCA2}-Gruppen LLSP und HLSP statt. Die
+ Laserscanner-Daten dazu werden wie schon erörtert aus der SAL-Gruppe bezogen.
+ Für eine Darstellung der beiden Gruppen im \lstinline{Mcabrowser} siehe
+ Abbildung \ref{fig:Llsp} und \ref{fig:Hlsp}.
  
-LLSP(Low-level Scanner Processing)
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.7]{graphics/Llsp.jpg}
+\caption{\label{fig:Llsp} Low Level Scanner Processing}
+\end{figure}
 
-Die LLSP dient der Verarbeitung der Scanner Rohdaten. Im Gegensatz zur HLSP macht die LLSP keine logische Auswertung
- der Scannerdaten. Es werden lediglich grundlegende Operationen auf die einzelnen Messwerte angewandt
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.7]{graphics/Hlsp.jpg}
+\caption{\label{fig:Hlsp} High Level Scanner Processing}
+\end{figure}
+ 
+\begin{description}
+\item[LLSP(Low Level Scanner Processing)] Die \lstinline{LLSP} dient der
+Verarbeitung der Scanner Rohdaten. Im Gegensatz zur \lstinline{HLSP} macht die
+\lstinline{LLSP} keine logische Auswertung der Scannerdaten.
+ Es werden lediglich grundlegende Operationen auf die einzelnen Messwerte angewandt
  (Koordinatentransformationen, Löschen ungültiger Werte,...).
+\item[HLSP(High Level Scanner Processing)] In der \lstinline{HLSP} werden
+logische Operationen auf die\\ Messwerte angewandt (Kantenextraktion,
+Posenkorrektur-Schätzung).
+\begin{itemize}
+  \item Der \lstinline{ScanStrategyMultiplexer} dient als zentrale Schaltstelle
+  für die Controllerinputs der \lstinline{HLSP} Module.
+  Über einen einzelnen Controllerinput des \lstinline{ScanTrategyMultiplexer}
+  kann ein Setup geladen werden, welches die Controllerinputs der einzelnen
+ \lstinline{HLSP} module setzt.
+\end{itemize}
+\end{description}
 
-Das Virtual Protective Field ist in der LLSP realisiert.
+Die kartenbasierte Posen-Schätzung wird in den folgenden Schritten ermittelt:
 
-HLSP(High-level Scanner Processing)
-
-In der HLSP werden logische Operationen auf die Messwerte angewandt (Kantenextraktion, Posenkorrektur-Schätzung).
-
-Der ScanStrategyMultiplexer? dient als zentrale Schaltstelle für die Controllerinputs der HLSP Module.
- Über einen einzelnen controller input in den ScanTrategyMultiplexer? kann ein Setup geladen werden,
- welches die Controllerinputs der einzelnen HLSP module setzt.  
+\begin{enumerate}
+  \item Scheibenförmiger Laser-Scan der Umgebung parallel zur Fahrbahn\\
+    	Gruppe: \lstinline{SAL}\\
+    	Ergebnis: Winkel-Abstand-Paare (Polarkoordinaten)\\
+  \item Koordinaten-Transformation: polaren Sensorkoordinaten -> kartesische
+  		Sensorkoordinaten\\
+  		Gruppe: \lstinline{LlSP}\\
+    	Modul: \lstinline{ToRobotCS}\\
+    	Ergebnis: XY-Punkte (kartesische Sensorkoordinaten)\\
+  \item Koordinaten-Transformation: kartesische Sensorkoordinaten -> kartesische
+  		Roboterkoordinaten\\ 
+  		Gruppe: \lstinline{LlSP}\\
+  		Modul: \lstinline{MergeScan}\\
+  		Ergebnis: XY-Punkte (kartesische Roboterkoordinaten)\\
+  \item Löschen von Punkten mit zu hohem Abstand oder schlechter Auflösung\\
+    	Gruppe: \lstinline{LlSP}\\
+    	Modul: \lstinline{CutScan}\\
+    	Ergebnis: XY-Punkte mit gültigem Abstand\\
+  \item Extraktion/Schätzung von Kanten aus der Punktemenge
+    	Gruppe: \lstinline{HlSP}\\
+    	Modul: \lstinline{ExtractEdges}\\
+    	Ergebnis: Liniensegmente\\
+  \item Vergleich der Kanten mit der Karte und Schätzung einer Pose samt
+  		Fehlerkovarianz\\ 
+  		Gruppe: \lstinline{HlSP}\\
+    	Modul: \lstinline{PoseCorrection}\\
+    	Ergebnis: X,Y,Gierwinkel-Schätzung + Fehlerkovarianz\\
+\end{enumerate}
 
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
@@ -341,14 +349,13 @@ Der ScanStrategyMultiplexer? dient als zentrale Schaltstelle für die Controller
  Da ein Roboter in der Realität eine größere Fläche als ein Punkt aufweist entschieden wir uns bereits an dieser
  Stelle zu einer Expansion der Hindernisse auf Robotergröße, damit solche Berechnungen an anderer Stelle vermieden
  werden können.
-\missingfigure{MCA2 Obstacle Extractor}
-%\begin{figure}[h]
-%\center
-%\includegraphics[]{}
-%\caption{\label{fig:obstacleExtractor} Gruppe \lstinline{Obstacle Extractor}}
-%\end{figure}
- In Abbildung \ref{obstacleExtractor} ist die die Gruppe (\lstinline{Obstacle Extractor}),
- durch welche die gewünschte Funktionalität implementiert wurde zu sehen.
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.8]{graphics/ObstacleExtractor.jpg}
+\caption{\label{fig:obstacleExtractor} Gruppe \lstinline{Obstacle Extractor}}
+\end{figure}
+ In Abbildung \ref{fig:obstacleExtractor} ist die die Gruppe
+ (\lstinline{Obstacle Extractor}), durch welche die gewünschte Funktionalität implementiert wurde zu sehen.
  Im Folgenden wollen wir auch hier die einzelnen Module kurz vorstellen:
 
 \todo[inline]{Erläutern der Funktion der Module}
