@@ -132,7 +132,7 @@ Dies äußert sich darin, dass die Kinect sich im Akku-Betrieb nicht in Betrieb 
 Daher ist es notwendig, ein externes Netzgerät zu verwenden, und den Roboter damit mit zusätzlichem Strom zu versorgen.
 Dies hat allerdings zur Folge, dass die Reichweite von \gls{hollie} durch die Länge des Kabels (ca. $5m$) zwischen Roboter und externem Netzgerät beschränkt ist.
 
-Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschänkungen ausreichend.
+Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschränkungen ausreichend.
 
 %\begin{itemize}
 %	\item Robotereigene Stromversorgung reicht nicht aus für Roboter + Kinect
@@ -144,10 +144,26 @@ Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschänkungen 
 
 \subsection{Kinect}
 
-\begin{itemize}
-	\item verliert getrackten Menschen bei zu schneller Bewegung (insbesondere Rotation)
-	\item Verringerung der Geschwindigkeit (Rotation sowie Translation)
-\end{itemize}
+Nach ersten Erfolgen mit dem realen Roboter stellt sich heraus, dass die Kinect-Kamera (s. Abs. \ref{kinect_grundlagen_sec}, S. \pageref{kinect_grundlagen_sec} ff.) \emph{Schwierigkeiten} damit hat, selbst bewegt zu werden und gleichzeitig auch noch einen sich wiederum auch bewegenden Menschen zu tracken.
+Wenn \gls{hollie} sich zügig durch den Raum bewegt, kommt es häufig zu einem Verlust des getrackten Menschen.
+Oft kommt es auch vor, dass statt des Menschen beispielsweise Säulen im Raum, Fenster, oder ähnliches als Menschen erkannt werden.
+Dieses Phänomen zeigt sich auch bei rein rotatorischen Bewegungen.
+
+Andere wissenschaftliche Mitarbeiter am \gls{fzi} haben bereits ähnliche Beobachtungen mit der Kinect gemacht.
+Die \emph{Ursache} dafür liegt wohl darin, dass die Kinect ursprünglich als Einheit für den stationären Einsatz entwickelt wurde.
+\Dh die Kamera steht üblicherweise fest auf einem Tisch \oae, und lediglich der Mensch vor der Kamera bewegt sich.
+Im vorliegenden Fall einer sich bewegenden Kinect bewegt sich ja aus Sicht der Kamera nahezu alles im Sichtfeld (dazu gehören neben dem Menschen auch sämtliche Hintergrundobjekte etc.)
+Dies scheint eine fehlerfreie Fokussierung des Menschen sehr zu limitieren.
+
+Da eine \emph{Lösung} dieses Problems außerhalb der Möglichkeiten der Praktikumsteilnehmer liegt, wird ein \glqq work-around\grqq\ eingesetzt:
+Die Geschwindigkeiten, mit denen sich \gls{hollie} fortbewegt, werden auf niedrigere Werte beschränkt.
+Dazu gehören sowohl die translatorischen als auch die rotatorischen Geschwindigkeiten.
+Dadurch kann die beschriebene Problematik zwar nicht endgültig beseitigt werden, die Häufigkeit des Auftretens wird jedoch reduziert.
+
+%\begin{itemize}
+%	\item verliert getrackten Menschen bei zu schneller Bewegung (insbesondere Rotation)
+%	\item Verringerung der Geschwindigkeit (Rotation sowie Translation)
+%\end{itemize}
 
 
 \subsection{Weitere Probleme}
@@ -157,3 +173,7 @@ Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschänkungen 
 	\item SW-Bugs
 	\item \ldots
 \end{itemize}
+
+
+
+
