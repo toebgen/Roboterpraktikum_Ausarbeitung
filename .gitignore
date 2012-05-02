@@ -23,5 +23,6 @@ Roboterpraktikum.pdf
 *.synctex.gz
 *.tdo
 *.thm
+*.tps
 *.toc
 temp*
