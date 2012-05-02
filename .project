@@ -14,4 +14,16 @@
 	<natures>
 		<nature>net.sourceforge.texlipse.builder.TexlipseNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>graphics/mcagroup.png</name>
+			<type>1</type>
+			<location>D:/Eclipse_Workspace/toebgen-Roboterpraktikum_Ausarbeitung-v0.1-0-g5a0d6d2/toebgen-Roboterpraktikum_Ausarbeitung-5a0d6d2/graphics/mcagroup.png</location>
+		</link>
+		<link>
+			<name>graphics/mcamodule.png</name>
+			<type>1</type>
+			<location>D:/Eclipse_Workspace/toebgen-Roboterpraktikum_Ausarbeitung-v0.1-0-g5a0d6d2/toebgen-Roboterpraktikum_Ausarbeitung-5a0d6d2/graphics/mcamodule.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
