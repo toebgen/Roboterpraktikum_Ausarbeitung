@@ -31,7 +31,13 @@ Im Folgenden werden die Testumgebung sowie die während der Testphase aufgetrete
 % \end{itemize}
 
 Als Testumgebung dient das Obergeschoss im Gebäude des \gls{fzi}.
-Erste Tests werden in einem weitläufigen Bereich ohne Hindernisse durchgeführt.\todoprivate{Foto?}
+Erste Tests werden in einem weitläufigen Bereich ohne Hindernisse durchgeführt (s. Abb. \ref{fig:fzi_og}).
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{graphics/fzi_og}
+	\caption{Testbereich im Obergeschoss des \protect\gls{fzi}}
+	\label{fig:fzi_og}
+\end{figure}
 
 Für weitergehende Tests (Lokalisierug, Hindernis-Umfahrung etc.) wird ein abgegrenzter Bereich zur Simulation einer Büroumgebung eingerichtet.
 Dazu werden drei fest stehende Objekte auf einer rechtwinkligen Fläche platziert, die im entsprechenden Kartenmaterial ebenfalls verzeichnet sind (s. Abb \ref{fig:map_fzi}).
@@ -73,11 +79,11 @@ Leider ist in der Realität an dieser Stelle keine Wand, sondern lediglich freie
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\textwidth]{graphics/cutscan_fehler}
+	\includegraphics[width=0.7\textwidth]{graphics/cutscan_fehler}
 	\caption[\glqq Unsichtbare Wand\grqq]{Problem der \glqq unsichtbaren Wand\grqq\ im Scanner-Bild: Die \glqq Wand\grqq\ ist mit einem Pfeil gekennzeichnet}
 	\label{fig:scanner_problem}
 \end{figure}
-\todoprivate{Tote Pixel auch noch einzeichnen}
+%\todoprivate{Tote Pixel auch noch einzeichnen}
 
 Die \emph{Ursache} dieser Erscheinung ist die Montage des Laserscanners am Roboter.
 Da dieser nicht exakt waagerecht an \gls{hollie} angebracht ist, verläuft die Scan-Ebene nicht exakt parallel zum Untergrund.
@@ -92,7 +98,7 @@ Eine \emph{Lösung} ist daher nicht nötig.
 
 Die zweite \emph{Problematik} im Zusammenhang mit den Laserscannern sind einige scheinbar \glqq tote Pixel\grqq.
 Dies sind Scan-Punkte, die anhand der grafischen Darstellung offensichtlich einen Gegenstand sehr nahe an oder sogar innerhalb der Laserscanner zurückgeben.
-Dieses Problem tritt bei beiden Scannern auf, und betrifft einen geringen Bruchteil der Scanner-Strahlen\todoprivate{screenshot?}.
+Dieses Problem tritt bei beiden Scannern auf, und betrifft einen geringen Bruchteil der Scanner-Strahlen.
 Schwierig für \gls{hollie} ist dies deshalb, da der Roboter quasi immer in einem Hindernis steht.
 Somit ist es dem A*-Algorithmus (s. Abs. \ref{kollisionsvermeidung_subsec}, S. \pageref{kollisionsvermeidung_subsec} f.) nicht möglich, eine Trajektorie um das Hindernis zu planen.
 Als Folge dessen, bleibt \gls{hollie} auf der Stelle stehen, und bewegt sich nicht.
@@ -190,8 +196,3 @@ Weiterhin treten auch noch viele kleinere bis mittelschwere Fehler in der währe
 % 	\item SW-Bugs
 % 	\item \ldots
 % \end{itemize}
-
-
-
-
-
