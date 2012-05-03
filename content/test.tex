@@ -18,7 +18,6 @@ Im Folgenden werden die Testumgebung sowie die während der Testphase aufgetrete
 
 
 \section{Testumgebung}
-\authorsection{\editortobias}
 
 % \begin{itemize}
 % 	\item Aufgebaute Umgebung
@@ -32,17 +31,20 @@ Im Folgenden werden die Testumgebung sowie die während der Testphase aufgetrete
 % \end{itemize}
 
 Als Testumgebung dient das Obergeschoss im Gebäude des \gls{fzi}.
-Erste Test werden in einem weitläufigen Bereich ohne Hindernisse durchgeführt.\todoprivate{Foto?}
+Erste Tests werden in einem weitläufigen Bereich ohne Hindernisse durchgeführt.\todoprivate{Foto?}
 
 Für weitergehende Tests (Lokalisierug, Hindernis-Umfahrung etc.) wird ein abgegrenzter Bereich zur Simulation einer Büroumgebung eingerichtet.
-Dazu werden zwei fest stehende Objekte auf einer rechtwinkligen Fläche platziert, die im entsprechenden Kartenmaterial ebenfalls verzeichnet sind, s. Abb \ref{fig:map_fzi}.
-Als Hindernis dient eine einfach Plastik-Mülltonne.
+Dazu werden drei fest stehende Objekte auf einer rechtwinkligen Fläche platziert, die im entsprechenden Kartenmaterial ebenfalls verzeichnet sind (s. Abb \ref{fig:map_fzi}).
+Diese Objekte ermöglichen eine Lokalisierung des Roboters in der Umgebung.
+Als Hindernis dient eine einfach Plastik-Mülltonne (welche selbstverständlich nicht in der Karte verzeichnet ist).
 
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{graphics/map_fzi}
-	\caption{Simulierte Büroumgebung für weitere Tests}
-	\label{fig:map_fzi}
+  \centering
+  \subfloat[Geplante Umgebung]{\label{fig:map_fzi_plan}\includegraphics[width=0.45\textwidth]{graphics/map_fzi_plan}}
+  \quad %add desired spacing between images, e. g. ~, \quad, \qquad etc. (or a blank line to force the subfig onto a new line)
+  \subfloat[Umgebung mit \protect\gls{hollie} und realen Scannerdaten]{\label{fig:map_fzi_hollie}\includegraphics[width=0.4\textwidth]{graphics/map_fzi}}
+  \caption{Simulierte Büroumgebung für weitere Tests}
+  \label{fig:map_fzi}
 \end{figure}
 
 In dieser Umgebung soll der Roboter folgendes Szenario erfüllen können:
@@ -55,34 +57,32 @@ In dieser Umgebung soll der Roboter folgendes Szenario erfüllen können:
 
 
 \section{Aufgetretene Schwierigkeiten}
-\authorsection{\editortobias}
-\todo[inline]{Tobias: Schreiben}
 
 \subsection{Laserscanner}
 \label{test_schwierigkeiten_laserscanner_sec}
 
-Der Test der auf \gls{hollie} montierten Laserscanner gestaltet sich zu Beginn nicht sehr erfolgreich.
+Der Test der auf \gls{hollie} montierten Laserscanner gestaltet sich zu Beginn schwierig.
 Die zwei aufgetretenen Probleme werden im Folgenden erläutert.
 
 \subsubsection{\glqq Unsichtbare Wand\grqq}
 
 Das erste \emph{Problem} wird von den Praktikumsteilnehmern gerne als \glqq unsichtbare Wand\grqq\ bezeichnet.
 Hintergrund dieser Namensschöpfung ist, dass sich die Scanner-Daten zwar auslesen und auch in der Benutzeroberfläche (\lstinline{mcagui}) anzeigen lassen, jedoch befindet sich in ca. $4m$ Entfernung ein großes, nur sehr leicht gekrümmtes Objekt, was von einem der beiden Scanner erkannt wird.
-Auf dem Scanner-Bild (s. Abb. \ref{fig:scanner_problem}) erscheint diese Linie wie eine Wand.
+Auf dem Scanner-Bild erscheint diese Linie wie eine Wand (s. Abb. \ref{fig:scanner_problem}).
 Leider ist in der Realität an dieser Stelle keine Wand, sondern lediglich freier Raum.
 
 \begin{figure}[h]
 	\centering
-	%\includegraphics[width=0.7\textwidth]{graphics/scanner_problem}
-	\missingfigure{Sensorbild aus McaGui}
-	\caption{Problem der \glqq unsichtbaren Wand\grqq\ im Scanner-Bild}
+	\includegraphics[width=0.8\textwidth]{graphics/cutscan_fehler}
+	\caption[\glqq Unsichtbare Wand\grqq]{Problem der \glqq unsichtbaren Wand\grqq\ im Scanner-Bild: Die \glqq Wand\grqq\ ist mit einem Pfeil gekennzeichnet}
 	\label{fig:scanner_problem}
 \end{figure}
+\todoprivate{Tote Pixel auch noch einzeichnen}
 
 Die \emph{Ursache} dieser Erscheinung ist die Montage des Laserscanners am Roboter.
 Da dieser nicht exakt waagerecht an \gls{hollie} angebracht ist, verläuft die Scan-Ebene nicht exakt parallel zum Untergrund.
-Daher erreicht ca. die Hälfte der Scanner-Strahlen in einiger Entfernung den Boden, anstatt parallel zum Boden weiter zu verlaufen.
-In der grafischen Darstellung der Messpunkte ähnelt dies dann einer Wand, da die Strahlen den Boden alle in nahezu der gleichen Entfernung treffen.
+Daher erreicht ca. die Hälfte der Scanner-Strahlen in einiger Entfernung den Boden, anstatt parallel zum Boden zu verlaufen.
+In der grafischen Darstellung der Messpunkte ähnelt dies dann einer Wand, da die Scanner-Strahlen den Boden alle in nahezu der gleichen Entfernung treffen.
 
 Nach Klärung der Ursache der \glqq unsichtbaren Wand\grqq\ erscheint das Problem für die weiteren Tests nicht relevant, da eine Sichweite der Laserscanner von $4m$ ausreichend ist.
 Eine \emph{Lösung} ist daher nicht nötig.
@@ -101,7 +101,7 @@ Die \emph{Ursache} dieses Problems liegt in einer unglücklich gewählten Behand
 Diese Punkte werden bis dato mit dem Wert 0 belegt.
 Da dies einen Gegenstand in der Entfernung 0 bedeutet, liegen diese Scan-Punkte wie vermutet tatsächlich innerhalb der Laserscanner.
 
-Ein erster \emph{Lösung}sversuch, gewisse Scan-Punkte für die weiteren Berechnungen einfach zu ignorieren, scheitert an der Tatsache, dass nicht immer exakt die gleichen \glqq toten Pixel\grqq\ auftreten.
+Ein erster \emph{Lösung}sversuch, gewisse Scan-Bereiche für die weiteren Berechnungen einfach zu ignorieren, scheitert an der Tatsache, dass nicht immer exakt die gleichen \glqq toten Pixel\grqq\ auftreten.
 Da allerdings die angesprochene Belegung mit dem Wert 0 nicht bereits in der Laserscanner-Software, sondern innerhalb der Scanner-Library auf \gls{hollie} geschieht, ist dies die Stelle, an welcher das Problem behoben werden kann:
 Anstatt dem Wert 0 werden nun Fehlmessungen mit einem hinreichend großen Wert belegt, sodass die Scan-Strahlen mit Fehlmessungen nun in weiter Entfernung vom Roboter liegen.
 Die \glqq toten Pixel\grqq\ bereiten damit keine Schwierigkeiten mehr.
@@ -126,11 +126,12 @@ Die \glqq toten Pixel\grqq\ bereiten damit keine Schwierigkeiten mehr.
 \subsection{Stromversorgung}
 
 Ein weiteres Problem, welches beim ersten Test mit der realen Roboterplattform auftritt, ist die Stromversorgung.
-Die Akkus, die auf \gls{hollie} verbaut sind, sind derzeit nicht in der Lage, sowohl den Roboter selbst als auch die darauf montierte Kinect-Kamera (s. Abs. \ref{kinect_grundlagen_sec}, S. \pageref{kinect_grundlagen_sec} ff.) mit genügend Strom zu versorgen.
+Die Akkus, die auf \gls{hollie} verbaut sind, sind derzeit nicht in der Lage sowohl den Roboter selbst als auch die darauf montierte Kinect-Kamera (s. Abs. \ref{kinect_grundlagen_sec}, S. \pageref{kinect_grundlagen_sec} ff.) mit genügend Strom zu versorgen.
 Dies äußert sich darin, dass die Kinect sich im Akku-Betrieb nicht in Betrieb nehmen lässt.
 
-Daher ist es notwendig, ein externes Netzgerät zu verwenden, und den Roboter damit mit zusätzlichem Strom zu versorgen.
-Dies hat allerdings zur Folge, dass die Reichweite von \gls{hollie} durch die Länge des Kabels (ca. $5m$) zwischen Roboter und externem Netzgerät beschränkt ist.
+Daher ist es notwendig, ein externes Netzgerät zu verwenden, und den Roboter so mit zusätzlichem Strom zu versorgen.
+Dies hat allerdings zur Folge, dass die Reichweite von \gls{hollie} durch die Länge des Kabels zwischen Roboter und externem Netzgerät beschränkt ist.
+Der Aktionsradius beträgt somit nur noch ca. $5m$.
 
 Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschränkungen ausreichend.
 
@@ -145,14 +146,14 @@ Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschränkungen
 \subsection{Kinect}
 
 Nach ersten Erfolgen mit dem realen Roboter stellt sich heraus, dass die Kinect-Kamera (s. Abs. \ref{kinect_grundlagen_sec}, S. \pageref{kinect_grundlagen_sec} ff.) \emph{Schwierigkeiten} damit hat, selbst bewegt zu werden und gleichzeitig auch noch einen sich wiederum auch bewegenden Menschen zu tracken.
-Wenn \gls{hollie} sich zügig durch den Raum bewegt, kommt es häufig zu einem Verlust des getrackten Menschen.
+Wenn \gls{hollie} sich zügig durch den Raum bewegt, kommt es bei der Kamera häufig zu einem Verlust des getrackten Menschen.
 Oft kommt es auch vor, dass statt des Menschen beispielsweise Säulen im Raum, Fenster, oder ähnliches als Menschen erkannt werden.
 Dieses Phänomen zeigt sich auch bei rein rotatorischen Bewegungen.
 
 Andere wissenschaftliche Mitarbeiter am \gls{fzi} haben bereits ähnliche Beobachtungen mit der Kinect gemacht.
-Die \emph{Ursache} dafür liegt wohl darin, dass die Kinect ursprünglich als Einheit für den stationären Einsatz entwickelt wurde.
+Die \emph{Ursache} dafür liegt wohl darin, dass die Kinect ursprünglich als Einheit für den stationären Gebrauch entwickelt wurde.
 \Dh die Kamera steht üblicherweise fest auf einem Tisch \oae, und lediglich der Mensch vor der Kamera bewegt sich.
-Im vorliegenden Fall einer sich bewegenden Kinect bewegt sich ja aus Sicht der Kamera nahezu alles im Sichtfeld (dazu gehören neben dem Menschen auch sämtliche Hintergrundobjekte etc.)
+Im vorliegenden Fall einer sich bewegenden Kinect bewegt sich ja aus Sicht der Kamera nahezu alles im Sichtfeld (dazu gehören neben dem Menschen auch sämtliche Hintergrundobjekte etc.).
 Dies scheint eine fehlerfreie Fokussierung des Menschen sehr zu limitieren.
 
 Da eine \emph{Lösung} dieses Problems außerhalb der Möglichkeiten der Praktikumsteilnehmer liegt, wird ein \glqq work-around\grqq\ eingesetzt:
@@ -166,13 +167,30 @@ Dadurch kann die beschriebene Problematik zwar nicht endgültig beseitigt werden
 %\end{itemize}
 
 
+
 \subsection{Weitere Probleme}
 
-\begin{itemize}
-	\item Odometrie auf Teppichboden
-	\item SW-Bugs
-	\item \ldots
-\end{itemize}
+Schließlich treten während den Tests auf der realen Roboterplattform auch noch einige weitere, kleinere Probleme auf, von denen hier nur einige kurz erwähnt werden sollen.
+
+Eine sehr wichtige Erkenntnis während der Testphase war es, dass einzelne Module unbedingt anhand einer externen Konfigurationsdatei (beispielsweise eine \lstinline{XML}-Datei) aktivierbar bzw. deaktivierbar sein sollten.
+Falls dies nur innerhalb des programmierten Codes, also nur zur Compile-Zeit möglich ist, so kostet das ständige Ändern des Codes, Neu-Bauen der \gls{sw}, Überspielen auf den Roboter etc. einen immensen Zeitaufwand!
+Durch einfache \lstinline{bool}-Flags in der Konfigurationsdatei können die einmal erzeugten Binärdaten weiter verwendet werden, und dennoch bestimmte Module einfach de-/aktiviert werden.
+Der zusätzliche Aufwand während der Programmierung ist sehr gering, die Zeitersparnis während der Testphase jedoch immens.
+
+Aufgrund des weichen Bodens im Obergeschoss des \gls{fzi} kann der Roboter nur sehr ungenaue Odometrie-Daten liefern.
+Die Mecanum-Räder haben auf diesem Untergrund großen Schlupf.
+So kommt es vor, dass \gls{hollie} auf einer Fahrstrecke von ca. $8m$ bereits durchaus einen Fehler in der odometrischen Lokalisierung von mehr als $2m$ hat.
+Eine Lokalisierung allein auf Basis der Odometrie-Daten ist somit unmöglich.
+
+Weiterhin treten auch noch viele kleinere bis mittelschwere Fehler in der während des Praktikums programmierten \gls{sw} auf, auf die nicht näher eingegangen wird.
+
+% \begin{itemize}
+% 	\item Odometrie auf Teppichboden
+% 	\item Abschaltung von Modulen
+% 	\item SW-Bugs
+% 	\item \ldots
+% \end{itemize}
+
 
 
 

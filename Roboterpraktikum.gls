@@ -2,30 +2,32 @@
 \begin{theglossary}\glossaryheader
 \glsgroupheading{B}\relax \glsresetentrylist %
 \glossaryentryfield{bk}{\glsnamefont{\acronymfont {BK}}}{Bildkoordinaten}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{16}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{18}}}\glsgroupskip
 \glsgroupheading{F}\relax \glsresetentrylist %
 \glossaryentryfield{fzi}{\glsnamefont{\acronymfont {FZI}}}{Forschungszentrum Informatik}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{33}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{39}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{42}}}\glsgroupskip
 \glsgroupheading{H}\relax \glsresetentrylist %
 \glossaryentryfield{hollie}{\glsnamefont{\acronymfont {HoLLiE}}}{House of Living Labs intelligent Escort}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{26}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{33}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{39\delimR 43}}}\glsgroupskip
 \glsgroupheading{M}\relax \glsresetentrylist %
 \glossaryentryfield{mux}{\glsnamefont{\acronymfont {MUX}}}{Multiplexer}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{16}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{18}}}\glsgroupskip
 \glsgroupheading{P}\relax \glsresetentrylist %
 \glossaryentryfield{PRM}{\glsnamefont{PRM}}{Probabilistische Roadmaps erzeugen je nach Sampling-Strategie zuf\IeC {\"a}llig kollisionsfreie Punkte, mit welchen man einen Graphen aufspannt, die Start- und Zielknoten hinzuf\IeC {\"u}gt und danach mit einen lokalen Planer auf dem Graphen sucht}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{8}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{10}}}\glsgroupskip
 \glsgroupheading{S}\relax \glsresetentrylist %
 \glossaryentryfield{Sichtgraphen}{\glsnamefont{Sichtgraphen}}{Verfahren zur Konstruktion von Roadmaps. Man verbindet jedes Paar von Eckpunkten auf dem Rand von kollisionsfreien Konfigurationsraum durch ein gerades Liniensegment, wenn das Segment kein Hindernis schneidet}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{8}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{10}}}%
+\glossaryentryfield{sw}{\glsnamefont{\acronymfont {SW}}}{Software}{\relax }{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{42\delimN 43}}}\glsgroupskip
 \glsgroupheading{V}\relax \glsresetentrylist %
 \glossaryentryfield{Voronoi}{\glsnamefont{Voronoi}}{Verfahren zur Zerlegung des Raumes in Regionen, die anhand vorgegeber Punkte bestimmt werden. Jede Region wird durch genau ein Zentrum bestimmt und umfasst alle Punkte des Raumes, die in Bezug zur euklidischen Metrik n\IeC {\"a}her an dem Zentrum der Region liegen, als an jedem anderen Zentrum}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{8}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{10}}}\glsgroupskip
 \glsgroupheading{W}\relax \glsresetentrylist %
 \glossaryentryfield{wk}{\glsnamefont{\acronymfont {WK}}}{Weltkoordinaten}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{16\delimN 17}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{18\delimN 19}}}\glsgroupskip
 \glsgroupheading{Z}\relax \glsresetentrylist %
 \glossaryentryfield{Zellenzerlegung}{\glsnamefont{Zellenzerlegung}}{Bei exakter Zellenzerlegung malt man horizontale Linien von jedem Eckpunkt aus bis man ein Hindernis trifft um Zellen zu schaffen. Bei approximativen Verfahren werden Rechtecke rekursiv zerlegt bis alle Rechtecke entweder im Freiraum oder in einem Hindernis liegen}{\relax }{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{8}}}%
+		\setentrycounter[]{page}\glsnumberformat{10}}}%
 \end{theglossary}\glossarypostamble
