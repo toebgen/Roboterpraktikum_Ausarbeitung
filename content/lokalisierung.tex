@@ -21,9 +21,9 @@ Roboter Pose, welche die Position und Orientierung des Roboters in seiner Umgebu
  Aufgrund einer unbekannter Startposition oder von Messungenauigkeiten während
  der Fortbewegung, kann die Pose eines Roboters nur in den seltensten Fällen
  genau bestimmt werden.
-  Von lokaler Lokalisierung wird gesprochen wenn die aktuelle Pose des Roboters
- in seiner Umwelt bekannt ist und bei einer Positionsänderung des Roboters
- fortlaufend aktualisiert wird um sie auf dem neusten Stand zu halten. Hier
+ Von lokaler Lokalisierung wird gesprochen wenn die aktuelle Pose des Roboters
+ in seiner Umwelt bekannt ist und bei einer Positionsänderung des Roboters diese
+ fortlaufend aktualisiert wird, um sie auf dem neusten Stand zu halten. Hier
  werden Schätzungen der Bewegung aufgrund der Odometrie Sensorik mit Hilfe von weiteren Daten zur Posenbestimmung korrigiert. Dieses Vorgehen soll eine Aufsummierung von Fehlern bei der
  Schätzung der Bewegung durch die Odometrie verhindern. Im Gegensatz dazu ist
  bei der globalen Lokalisierung die aktuelle Pose des Roboters in seiner Umwelt
@@ -49,7 +49,7 @@ Abgesehen von der Lokalisierung gibt es noch einen weiteren Grund warum es für 
  Als negative Hindernisse werden Bereiche bezeichnet die im Vergleich zur
  gegenwärtigen Position eine geringere Höhe aufweisen.
  Ein Beispiel für ein solches Hindernis ist eine Treppe in ein tiefer gelegenes
- Stockwerk. Das erstellen einer Hinderniskarte ist aus den oben genannten
+ Stockwerk. Das Erstellen einer Hinderniskarte ist aus den oben genannten
  Gründen essentiell um eine Bahnplanung für einen mobilen Roboter
  durchführen zu können.
 % -----------------------------------------------------------------------------
@@ -186,23 +186,22 @@ In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  Lokalisierung beschäftigen. Wie sie wahrscheinlich schon aus Kapitel
  \ref{grundlagen_cha} wissen, verfügen die beiden Roboter \lstinline{HoLLiE} und
  \lstinline{Odete} über sehr ähnliche Sensoren, die zur Lokalisierung verwendet
- werden können. Der Roboter, \lstinline{Odete} weist 2 Winkelencoder und einen 270 Grad Sick
+ werden können. Der Roboter \lstinline{Odete} weist 2 Winkelencoder und einen 270 Grad Sick
  Laserscanner (Scheibenförmiger Scan) auf.
  \lstinline{HoLLiE} verfügt über 2 Winkelencoder und zwei
- ?\todoprivate{Prüfen ob diese Angaben stimmen und Grad Zahl hinzufügen} Grad
- Sick Laserscanner.
- Offensichtlich musste, um ein sicheres Fortbewegen des Roboters zu gewährleisten, für das \lstinline{Odete} Projekt
- ebenfalls eine Lokalisierung implementiert werden.
- Im Folgenden wollen wir kurz auf die Idee für den Aufbau der Gruppen
- und Module für die Lokalisierung eingehen.
- Die verwendete \lstinline{MCA2} Struktur der \lstinline{Odete} basiert auf einem bestimmten
- Paradigma.
+ 270 Grad Sick Laserscanner.
+ Offensichtlich musste, um ein sicheres Fortbewegen des Roboters zu
+ gewährleisten, für das \lstinline{Odete}-Projekt ebenfalls eine Lokalisierung implementiert werden.
+ Im Folgenden wollen wir kurz auf die grundlegende Idee für den Aufbau der
+ Gruppen und Module bezüglich der Lokalisierung eingehen.
+ Die verwendete \lstinline{MCA2}-Struktur der \lstinline{Odete} basiert auf
+ einem bestimmten Paradigma.
  Ziel ist es eine hohe Flexibilität zu erreichen. Sensoren und Plattformen sollen
  beliebig kombinierbar sein. Wir entschieden uns daher dazu diese Struktur auch
- beim \lstinline{Segway Omni} Projekt weiterzuführen. Dadurch konnten alte Programmstrukturen
- übernommen und/oder adaptiert und außerdem dieselbe Flexibilität wie im \lstinline{Odete} Projekt
- erreicht werden. Daher gelten die folgenden Erläuterungen zur Lokalisierung
- auch fast uneingeschränkt für beide Robotersysteme.
+ beim \lstinline{SegwayOmni}-Projekt weiterzuführen. Dadurch konnten alte
+ Programmstrukturen übernommen und/oder adaptiert und außerdem dieselbe
+ Flexibilität wie im \lstinline{Odete}-Projekt erreicht werden. Daher gelten die folgenden Erläuterungen
+ zur Lokalisierung auch fast uneingeschränkt für beide Robotersysteme.
  Zur Positionsschätzung wird bei beiden Systemen eine Kombination aus
  kartenbasierter Lokalisierung und Odometrie verwendet. Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer
  Synthese geschätzt. Dem Kalman-Filter ist eine Queue (FIFO) vorgeschaltet, in der jede Schätzung
@@ -217,8 +216,8 @@ In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  jetzt die beteiligten Gruppen und Module etwas näher betrachten. 
 
 \begin{description}
-\item[HAL(Hardware abstraction Layer)] Die \lstinline{Hal}-Gruppe ist in der \lstinline{Odete} für die
-plattformabhängige Hardware zuständig.
+\item[HAL(Hardware abstraction Layer)] Die \lstinline{Hal}-Gruppe ist für
+ plattformabhängige Hardware zu\-ständig.
  Mit der Plattform sind jene Hardwarekomponenten gemeint, die in der Regel nicht getauscht werden 
  (Rechner, Omnidirektionaler Antrieb, Akummulatoren).
  In \lstinline{MCA2} umfasst die \lstinline{Hal} die Bewegungsplattformen, die dazugehörigen
@@ -228,8 +227,8 @@ plattformabhängige Hardware zuständig.
  Prinzipiell können sogar die Plattformen (Omnidirektional <-> Differentiell) ausgetauscht werden. Die Odometrie hängt
  direkt mit der Antriebsart zusammen und findet deswegen in der \lstinline{Hal} statt.
  Auch die Kalman-Filterung findet in dieser Gruppe im
- AbsoluteCoordinatesMecanumKLF-Modul statt (KLF = KalmanFilter). Für eine
- Darstellung der Gruppe siehe Abbildung \ref{fig:segwayHal}.
+ \lstinline{AbsoluteCoordinatesMecanumKLF}-Modul statt (KLF = KalmanFilter). Für
+ eine Darstellung der Gruppe siehe Abbildung \ref{fig:segwayHal}.
 \item[SAL(Scanner abstraction Layer)] Die \lstinline{Sal}-Gruppe umfasst alle ``angebauten''
 Scanner, nicht aber in Plattform integrierte Scanner (Winkelencoder).
  Im Sinne der Abstraction Layer können auch hier Hardware- und
@@ -244,19 +243,22 @@ Scanner, nicht aber in Plattform integrierte Scanner (Winkelencoder).
 
 Diese Beiden Gruppen realisieren also unter anderem die erste benötigte
  Abstraktion der Sensordaten sowie eine Simulation für den Testfall. Zu beginn
- des Projektes existierte bereits eine \lstinline{Hal} Gruppe im \lstinline{Segway Omni} Projekt,
- allerdings war darin noch keine kartenbasierte
- Positionskorrektur durch den Kalman-Filter realisiert. Diese Funktionalität und die \lstinline{Sal} Gruppe wurden
- einige Zeit später durch einen unserer Betreuer, Jan Oberländer implementiert. Da wir Anfangs nicht wussten
+ des Projektes existierte bereits eine \lstinline{Hal} Gruppe im
+ \lstinline{SegwayOmni}-Projekt, allerdings war darin noch keine kartenbasierte
+ Positionskorrektur durch den Kalman-Filter realisiert. Diese Funktionalität und
+ die \lstinline{Sal}-Gruppe wurden einige Zeit später durch einen unserer Betreuer,
+ Jan Oberländer implementiert. Da wir Anfangs nicht wussten
  welche Funktionalitäten von uns implementiert werden mussten hatte unserer Gruppe einige Schwierigkeiten
  einen Einstieg zu finden. Dies äußerte sich vor allem darin, dass wir zu Beginn des Praktikums viel Zeit damit
  verbrachten zu versuchen uns in alle Gruppen und Module einzuarbeiten.
 
-Nach der Feststellung der benötigten Anpassungen an die vorhandenen Gruppen und Module des \lstinline{Odete} Projekts wurden
- diese adaptiert. Außerdem wurden Erweiterungen integriert damit eine beliebige Menge von Scannern genutzt werden kann.
+Nach der Feststellung der benötigten Anpassungen an die vorhandenen Gruppen und
+ Module des \lstinline{Odete}-Projekts wurden diese adaptiert. Außerdem wurden
+ Erweiterungen integriert damit eine beliebige Menge von Scannern genutzt werden
+ kann.
  Eine Parametrisierung über einen Multiplexer und ein XML-Config-File
  ermöglichen eine Anpassung auf eine neue Sensor-Anordnung. Abschließend erfolgt
- nun noch eine detailliertere Erläuterung der für die kartenbasierten
+ nun noch eine detailliertere Erläuterung der für die kartenbasierte
  Lokalisierung nötigen Schritte und der involvierten Gruppen und Module. Die kartenbasierte Lokaliserung
  findet in den \lstinline{MCA2}-Gruppen \lstinline{LlSP} und \lstinline{HLSP}
  statt. Die Laserscanner-Daten dazu werden wie schon erörtert aus der
@@ -267,13 +269,13 @@ Nach der Feststellung der benötigten Anpassungen an die vorhandenen Gruppen und
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.7]{graphics/Llsp.jpg}
-\caption{\label{fig:Llsp} Low Level Scanner Processing}
+\caption{\label{fig:Llsp}Llsp -- Low Level Scanner Processing}
 \end{figure}
 
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.7]{graphics/Hlsp.jpg}
-\caption{\label{fig:Hlsp} High Level Scanner Processing}
+\caption{\label{fig:Hlsp}Hlsp -- High Level Scanner Processing}
 \end{figure}
  
 \begin{description}
@@ -281,16 +283,16 @@ Nach der Feststellung der benötigten Anpassungen an die vorhandenen Gruppen und
 Verarbeitung der Scanner Rohdaten. Im Gegensatz zur \lstinline{HLSP} macht die
 \lstinline{LLSP} keine logische Auswertung der Scannerdaten.
  Es werden lediglich grundlegende Operationen auf die einzelnen Messwerte angewandt
- (Koordinatentransformationen, Löschen ungültiger Werte,...).
+ (Koordinatentransformationen, Löschen ungültiger Werte, ...).
 \item[HLSP(High Level Scanner Processing)] In der \lstinline{HLSP} werden
 logische Operationen auf die\\ Messwerte angewandt (Kantenextraktion,
 Posenkorrektur-Schätzung).
 \begin{itemize}
   \item Der \lstinline{ScanStrategyMultiplexer} dient als zentrale Schaltstelle
-  für die Controllerinputs der \lstinline{HLSP} Module.
+  für die Controllerinputs der \lstinline{HLSP}-Module.
   Über einen einzelnen Controllerinput des \lstinline{ScanTrategyMultiplexer}
   kann ein Setup geladen werden, welches die Controllerinputs der einzelnen
- \lstinline{HLSP} module setzt.
+ \lstinline{HLSP}-Module setzt.
 \end{itemize}
 \end{description}
 
@@ -300,10 +302,10 @@ Die kartenbasierte Posen-Schätzung wird in den folgenden Schritten ermittelt:
   \item Scheibenförmiger Laser-Scan der Umgebung parallel zur Fahrbahn\\
     	Gruppe: \lstinline{SAL}\\
     	Ergebnis: Winkel-Abstand-Paare (Polarkoordinaten)\\
-  \item Koordinaten-Transformation: polaren Sensorkoordinaten -> kartesische
+  \item Koordinaten-Transformation: polare Sensorkoordinaten -> kartesische
   		Sensorkoordinaten\\
   		Gruppe: \lstinline{LlSP}\\
-    	Modul: \lstinline{ToRobotCS}\\
+    	Modul: \lstinline{ScanToRobotCS}\\
     	Ergebnis: XY-Punkte (kartesische Sensorkoordinaten)\\
   \item Koordinaten-Transformation: kartesische Sensorkoordinaten -> kartesische
   		Roboterkoordinaten\\ 
@@ -314,7 +316,7 @@ Die kartenbasierte Posen-Schätzung wird in den folgenden Schritten ermittelt:
     	Gruppe: \lstinline{LlSP}\\
     	Modul: \lstinline{CutScan}\\
     	Ergebnis: XY-Punkte mit gültigem Abstand\\
-  \item Extraktion/Schätzung von Kanten aus der Punktemenge
+  \item Extraktion/Schätzung von Kanten aus der Punktemenge\\
     	Gruppe: \lstinline{HlSP}\\
     	Modul: \lstinline{ExtractEdges}\\
     	Ergebnis: Liniensegmente\\
@@ -335,10 +337,11 @@ Die kartenbasierte Posen-Schätzung wird in den folgenden Schritten ermittelt:
  diesem Grund war es notwendig im Vorfeld intensivere Überlegungen über die möglichen
  Umsetzungen und Repräsentationen anzustellen.
  Nach einigen Diskussionen entschieden wir uns für die Nutzung von
- Bildverarbeitungs"=Modulen aus \lstinline{SenseIVT} \todoprivate{ref setzen} und
- einer Repräsentation der Hinderniskarte als Schwarzweiß-Bit\-map. Der Grund für
- diese Wahl lag vor allem an der guten Visualisierung, die dadurch erhalten werden kann, außerdem wird eine einfache Anpassung und die Verwendung
- von Standard-Filtern ermöglicht. 
+ Bildverarbeitungs"=Modulen aus der \lstinline{SenseIVT}-Bibliothek
+ und einer Repräsentation der Hinderniskarte durch ein
+ Schwarzweiß-Bitmap. Der Grund für diese Wahl lag vor
+ allem an der guten Visualisierung, die dadurch erhalten werden kann, außerdem wird eine einfache
+ Anpassung und die Verwendung von Standard-Filtern ermöglicht.
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.7]{graphics/hinderniskarte.jpg}
@@ -360,7 +363,7 @@ Die kartenbasierte Posen-Schätzung wird in den folgenden Schritten ermittelt:
 \caption{\label{fig:obstacleExtractor} Gruppe \lstinline{ObstacleExtractor}}
 \end{figure}
  In Abbildung \ref{fig:obstacleExtractor} ist die die Gruppe
- (\lstinline{Obstacle Extractor}), durch welche die gewünschte Funktionalität implementiert wurde zu sehen.
+ (\lstinline{ObstacleExtractor}), durch welche die gewünschte Funktionalität implementiert wurde zu sehen.
  Im Folgenden wollen wir auch hier die einzelnen Module kurz vorstellen:
 
 \begin{description}
@@ -371,12 +374,13 @@ Die kartenbasierte Posen-Schätzung wird in den folgenden Schritten ermittelt:
 \lstinline{SenseIvt}-Bibliothek und dient dazu die Aktualisierung der Quelldaten
 zu beeinflussen.
 \item[SenseBitmapSource] Auch dieses Modul ist ein abgewandelter Teil der
-\lstinline{SenseIvt}-Bibliothek, es dient in unserem Fall dazu ein im
-XML-Config-File spezifiziertes schwarzes Bitmap zu laden.
- Es stehen unterschiedliche Größen zur Verfügung.
+\lstinline{SenseIvt}-Bibliothek, es dient in unserem Fall dazu ein, in einem
+ XML-Config-File spezifiziertes schwarzes Bitmap zu laden.
+ Dafür stehen unterschiedliche Größen zur Verfügung.
 \item[SenseIvtScanToBitmap] Hier werden die Hindernisse aus den Laserdaten extrahiert und auf Robotergröße expandiert.
 \item[SenseIvtDilate] Ein Dilate-Filter.
-\item[SenseIvtErode] Ein Erode-Filter. Zusammen mit dem vorigen Dilate-Filter wird hier eine Schließen-Operation ausgeführt.
+\item[SenseIvtErode] Ein Erode-Filter. Zusammen mit dem vorigen Dilate-Filter
+wird hier eine Schlie\-ßen-Operation ausgeführt.
 \item[ObstacleMap] Diese Modul dient dazu mit Hilfe eines Plugins des
 \lstinline{Mcabrowser} die resultierende Hinderniskarte betrachten zu können.
 \end{description}
@@ -385,16 +389,17 @@ XML-Config-File spezifiziertes schwarzes Bitmap zu laden.
 %													Virtual protective Field
 \subsection{Virtual protective Field}
 \label{sec:vpf}
-Ein Virtual protective Field, was die Letzte von uns zu lösenden Aufgabe darstellte war bereits im \lstinline{Odete}-Projekt
- realisiert, allerdings war dieses lediglich für einen Differentialantrieb implementiert.
+Ein Virtual protective Field, was die letzte von uns zu lösenden Aufgabe
+darstellte war bereits im \lstinline{Odete}-Projekt realisiert,
+ allerdings war dieses lediglich für einen Differentialantrieb implementiert.
  Nach einer Begutachtung des bestehenden Moduls entschieden wir uns dafür
  dieses nicht für omnidirektionale Bewegung anzupassen sondern eine neue Gruppe mit der gewünschten Funktionalität
  zu erstellen, da uns dies effizienter erschien. Die Wahl der für die Umsetzung benötigten Primitiven viel, aufgrund
  der von uns gewonnen Erfahrungen mit den Bildverarbeitungs-Modulen und der Möglichkeit die bereits bestehende
- Hinderniskarte auszunutzen auch hier auf die \lstinline{SenseIVT} \todoprivate{ref setzen} Bibliothek.
- Als Repräsentation wurde wieder ein Schwarzweiß-Bitmap gewählt. Auf anfrage der Bahnplanungs und Steuerungs
- Gruppe implementierten wir 3 unterschiedliche Virtual Protective Fields siehe
- Abbildung \ref{fig:virtualprotectivefields}.
+ Hinderniskarte auszunutzen auch hier auf die \lstinline{SenseIVT}-Bibliothek.
+ Als Repräsentation wurde wieder ein Schwarzweiß-Bitmap gewählt. Auf Anfrage der
+ Bahnplanungs und Steuerungs Gruppe implementierten wir 3 unterschiedliche
+ Virtual protective Fields siehe Abbildung \ref{fig:virtualprotectivefields}.
  \begin{figure}[h]
 \center
 \includegraphics[scale=0.5]{graphics/virtualprotectivefields.jpg}
@@ -403,17 +408,16 @@ Fields}
 \end{figure}
  Die Varianten \emph{Sideward} sowie \emph{Forward} sollen es \lstinline{HoLLiE}
  ermöglichen eine Bewegung in zumindest eine Richtung durchzuführen wenn die Kombination zu einer Kollision führen würde.
- Die Virtual Protective Fields unterliegen einer dynamischen Ausdehnung zum Quadrat der Geschwindigkeit
- um ein erfolgreiches Anhalten vor einer Kollision zu gewährleisten. Aufgrund der Nutzung von Bildverarbeitungs-Modulen
+ Die Virtual protective Fields unterliegen einer dynamischen Ausdehnung zum
+ Quadrat der Geschwindigkeit um ein erfolgreiches Anhalten vor einer Kollision zu gewährleisten. Aufgrund der Nutzung von Bildverarbeitungs-Modulen
  konnte die Erkennung einer möglichen Kollision durch eine AND-Operation auf der Hinderniskarte und dem entsprechenden
- Virtual Protective Field realisiert werden. Sollten nach dieser Operation noch weiße Pixel im resultierenden Bitmap
- vorhanden sein gilt dies als erkannte Kollision. Aufgrund von Fehlern der Laserdaten wird verlangt, dass mehr als ein
+ Virtual protective Field realisiert werden. Sollten nach dieser Operation noch
+ weiße Pixel im resultierenden Bitmap vorhanden sein gilt dies als erkannte Kollision. Aufgrund von Fehlern der Laserdaten wird verlangt, dass mehr als ein
  weißer Pixel vorhanden ist, um das Verfahren etwas robuster zu machen.
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.29]{graphics/VirtualProtectiveBitmap.jpg}
-\caption{\label{fig:virtualprotectivebitmap} Gruppe \lstinline{Virtual
-ProtectiveBitmap}}
+\caption{\label{fig:virtualprotectivebitmap} Gruppe \lstinline{VirtualProtectiveBitmap}}
 \end{figure}
  Wie bereits in den beiden vorigen Abschnitten  ist auch hier in Abbildung
  \ref{fig:virtualprotectivebitmap} die beschriebene Gruppe dargestellt und es
