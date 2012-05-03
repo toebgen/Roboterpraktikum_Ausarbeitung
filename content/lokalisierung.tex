@@ -132,8 +132,8 @@ Anhand von gegebenem Kartenmaterial kann aus einem Sensorbild
 
 \subsubsection{Landmarkbasierte Lokalisierung}
 
-In einer bekannten Umgebung können Landmarks (QR-Codes, Bodenlinien,
- GPS-Satelliten) angebracht werden. Diese können durch Sensoren
+In einer bekannten Umgebung können Landmarks (\gls{qr}-Codes, Bodenlinien,
+ \gls{gps}-Satelliten) angebracht werden. Diese können durch Sensoren
  am Roboter wiedererkannt werden und ermöglichen die Lokalisierung
  z.B. mittels Triangulierung.
 
@@ -184,11 +184,11 @@ Autoren: Dirk~Toewe und Anne~Güntner}\end{flushright}
 \subsection{Lokalisierung} 
 In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  Lokalisierung beschäftigen. Wie sie wahrscheinlich schon aus Kapitel
- \ref{grundlagen_cha} wissen, verfügen die beiden Roboter \lstinline{HoLLiE} und
+ \ref{grundlagen_cha} wissen, verfügen die beiden Roboter \gls{hollie} und
  \lstinline{Odete} über sehr ähnliche Sensoren, die zur Lokalisierung verwendet
  werden können. Der Roboter \lstinline{Odete} weist 2 Winkelencoder und einen 270 Grad Sick
  Laserscanner (Scheibenförmiger Scan) auf.
- \lstinline{HoLLiE} verfügt über 2 Winkelencoder und zwei
+ \gls{hollie} verfügt über 2 Winkelencoder und zwei
  270 Grad Sick Laserscanner.
  Offensichtlich musste, um ein sicheres Fortbewegen des Roboters zu
  gewährleisten, für das \lstinline{Odete}-Projekt ebenfalls eine Lokalisierung implementiert werden.
@@ -204,7 +204,7 @@ In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  zur Lokalisierung auch fast uneingeschränkt für beide Robotersysteme.
  Zur Positionsschätzung wird bei beiden Systemen eine Kombination aus
  kartenbasierter Lokalisierung und Odometrie verwendet. Die Schätzwerte aus beiden Messungen werden mit einem Kalman-Filter zu einer
- Synthese geschätzt. Dem Kalman-Filter ist eine Queue (FIFO) vorgeschaltet, in der jede Schätzung
+ Synthese geschätzt. Dem Kalman-Filter ist eine Queue (\gls{fifo}) vorgeschaltet, in der jede Schätzung
  mit einem Timestamp registriert wird. So können die Messwerte in zeitlich korrekter Reihenfolge
  eingerechnet werden, selbst dann, wenn sie nach der Verarbeitung in einer anderen Reihenfolge
  im Kalman-Filter registriert werden. Die für die Odometrie benötigte Winkelschrittmessung der Räder wird direkt
@@ -406,7 +406,7 @@ darstellte war bereits im \lstinline{Odete}-Projekt realisiert,
 \caption{\label{fig:virtualprotectivefields} Darstellung der unterschiedlichen Protective
 Fields}
 \end{figure}
- Die Varianten \emph{Sideward} sowie \emph{Forward} sollen es \lstinline{HoLLiE}
+ Die Varianten \emph{Sideward} sowie \emph{Forward} sollen es \gls{hollie}
  ermöglichen eine Bewegung in zumindest eine Richtung durchzuführen wenn die Kombination zu einer Kollision führen würde.
  Die Virtual protective Fields unterliegen einer dynamischen Ausdehnung zum
  Quadrat der Geschwindigkeit um ein erfolgreiches Anhalten vor einer Kollision zu gewährleisten. Aufgrund der Nutzung von Bildverarbeitungs-Modulen
