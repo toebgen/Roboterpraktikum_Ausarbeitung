@@ -117,22 +117,38 @@ Zustandsmaschine in den Zustand \lstinline{idle} wechselt. Dieser neue Zustand w
 im \lstinline{Sense}-Teil der globalen Zustandsmaschine verarbeitet und falls alle weiteten 
 Bedingungen erfüllt sind wird die Aufgabe durch einen letzten Zustandswechsel, ebenfalls in 
 den Zustand \lstinline{idle} beendet.
-\todo[inline]{Bild zu sense, control -> zwei Zustandsdiagramme die das entsprechende darstellen}
+\todo[inline]{Bild zu sense, control -> zwei Zustandsdiagramme die das Entsprechende darstellen}
 
 
 \subsection{Benutzerschnittstelle}
 \label{benutzerschnittstelle_integration_cha}
 
-\begin{itemize}
-\item Ausführbare Handlungen
-\item Steuerung über Gesten
-\item Ausführen der entsprechenden Handlung
-\end{itemize}
+Gemäß der Konzeption des Roboters erfolgt die Steuerung vollständig über Gesten. Die Erkennung der Gesten 
+geschieht in der Gruppe \lstinline{SegwayOmniKinect}; die Verarbeitung der Gesten im Modul \lstinline{SegwayOmniStateModeManager}. Entsprechend der in Abschnitt \ref{integration_umsetzung_zusammenspiel_sec}
+ erläuterten Systematik, entscheidet die globale Zustandsmaschine in jedem Zustand individuell, welche Handlung 
+ nach der Beobachtung einer bestimmten Geste folgt. Beim ersten Test der Gestensteuerung hat sich gezeigt, 
+ dass eine zuverlässige Steuerung nur durch das Erkennen einer Abfolge mehrerer Gesten möglich. 
 
-\section{Probleme}
-\label{probleme_integration_sec}
+Es trat das Problem auf, dass während des Einnehmens einer bestimmten Haltung, die entsprechend der Definition 
+der Kinect-Gruppe einer Geste entsprach, regelmäßig eine nicht gewünschte Geste erkannt wurde. Um dieses Problem 
+zu lösen kommt eine Steuerung zum Einsatz, bei der nur durch eine Folge von Körperhaltungen eine Geste erkannt 
+wird und so eine Funktion auslöst. Bereits bei der Initialisierung einer Person ist es notwendig eine korrekte 
+Folge von Haltungen einzunehmen die signalisieren dass man auch wirklich den Roboter steuern möchte. Auch beim 
+Ausführen einer Geste um eine bestimmte Funktion des Roboters, etwa das Abfahren eines Pfades, zu aktivieren ist 
+es notwendig zuerst eine Anrückhaltung einzunehmen und von dieser zu einer Haltung überzugehen die letztlich die 
+Funktion aktiviert.
 
-\begin{itemize}
-\item Definition der Schnittstellen
-\item Definition der Funktionen des Roboters
-\end{itemize}
+%\begin{itemize}
+%\item Ausführbare Handlungen
+%\item Steuerung über Gesten
+%\item Ausführen der entsprechenden Handlung
+%\end{itemize}
+
+%\section{Probleme}
+%\label{probleme_integration_sec}
+
+
+%\begin{itemize}
+%\item Definition der Schnittstellen
+%\item Definition der Funktionen des Roboters
+%\end{itemize}
