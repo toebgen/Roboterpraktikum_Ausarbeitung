@@ -7,29 +7,27 @@
 \section{Aufgabenstellung}
 \label{aufgabenstellung_integration_sec}
 
-\begin{itemize}
-\item Überblick was alles unter Integration fällt
-\item Zusammenführen der einzelnen Teilprojekte
-\item Zustandsmaschinen zur Steuerung/Beobachtung der einzelnen Teile
-\item Planer um auf Umwelteinflüsse zu reagieren
-\item Userinterface zur Steuerung des Roboters
-\end{itemize}
+%\begin{itemize}
+%\item Überblick was alles unter Integration fällt
+%\item Zusammenführen der einzelnen Teilprojekte
+%\item Zustandsmaschinen zur Steuerung/Beobachtung der einzelnen Teile
+%\item Userinterface zur Steuerung des Roboters
+%\end{itemize}
 
-Die Aufgaben im Bereich der Integration lassen sich in die folgenden Unterpunkte einordnen:
+Die Aufgaben im Bereich der Integration lassen sich unter folgende Punkte einordnen:
 
 \begin{description}
 \item[Code Zusammenführen]
-Um das Auseinanderdriften der einzelnen Teilprojekte zu vermeiden ist ein regelmäßiges Zusammenführen mittels Git notwendig. Zusätzlich ist die Integration von Code der außerhalb des SegwayOmni-Projektes entsteht, wie etwa der Kinect Anteil, notwendig. Weiterhin muss die Kompatibilität der Schnittstellen zwischen den Teilprojekten gepflegt werden.
+Um das Auseinanderdriften der einzelnen Teilprojekte zu vermeiden ist ein regelmäßiges Zusammenführen mittels Git notwendig. Zusätzlich ist die Integration von Code der außerhalb des SegwayOmni-Projektes entsteht, wie etwa der Kinect-Teil, notwendig. Weiterhin muss die Kompatibilität der Schnittstellen zwischen den Teilprojekten gepflegt werden.
+
+\item[Architektur]
+Auf oberster Ebene müssen die Zustände von in der Hierachie tiefer gelegenen Modulen überwacht und auf Änderungen reagiert werden.
+\todo[inline]{hier noch schöneren Text}
 
 \item[Benutzerschnittstelle]
 Zur Kontrolle des Roboters durch Benutzer muss eine Benutzerschnittstelle implementiert werden die es erlaubt die einzelnen Funktionen der Software zu aktivieren.
 
-\item[Reaktion auf Zustandsänderungen]
-Der vorherrschende Umweltzustand muss erkannt und eine entsprechende Reaktion ausgeführt werden.
 \end{description}
-
-
-
 
 \section{Grundlagen der Planung}
 \label{grundlagen_integration_sec}
@@ -42,13 +40,22 @@ Der vorherrschende Umweltzustand muss erkannt und eine entsprechende Reaktion au
 \end{itemize}
 
 
-
 \section{Umsetzung}
 \label{umsetzung_integration_sec}
 
 \subsection{Architektur}
 \label{integration_architektur_sec}
 
+Die Gruppen \lstinline{SegwayOmniBehaviours} und \lstinline{SegwayOmniKinect} verfügen über verschiedene Funktionen und bieten wichtige Informationen über den Zustand des Roboters und seiner Umwelt. Um diese Informationen sinnvoll verarbeiten zu können und ein Abrufen der einzelnen Funktionen zu ermöglichen, ist es notwendig eine Architektur bereitzustellen die dies ermöglicht.
+
+In den existierenden Projekten \lstinline{Odete} und \lstinline{SegwayOmni} gab es bereits eine Hierarchie in den verwendeten Gruppen, bei der Schritt für Schritt die Abstraktion von der verwendeten Plattform bzw. Hardware erfolgte. Diese Hierachie wurde beibehalten und kann zunächst in drei Ebenen unterteilt werden (siehe \ref{bahnplanung_umsetzung_sec}). Auf der obersten Ebene, der Verhaltensebene, befinden sich die Gruppen \lstinline{SegwayOmniBehaviours} und \lstinline{SegwayOmniKinect}. Zur Kontrolle des Roboters kommt eine zusätzliche Ebene hinzu, die es erlaubt die einzelnen Verhalten zu aktivieren. Diese Ebene arbeitet auf Aufgabenbasis und aktiviert das notwendige Verhalten um eine Aufgabe auszuführen. Eine Aufgabe ist beispielsweise: Zeige den gespeicherten Pfad einem Menschen. Auf der Verhaltensebene muss nun die entsprechende Funktion aktiviert werden. In diesem Beispiel würde die \lstinline{SegwayOmniKinect}-Gruppe das Verhalten zum Beobachten eines Menschen ausführen und die \lstinline{SegwayOmniBehaviours}-Gruppe das Verhalten zum Abfahren eines gespeicherten Pfades.
+
+Die Funktionen des Roboters können, auf oberster Ebene, in einzelne, unabhängige Aufgaben getrennt werden. 
+\todo[inline]{itemize mit Aufgaben oder Tabelle mit Aufgaben und entsprech. Verhalten}
+
+In einem ersten Schritt ist es sinnvoll diese Funktionen zu strukturieren, in dem jeder Aufgabe ein interner Zustand zugewiesen wird. Da bei diesem Projekt nicht der Dialog mit dem Roboter sondern lediglich die Aktivierung verschiedener Funktionen durch Gesten gewünscht ist, erfolgt der Wechsel der internen Zustände durch eine deterministische Zustandsmaschine\todo[inline]{ref zu wiki artikel}. Bei komplexeren Aufgaben, oder in Szenarien bei der die beobachtete Umwelt nicht deterministisch aufgefasst wird, stößt eine Zustandsmaschine an ihre Grenzen und es muss eine Planer\todo[inline]{ref zu planer} verwendet werden.
+
+ 
 \begin{itemize}
 \item Highlevel Architektur, insbesondere Zusammenspiel Planer, Bahnplanung, Kinect
 \item Aufteilung in sense und control
