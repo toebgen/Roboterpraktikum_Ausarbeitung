@@ -45,25 +45,59 @@ Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst m
 
 \section{Stand der Technik}
 \label{stand_der_technik_sec}
+\todo[inline]{Author hinzufügen}
 \authorsection{\editordummy}
-\todo[inline]{Kinect-Gruppe: Schreiben}
 
 \subsection{Hardware}
 \subsubsection{3D Kameras (am Beispiel Microsoft Kinect)}
-Die unten stehende Abbildung zeigt ein Bild der Kinect. Sie ist mit laser-basiertem IR Projektor und einem monochromen CMOS Sensor ausgestattet. Der IR-Projektor projiziert ein Muster auf die beobachtete Szenerie, während der CMOS Sensor die Verformungen des Musters detektiert und gegen ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet. Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen und einer RGB-Kamera ausgestattet. Horizontal hat die Kamera einen Öffnungswinkel von 57 und vertikal 43\todo[inline]{hinter 57 und 43 muss ein Grad zeichen}. Die Arbeitsentfernung der Kinect liegt zwischen 0.8 und 3.5 m. Die Auflösung der Tiefenkamera beträgt 3mm in der X/Y Ebene und 10mm in Z-Richtung bei einem Abstand von 2 Metern. Die Auflösung ist 640 x 480 Bildpunkte bei einer Bildfrequenz von 30 Hz. Das Tiefenbild hat eine 11 bit Auflösung mit Werten zwischen 0 und 2047.
+Die Abbildung \ref{fig:Kinect} zeigt ein Bild der Kinect. Sie ist mit
+ laser-basiertem IR Projektor und einem monochromen CMOS Sensor ausgestattet.
+ Der IR-Projektor projiziert ein Muster auf die beobachtete Szenerie,
+ während der CMOS Sensor die Verformungen des Musters detektiert und gegen
+ ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
+ Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen
+ und einer RGB-Kamera ausgestattet. Horizontal hat die Kamera einen Öffnungswinkel
+ von $57^\circ$ und vertikal $43^\circ$. Die Arbeitsentfernung der Kinect liegt
+ zwischen $0.8$ und $3.5$ m. Die Auflösung der Tiefenkamera beträgt $3$ mm in
+ der X/Y Ebene und $10$ mm in Z-Richtung bei einem Abstand von $2$ Metern. Die
+ Auflösung ist $640$ x $480$ Bildpunkte bei einer Bildfrequenz von $30$ Hz. Das
+ Tiefenbild hat eine $11$ bit Auflösung mit Werten zwischen $0$ und $2047$.
 
-\todo[inline]{Bild von der Kinect einfügen}
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.3]{graphics/Kinect.jpg}
+\caption{\label{fig:Kinect} Kinect}
+\end{figure}
 
-Für die Kinect wurden in den letzten Jahren mehrere Entwicklerbibliotheken erstellt, die sich wachsender Beliebtheit erfreuen.  Es ist eine rasant wachsende Anzahl von Applikationen vorhanden, die 3D Kameras unterstützen. Ursprünglich als Entertainmenthardware entwickelt, findet die Kinect vermehrt auch in der Forschung massiv Anwendung. Ähnliche Spezifikationen haben auch die Wavi Xtion Kamras der Firma ASUS.
+Für die Kinect wurden in den letzten Jahren mehrere Entwicklerbibliotheken erstellt,
+ die sich wachsender Beliebtheit erfreuen. Es ist eine rasant wachsende Anzahl von Applikationen vorhanden,
+ die 3D Kameras unterstützen. Ursprünglich als Entertainmenthardware entwickelt,
+ findet die Kinect vermehrt auch in der Forschung massiv Anwendung.
+ Ähnliche Spezifikationen haben auch die Wavi Xtion Kamras der Firma ASUS.
 
 \subsubsection{Mobile Roboterplattformen}
 
-Mobile Roboterplattformen werden in den meisten Fällen zu Forschungszwecken verwendet. Wissenschaftler verschiedener Disziplinen wirken an Design und Programmierung mit. Sie weisen teils stark unterschiedliche Konfigurationen auf. Seit vielen Jahren wird jedoch intensiv an menschenähnliche Prototypen gearbeitet. Nach der Konstruktion dienen solche Plattformen häufig dazu durch verschiedenste Programmierungen vorgegebene Aufgaben zu erfüllen. Im Rahmen des Mobile Roboterpraktikums haben wir an der Plattform HoLLiE des FZI Karlsruhe gearbeitet. Auch die Roboterplattform ARMAR wurde in Karlsruhe am KIT entwickelt.
-Aufgrund der großen Popularität, technischen Ausgereiftheit und guten Dokumentation soll jedoch exemplarisch an dieser Stelle die Roboterplattform PR2 der Firma willow garage dargestellt werden, siehe untenstehende Abbildung.
+Mobile Roboterplattformen werden in den meisten Fällen zu Forschungszwecken verwendet.
+ Wissenschaftler verschiedener Disziplinen wirken an Design und Programmierung mit.
+ Sie weisen teils stark unterschiedliche Konfigurationen auf.
+ Seit vielen Jahren wird jedoch intensiv an menschenähnliche Prototypen gearbeitet.
+ Nach der Konstruktion dienen solche Plattformen häufig dazu durch verschiedenste Programmierungen
+ vorgegebene Aufgaben zu erfüllen. Im Rahmen des Mobile Roboterpraktikums haben
+ wir an der Plattform \gls{hollie} des \gls{fzi} Karlsruhe gearbeitet. Auch die
+ Roboterplattform ARMAR wurde in Karlsruhe am KIT entwickelt.
+ Aufgrund der großen Popularität, technischen Ausgereiftheit und guten
+ Dokumentation soll jedoch exemplarisch an dieser Stelle die Roboterplattform
+ PR2 der Firma willow garage dargestellt werden, siehe Abbildung
+ \ref{fig:PR2Struktur}.
 
-\todo[inline]{Bild von PR2 einfügen}
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.5]{graphics/PR2Struktur.jpg}
+\caption{\label{fig:PR2Struktur} Struktur des PR2 [5]}
+\end{figure}
 
-Der PR2 ist ein kommerziell erhältlicher, weit entwickelter humanoider Roboter, der den typische Aufbau humanoider Roboterplattformen aufweist. Er hat folgende, HoLLiE ähnlicher, technische Eigenschaften [5]:
+Der PR2 ist ein kommerziell erhältlicher, weit entwickelter humanoider Roboter, der den typische Aufbau humanoider Roboterplattformen aufweist.
+ Er hat folgende, \gls{hollie} ähnlicher, technische Eigenschaften [5]:
 
 \begin{itemize}
   \item 2 Arme mit Greifern (Arm 4 DoF, Handgelenk 3 DoF, Greifer 1DoF)
@@ -71,7 +105,9 @@ Der PR2 ist ein kommerziell erhältlicher, weit entwickelter humanoider Roboter,
   \item Omnidirektionale Basis (3 DoF)
 \end{itemize}
 
-Außerdem ist der PR2 mit einer großen Anzahl an Sensoren ausgestattet ist und innerhalb gewisser Parameter modular konfiguriebar. Der PR2 ist mit folgenden Sensoren ausgestattet bzw. ausstattbar:
+Außerdem ist der PR2 mit einer großen Anzahl an Sensoren ausgestattet
+ ist und innerhalb gewisser Parameter modular konfiguriebar.
+ Der PR2 ist mit folgenden Sensoren ausgestattet bzw. ausstattbar:
 
 \begin{itemize}
   \item Microsoft Kinect
@@ -86,28 +122,54 @@ Außerdem ist der PR2 mit einer großen Anzahl an Sensoren ausgestattet ist und 
   \item Kalibrierungs-LEDs
 \end{itemize}
 
-Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt (u.a. TU München, Stanford University und MIT) und es existieren Arbeiten in verschiedensten Bereichen, wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz in Dienstleistungsbetrieben.
-Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Betriebssystem ROS (Robot Operating System)  aufbaut und es Wissenschaftlern ermöglicht in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragben.
+Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt
+ (u.a. TU München, Stanford University und MIT) und es existieren Arbeiten in verschiedensten Bereichen,
+ wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz
+ in Dienstleistungsbetrieben.
+
+Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform,
+ die auf dem Betriebssystem \gls{ros} aufbaut und es Wissenschaftlern
+ ermöglicht in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragben.
 
 \subsection{Software}
+
 \subsubsection{OpenNI}
 
-OpenNI (Open Natual Interaction) ist ein plattformübergreifendes Framework zur Entwicklung von Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen. Die OpenNI API stellt eine Vielzahl an Schnittstellen bereit, um entsprechende Applikationen zu programmieren. Der Hauptzweck von OpenNI ist eine Standard-API bereitzustellen, die folgende Eigenschaften vereint [6]:
+\gls{openni} ist ein plattformübergreifendes Framework zur Entwicklung von
+Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
+ Die \gls{openni}-API stellt eine Vielzahl an Schnittstellen bereit, um
+ entsprechende Applikationen zu programmieren. Der Hauptzweck von \gls{openni}
+  ist eine Standard-API bereitzustellen, die folgende Eigenschaften vereint [6]:
 
 \begin{itemize}
   \item Kommunikation mit Video und Audiosensoren
-  \item Bereitstellung von Middleware zur Video- und Audiodatenverarbeitung, wie die Unterstützung bei der Objektdetektion in Bildern
+  \item Bereitstellung von Middleware zur Video- und Audiodatenverarbeitung,\\
+  wie die Unterstützung bei der Objektdetektion in Bildern
 \end{itemize}
 
-Dabei stellt OpennNI eine Reihe von APIs bereit, die sowohl von  (3D-Kamera-) Sensoren als auch Middleware Komponenten implementiert werden können. Durch das Entkoppeln von Sensor und Middleware können mit OpenNI angefertigte Softwareprodukte ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (“write once, deploy everywhere“). Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild-) Formaten aufbauen, unabhängig von der Sensorik-Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite Sensoren zur Verfügung stellen, die diese Bildformate generieren können. OpenNI steht kostenlos als open source Quelle zur Verfügung. In der unten stehenden Abbildung ist das Konzept von OpenNI in 3 Schichten dargestellt:
+Dabei stellt \gls{openni} eine Reihe von APIs bereit, die sowohl von  (3D-Kamera-)
+ Sensoren als auch Middleware Komponenten implementiert werden können.
+ Durch das Entkoppeln von Sensor und Middleware können mit \gls{openni} angefertigte Softwareprodukte
+ ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (“write once, deploy everywhere“).
+ Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild-) Formaten aufbauen,
+ unabhängig von der Sensorik-Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite
+ Sensoren zur Verfügung stellen, die diese Bildformate generieren können. \gls{openni} steht kostenlos
+ als open source Quelle zur Verfügung. In Abbildung \ref{fig:openNI} ist das
+ Konzept von \gls{openni} in 3 Schichten dargestellt:
 
-\begin{itemize}
-  \item Oben: Software, die Natürliche Interaktion auf OpenNI aufbauend verwendet
-  \item Mitte: OpenNI, das Kommunikationsschnittstellen sowohl zu Hardware- als auch zu Softwarekomponenten zur Verfügung stellt
-  \item Unten: Hardwarekomponenten, die Video- und Audiosignale aufnehmen
-\end{itemize}
+\begin{description}
+  \item[Oben:] Software, die Natürliche Interaktion auf \gls{openni} aufbauend
+  verwendet
+  \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu
+  Hardware- als auch zu\\ Softwarekomponenten zur Verfügung stellt
+  \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
+\end{description}
 
-\todo[inline]{Bild von OpenNI einfügen}
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.8]{graphics/openNI.jpg}
+\caption{\label{fig:openNI} \gls{openni} Architektur [6]}
+\end{figure}
 
 OpenNI basiert auf einigen Grundkonzepten:
 
@@ -117,48 +179,78 @@ OpenNI basiert auf einigen Grundkonzepten:
   \item Produktionsketten
 \end{itemize}
 
-Modularität
+\begin{description}
+\item[Modularität]
+\end{description}
 
-Unter Modularität ist in diesem Zusammenhang vor allem die Austauschbarkeit von Komponenten und die Architektur des Systems zu verstehen. Es werden folgende Module unterstützt:
-Sensoren
+Unter Modularität ist in diesem Zusammenhang vor allem die Austauschbarkeit von Komponenten
+ und die Architektur des Systems zu verstehen.
+ Es werden folgende Module unterstützt:
+
+
+\begin{itemize}
+\item \textbf{Sensoren:}
 \begin{itemize}
   \item 3D Sensoren
   \item RGB Kameras
   \item Infrarot Kameras
   \item Mikrofone / Mikrofonarrays
 \end{itemize}
-
-Middleware Komponenten
-\begin{itemize}
-  \item Ganzkörperanalyse Middleware: Softwarekomponente, die Sensordaten verarbeitet und daraus relevante Informationen wie Gelenkposen ableitet
-  \item Handanalyse Middleware: Software, die hilft Sensordaten zu verarbeiten, um die Positionen von Händen zu ermitteln
-  \item Gestendetektion: Softwarekomponente, die Gesten erkennt und diese Information an die Anwendungen weitergibt
-  \item Szenenanalyse: Software, die verschiedene Szenenrelevanten Informationen ableitet, wie Hintergrundseparation, Erkennen der Bodenebene und Identifikation und Detektion von verschiedenen Personen
-Produktionsknoten
+\item \textbf{Middleware Komponenten:}
+\begin{description}
+  \item[Ganzkörperanalyse Middleware:] Softwarekomponente, die Sensordaten
+  verarbeitet und daraus relevante Informationen wie Gelenkposen ableitet
+  \item[Handanalyse Middleware:] Software, die hilft Sensordaten zu verarbeiten,
+  um die Positionen von Händen zu ermitteln
+  \item[Gestendetektion:] Softwarekomponente, die Gesten erkennt und diese
+  Information an die Anwendungen weitergibt
+  \item[Szenenanalyse:] Software, die verschiedene Szenenrelevanten
+  Informationen ableitet, wie Hintergrundseparation, Erkennen der Bodenebene und Identifikation und Detektion von verschiedenen Personen
+\end{description}
 \end{itemize}
 
-In OpenNI werden sogenannte Produktionsknoten definiert die die Aufgabe haben, für verschiedene Anwendungen die Daten zur Verfügung zu stellen. Produktionsknoten stehen dabei in einer Hierarchie zueinander. Sie können sowohl Produktionsknoten eines niedrigeren Levels verwenden als auch von Knoten höheren Levels verwendet werden. Konkret bietet OpenNI einen User Generator, der alle Daten einer getrackten Person liefern kann. Hierfür verwendet der User Generator einen Tiefenbildgenerator, aus dem er seine Informationen ableitet.
 
-Produktionsketten
-
-Wie bereits dargestellt können mehrere Module gleichzeitig an der selben OpenNI Distribution angemeldet sein. Diese Topologie erlaubt Anwendungen flexibel auf Aufnahme- und Verarbeitungsmodule zuzugreifen. Als Produktionsketten werden die bereits angesprochenen hierarchischen Verarbeitungsketten der Produktionsknoten verstanden. Der erwähnte User Generator verwendet einen Tiefengenerator, der wiederum seine Daten von einem Tiefensensor bezieht. Diese Abhängigkeit bzw. sequenzielle Herunterbrechen der Aufgabe der Produktionsknoten wird als Produktionskette verstanden. Vorteilhaft ist an dieser Struktur, dass Anwendungen nur die oberste Schicht mit ihren Fähigkeiten nutzt. Die Konfiguration der darunter liegenden Schichten bleibt dabei verborgen und erlaubt Herstellern größere Freiheit in der Gestaltung der niedrigeren Hierarchieebenen [6].
-
-Microsoft SDK
-
-Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles Software Development Kit (SDK) das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft SDK hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden. Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen. Dort kann Microsoft SDK auch kostenlos heruntergeladen werden [7].
-
-Die Sprachß und Gestenerkennung finde nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung, wie zum Beispiel bei Microsofts Internetsuchmaschine bing. Eine neu entwickelte Körperscan Software erlaubt es, Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu verwenden, siehe unten stehende Abbildung [8].
-
-\todo[inline]{Bild von Skeletttracking einfügen}
+\begin{description}
+\item[Produktionsknoten]
+\end{description}
 
 
-Literatur
-[1]	 R. Dillmann, „4.2 Stand der Servicerobotik: BMBF-Leitprojekt MORPHA (1999–2003) und SFB 588 ‚Humanoide Roboter ‘der DFG (2001–2008)“, Informatikforschung in Deutschland, 2008.
-[2]	 M. Suppa und J. Hofschulte, „Industrierobotik im Wandel“, at-Automatisierungstechnik, Bd. 58, Nr. 12, S. 663-664, 2010.
-[3]	 J. Sturm, K. Konolige, C. Stachniss, und W. Burgard, „3D Pose Estimation, Tracking and Model Learning of Articulated Objects from Dense Depth Video using Projected Texture Stereo“, 2010.
-[4]	„s6.jpg (JPEG-Grafik, 988x550 Pixel) - Skaliert (46%)“. [Online]. Available: http://i.cdn.play.tm/s/32349/p/s6.jpg. [Accessed: 24-Apr-2012].
-[5]	„Hardware Specs | Willow Garage“. [Online]. Available: http://www.willowgarage.com/pages/pr2/specs. [Accessed: 04-Mai-2012].
-[6]	„OpenNI - OpenNI > Home“. [Online]. Available: http://www.openni.org/. [Accessed: 28-März-2012].
-[7]	„Kinect Develop | Kinect for Windows“. [Online]. Available: http://www.microsoft.com/en-us/kinectforwindows/develop/. [Accessed: 27-März-2012].
-[8]	„Microsoft Kinect now entering other than the gaming world | SayPeople“. [Online]. Available: \url{http://saypeople.com/2011/06/17/microsoft-kinect-now-entering-other-than-the-gaming-world/#axzz1lpVuRjj6}. [Accessed: 27-März-2012].
+In \gls{openni} werden sogenannte Produktionsknoten definiert die die Aufgabe haben,
+ für verschiedene Anwendungen die Daten zur Verfügung zu stellen.
+ Produktionsknoten stehen dabei in einer Hierarchie zueinander.
+ Sie können sowohl Produktionsknoten eines niedrigeren Levels verwenden als auch von Knoten höheren
+ Levels verwendet werden. Konkret bietet \gls{openni} einen User Generator, der alle Daten einer getrackten Person
+ liefern kann. Hierfür verwendet der User Generator einen Tiefenbildgenerator, aus dem er seine Informationen ableitet.
 
+\begin{description}
+\item[Produktionsketten]
+\end{description}
+
+Wie bereits dargestellt können mehrere Module gleichzeitig an der selben \gls{openni} Distribution angemeldet sein.
+ Diese Topologie erlaubt Anwendungen flexibel auf Aufnahme- und Verarbeitungsmodule zuzugreifen.
+ Als Produktionsketten werden die bereits angesprochenen hierarchischen Verarbeitungsketten der Produktionsknoten verstanden.
+ Der erwähnte User Generator verwendet einen Tiefengenerator, der wiederum seine Daten von einem Tiefensensor bezieht.
+ Diese Abhängigkeit bzw. sequenzielle Herunterbrechen der Aufgabe der Produktionsknoten wird als Produktionskette verstanden.
+ Vorteilhaft ist an dieser Struktur, dass Anwendungen nur die oberste Schicht mit ihren Fähigkeiten nutzt.
+ Die Konfiguration der darunter liegenden Schichten bleibt dabei verborgen und erlaubt Herstellern größere Freiheit
+ in der Gestaltung der niedrigeren Hierarchieebenen [6].
+
+\subsubsection{Microsoft SDK}
+
+Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles Software Development Kit (SDK)
+ das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft SDK
+ hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden.
+ Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
+ Dort kann Microsoft SDK auch kostenlos heruntergeladen werden [7].
+
+Die Sprachß und Gestenerkennung finde nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
+ wie zum Beispiel bei Microsofts Internetsuchmaschine bing. Eine neu entwickelte Körperscan Software erlaubt es,
+ Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu
+ verwenden, siehe Abbildung \ref{fig:skelettracking} [8].
+
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.8]{graphics/skelettracking.jpg}
+\caption{\label{fig:skelettracking} Beispielhafte Anwendung von Skelettracking
+[8]}
+\end{figure}
