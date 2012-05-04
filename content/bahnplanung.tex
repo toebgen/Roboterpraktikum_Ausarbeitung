@@ -118,7 +118,8 @@ Nach Robotertyp:
 
 Nach dem Zustandsraum wo die Planung stattfindet:
 \begin{itemize}
-\item Gelenkwinkelzustandsraum (Konfigurationsraum, der alle möglichen Gelenkwinkelkonfigurationen des Roboters beinhaltet)
+\item Gelenkwinkelzustandsraum (Konfigurationsraum,\\ der alle möglichen
+Gelenkwinkelkonfigurationen des Roboters beinhaltet)
 \item Euklidischer Raum (Arbeitsraum, 3D / 6D)
 \item Sensorzustandsraum
 \item Objektzustandsraum
@@ -142,7 +143,9 @@ So wird der Konfigurationsraum während der Suche exploriert.
 
 Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell2003}.
 \begin{enumerate}
-\item Eine Roadmap oder einen Graph aufbauen mittels \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach Sampling-Strategie (\zB für \gls{PRM} Verfahren\cite{Thrun2005}).
+\item Eine Roadmap oder einen Graph aufbauen mittels \gls{Voronoi},
+ \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach
+ Sampling-Strategie (\zB für \gls{PRM} Verfahren\cite{Thrun2005}).
 \item Im Graph einen Weg vom Startknoten zum Zielknoten finden mittels A*-Algorithmus oder anderer Suchalgorithmen.
 \end{enumerate}
 
@@ -227,7 +230,8 @@ Eine andere Möglichkeit zur Flucht, die von Rimon und Koditschek vorgestellt wu
 
 
 
-Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul \lstinline{SegwayOmniHal} von der Odete.
+Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul
+\lstinline{Segway-}\lstinline{OmniHal} von der Odete.
 Unsere Aufgabe bestand darin, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen.
 Als Eingaben erhält es Geschwindigkeiten, und Ausgaben sind die plattformspezifischen Geschwindigkeiten.
 Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
@@ -254,7 +258,13 @@ Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der 
 \authorsection{\editorjulian}
 
 \todo[inline]{Julian: Schreiben}
-In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters. Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung. Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb nicht aktiv kommt die Ausgabe der Gruppe \lstinline{SegwayOmniAutoReflexes} zur Verwendung. So ist es möglich zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
+In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters.
+ Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung.
+ Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe
+ \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb
+ nicht aktiv kommt die Ausgabe der Gruppe
+ \lstinline{SegwayOmni-}\lstinline{AutoReflexes} zur Verwendung. So ist es
+ möglich zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
 
 \begin{figure}[h]
 	\label{fig:bahnplanung_reflexes_gruppe}
@@ -295,7 +305,10 @@ Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeit
 \subsubsection{Vorhandene Software}
 \label{bahnplanung_inv_kinem_vorhandene_software_sec}
 
-Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war. Insbesondere der zentrale Teil, die Module \lstinline{DriveAlongPath} bzw. \lstinline{OmniOrientedDriveAlongPath} welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden verursachten im laufenden Betrieb allerdings Probleme.
+Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war.
+ Insbesondere der zentrale Teil, die Module
+ \lstinline{DriveAlong-}\lstinline{Path} bzw.
+ \lstinline{OmniOrientedDriveAlongPath} welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden verursachten im laufenden Betrieb allerdings Probleme.
 
 \subsubsection{Erweiterungen}
 \label{bahnplanung_inv_kinem_erweiterung_sec}
@@ -322,7 +335,9 @@ Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
+Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht.
+ In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren,
+ die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
 
 \todo[inline]{Bild zur Verwendung des Virtual Protective Field}
 
@@ -517,7 +532,8 @@ Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Modu
 	\item \lstinline{fileUtil}
 \end{itemize}
 
-Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
+Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades,
+ schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
 Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
 Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand des euklidischen Abstands festgelegt:
 Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.

@@ -65,9 +65,10 @@ Gruppen \lstinline{SegwayOmniBehaviours} und \lstinline{SegwayOmniKinect}. Zur K
 eine zusätzliche Ebene hinzu, die es erlaubt die einzelnen Verhalten zu aktivieren. Diese Ebene arbeitet auf 
 Aufgabenbasis und aktiviert das notwendige Verhalten um eine Aufgabe auszuführen. Eine Aufgabe ist 
 beispielsweise: Zeige den gespeicherten Pfad einem Menschen. Auf der Verhaltensebene muss nun die entsprechende 
-Funktion aktiviert werden. In diesem Beispiel würde die \lstinline{SegwayOmniKinect}-Gruppe das Verhalten zum 
-Beobachten eines Menschen ausführen und die \lstinline{SegwayOmniBehaviours}-Gruppe das Verhalten zum Abfahren 
-eines gespeicherten Pfades.
+Funktion aktiviert werden. In diesem Beispiel würde die
+\lstinline{SegwayOmni-}\lstinline{Kinect}-Gruppe das Verhalten zum Beobachten
+eines Menschen ausführen und die \lstinline{SegwayOmni-Behaviours}-Gruppe das
+Verhalten zum Abfahren eines gespeicherten Pfades.
 
 Die Funktionen des Roboters können, auf oberster Ebene, in einzelne, unabhängige Aufgaben getrennt werden. 
 \todo[inline]{itemize mit Aufgaben oder Tabelle mit Aufgaben und entsprech. Verhalten}
@@ -78,8 +79,8 @@ die Aktivierung verschiedener Funktionen durch Gesten gewünscht ist, erfolgt de
 Zustände durch eine deterministische Zustandsmaschine\todo[inline]{ref zu wiki artikel}. Bei komplexeren 
 Aufgaben, oder in Szenarien bei der die beobachtete Umwelt nicht deterministisch aufgefasst wird, stößt 
 eine Zustandsmaschine an ihre Grenzen und es muss eine Planer\todo[inline]{ref zu planer} verwendet werden. 
-Neben der globalen Zustandsmaschine im Modul \lstinline{SegwayOmniStateModeManager} erhält jede Gruppe 
-in der darunterliegenden Hierarchieebene (die Verhaltensebene) ebenfalls eine Zustandsmaschine; 
+Neben der globalen Zustandsmaschine im Modul
+\lstinline{SegwayOmniStateMode-Manager} erhält jede Gruppe in der darunterliegenden Hierarchieebene (die Verhaltensebene) ebenfalls eine Zustandsmaschine; 
 realisiert sind diese in den Modulen \lstinline{SegwayOmniBehavioursManager} bzw. \lstinline{SegwayOmniKinectManager}.
 
 Mit Hilfe dieser hierarchischen Architektur und durch das Arbeiten mit Zuständen kann effizient und für 
@@ -108,17 +109,17 @@ Setzen der entsprechenden Zustände auf Verhaltensebene, ein bestimmtes Verhalte
 auch ein momentan aktives Verhalten beendet.
 
 Die \lstinline{Mca2}-Architektur bietet, durch die strikte Trennung des Informationsflusses in 
-einen \lstinline{Control}- und \lstinline{Sense}-Teil, eine passende Grundlage für das zuvor 
-beschriebene Konzept. Jede Zustandsmaschine ist in zwei Teile gespalten. Im \lstinline{Sense}-Teil 
+einen \lstinline{Con-trol}- und \lstinline{Sense}-Teil, eine passende Grundlage
+für das zuvor beschriebene Konzept. Jede Zustandsmaschine ist in zwei Teile gespalten. Im \lstinline{Sense}-Teil 
 erfolgt die Verarbeitung neuer Informationen. Dies geschieht indem, entsprechend dem vorherrschenden 
 inneren Zustand und der beobachteten, externen Variable, ein Übergang zu einem neuen Zustand 
 ausgeführt wird. Beispielsweise kommt die Ausführung der Aufgabe \textit{Verfolge einen Menschen} 
 durch die Geste \textit{Stop} zu ihrem Ende. Im \lstinline{Control}-Teil werden hingegen 
 Handlungen ausgeführt. Hier erfolgt, entsprechend dem momentanen inneren Zustand, zum Beispiel 
 das Setzen eines neuen Zustandes für in der Hierarchie tiefer liegende Zustandsmaschinen. 
-Ein passendes Beispiel ist der Zustand \lstinline{stopFollowingPerson} der globalen Zustandsmaschine, 
-welcher wiederum den Zustand \lstinline{stopFollowingPerson} im \lstinline{SegwayOmniBehavioursManager} 
-setzt und so das Beenden des momentanen Verhaltens initialisiert. Erst wenn die aufgezeichnete 
+Ein passendes Beispiel ist der Zustand \lstinline{stopFollowing-Person} der
+globalen Zustandsmaschine, welcher wiederum den Zustand \lstinline{stopFollowingPerson} im
+\lstinline{SegwayOmniBehavioursManager} setzt und so das Beenden des momentanen Verhaltens initialisiert. Erst wenn die aufgezeichnete 
 Trajektorie gespeichert und der Roboter gestoppt ist, erfolgt die Rückmeldung, indem die 
 Zustandsmaschine in den Zustand \lstinline{idle} wechselt. Dieser neue Zustand wird 
 im \lstinline{Sense}-Teil der globalen Zustandsmaschine verarbeitet und falls alle weiteten 

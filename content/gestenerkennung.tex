@@ -31,9 +31,9 @@ Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
 \authorsection{\editordummy}
 
 Sowohl die Bildqualität von Sensoren, als auch die Verarbeitungsalgorithmen zeigten eine erhebliche Entwicklung in den letzten Jahren.
- Heutzutage sind 3D-Entfernungskameras durch rasche Entwicklung des
+ Heutzutage sind 3D-Entfernungskameras durch rapide Entwicklung des
  Entfernungsbildaufnahmeverfahren für breite Anwenderkreise erschwinglich
- (z.B. Microsoft Kinect oder Asus Xtion PRO LIVE).
+ (unter anderem Microsoft Kinect oder Asus Xtion PRO LIVE).
  Darum können neben 2D Farbbildern immer häufiger 3D-Bilder in Anspruch genommen
  werden. Bewährte Tatsache ist, dass Tiefenkarten eine viel robustere Darstellung geben, als herkömmliche Intensitätsbilder.
  
@@ -78,14 +78,14 @@ OpenNI liefert eine eingebaute Segmentierung, die nach unserer Erfahrungen robus
  auf dem Bildschirm mit einer Farbe gekennzeichnet. Der zugrunde liegenede Algorithmus ist gekapselt und war somit von uns nicht einsehbar.
  Der Ansatz das Modul zu verwenden schien eine gute Wahl zu sein.
 
-Wie im vorigen Absatz angesprochen werden Personen kontinuierlich segmentiert. Das „NIUserTracker“ Programm liefert auch das Skelett aller kalibrierten
- und registrierten Personen. Das Gerüst enthält die Poseninformation über jedes
+Wie im vorigen Absatz erläutert werden Personen kontinuierlich segmentiert. Das
+„NIUserTracker“ Programm liefert auch das Skelett aller kalibrierten und registrierten Personen. Das Gerüst enthält die Poseninformation über jedes
  Gelenk. Für unseren Ansatz waren Halsposition (\lstinline{XN_SKEL_NECK}), beide
  Ellenbogenpositionen (\lstinline{XN_SKEL_LEFT_ELBOW},
  \lstinline{XN_SKEL_RIGHT_ELBOW}), beide Schulterpositionen
  (\lstinline{XN_SKEL_LEFT_SHOULDER}, \lstinline{XN_SKEL_RIGHT_SHOULDER}), beide
  Hüftenwerte (\lstinline{XN_SKEL_LEFT_HIP}, \lstinline{XN_SKEL_RIGHT_HIP}) und
- die Positionen beider Handflächen (\lstinline{XN_SKEL_LEFT_HAND},
+ die Positionen beider Handflächen (\lstinline{XN_SKEL_LEFT}\\\lstinline{_HAND},
  \lstinline{XN_SKEL_RIGHT_HAND}) relevant. Das Programm gibt außerdem
  Konfidenzwerte, d.h. Einschätzungen über die Güte von Messwerte, dieser Positionen zurück.
  Bei ausrechend hohen Konfidenzwerten (>50\%) verwendeten wir die gemessenen
@@ -139,7 +139,8 @@ umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
  Diesem Ansatz liegt ein binärer Entscheidungsbaum zu Grunde, dem den einzelnen
- Output-Möglichkeiten (den Blätter des Baums, also den eigentlichen Gesten) Identifikationsnummern zugeordnet werden.
+ Output-Mög"-lich"-kei"-ten (den Blätter des Baums, also den eigentlichen
+ Gesten) Identifikationsnummern zugeordnet werden.
 
 Diese Struktur bietet programmierungstechnisch eine generische Lösung. Sie funktioniert anatomisch universal,
  also unabhängig von konkreten Körpermaßen der Person, durch die Verwendung relativer Merkmale.
@@ -209,7 +210,7 @@ Aufgrund der groben Auflösung und der stark verrauschten Messwerte der Kinect m
 
 \begin{figure}[h]
 \center
-\includegraphics[scale=0.3]{graphics/Gesten.jpg}
+\includegraphics[scale=0.25]{graphics/Gesten.jpg}
 \caption{\label{fig:Gesten} Die vier definierten Gesten (oben und in der Mitte),
  bzw. die beiden Möglichkeiten für unbestimmte Fälle (links unten: mangelndes Gelenk, rechts unten: normale Körperhaltung)}
 \end{figure}
