@@ -274,8 +274,10 @@ Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{Se
 \end{description}
 
 \begin{figure}[h]
+\label{fig:bahnpl_umsetz_schema_inv_kinem}
+\centering
 \includegraphics[scale=0.9]{graphics/SCHEMA-invKinem.pdf}
-\caption{\label{fig:bahnpl_umsetz_schema_inv_kinem} Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
+\caption{Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
 \end{figure}
 
 Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
@@ -303,8 +305,14 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 		\item Aktualisieren des Zählers zum Signalisieren das eine neue Trajektorie anliegt
 		\item Aktivieren/Deaktivieren des Moduls
 	\end{itemize}
-	\item[Safety] Aktivieren/Deaktivieren des Moduls
-	\item[VirtualProtectiveSafety] Aktivieren/Deaktivieren des Moduls
+	\item[Safety] 
+	\begin{itemize}
+		\item Aktivieren/Deaktivieren des Moduls
+	\end{itemize}
+	\item[VirtualProtectiveSafety] 
+	\begin{itemize}
+	\item Aktivieren/Deaktivieren des Moduls	
+	\end{itemize}
 \end{description}
 
 Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem Virtual Protective Field mit ein, um kollisionsfreies Fahren zu ermöglichen.
@@ -312,7 +320,7 @@ Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{VIRTUALPROTECTIVEBLA} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
+Das Modul \lstinline{VirtualProtectiveSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
 
 \todo[inline]{Bild zur Verwendung des Virtual Protective Field}
 
@@ -502,12 +510,12 @@ So kann gewährleistet werden, dass die Kinect den Menschen weiterhin im Fokus h
 
 Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Module, sowie eine Helfer-Klasse verwendet:
 \begin{itemize}
-	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{planer_integration_sec} für weitere Informationen zur globalen Zustandsmaschine) aktiv
-	\item \lstinline{LoadRoboterPositionsFromFile}: Während dem Modus Während dem Modus \lstinline{followPath} (s. Abs. \ref{planer_integration_sec}) aktiv
+	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec} für weitere Informationen zur globalen Zustandsmaschine) aktiv\todoprivate{evtl. ref noch auf subsec}
+	\item \lstinline{LoadRoboterPositionsFromFile}: Während dem Modus Während dem Modus \lstinline{followPath} (s. Abs. \ref{umsetzung_integration_sec}) aktiv\todoprivate{evtl. ref noch auf subsec}
 	\item \lstinline{fileUtil}
 \end{itemize}
 
-Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{planer_integration_sec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
+Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
 Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
 Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand des euklidischen Abstands festgelegt:
 Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
@@ -524,7 +532,7 @@ Eine beispielhafter abgespeicherter Pfad ist in Listing \ref{lst:dump_file} darg
 	999:888.8:77.77
 \end{lstlisting}
 
-Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{planer_integration_sec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
+Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
 Der euklidische Abstand findet wieder Verwendung, um den Zeitpunkt festzulegen, an welchem der nächste Punkt in die Trajektorie aufgenommen wird.
 Dies geschieht, sobald der Abstand des Roboters zu $following$ kleiner ist als der zu $next$:
 \begin{equation}
@@ -626,14 +634,29 @@ Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine I
 In der ursprünglichen Implementierung wurde die Manhattan-Distanz zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann ist es sinnvoll stattdessen die Euler-Distanz zu verwenden.
 \todo[inline]{eventuell noch eine Fußnote dazu?}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\label{fig:bahnplanung_umsetzung_algorithm_antigrav}
-	\includegraphics[scale=0.9]{graphics/BILD-AlgoAstar.png}
-	\caption{Darstellung der Hinderniskarte mit Antigravitationsfeld und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus.}
+	\label{fig:bahnplanung_umsetzung_algorithm}
+	\subfloat[Ursrpüngliche Hinderniskarte]
+	{\includegraphics[scale=0.8]{graphics/BILD-Astar_normale_hindernisse.png}}
+	\quad
+	\subfloat[Hinderniskarte mit großen Hindernissen]
+	{\includegraphics[scale=0.8]{graphics/BILD-Astar_grosse_hindernisse.png}}
+	\quad
+	\subfloat[Hinderniskarte mit Antigravitationsfeld]
+	{\includegraphics[scale=0.8]{graphics/BILD-Astar_antigrav.png}}
+	\caption{Darstellung der Hinderniskarte und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus, mit vergrößerten Hindernissen und mit Antigravitationsfeld.}
 \end{figure}
 
-\todo[inline]{Bild ohne Antig-Feld und mit einfacher Vergrößerung}
+
+%\begin{figure}[h]
+%  \centering
+%  \subfloat[Geplante Umgebung]{\label{fig:map_fzi_plan}\includegraphics[width=0.45\textwidth]{graphics/map_fzi_plan}}
+%  \quad %add desired spacing between images, e. g. ~, \quad, \qquad etc. (or a blank line to force the subfig onto a new line)
+%  \subfloat[Umgebung mit \protect\gls{hollie} und realen Scannerdaten]{\label{fig:map_fzi_hollie}\includegraphics[width=0.4\textwidth]{graphics/map_fzi}}
+%  \caption{Simulierte Büroumgebung für weitere Tests}
+%  \label{fig:map_fzi}
+%\end{figure}
 
 In der Praxis stellte sich bei der Verwendung des A*-Algorithmus heraus, dass die verwendete Implementierung nicht den optimalen, also kürzesten Weg, findet und sich an Hindernissen entlang bewegt. Dieses Verhalten führte bereits in der Simulation zu erheblichen Problemen, konnte allerdings durch die Erweiterung um ein Antigravitationsfeld abgemildert werden.
 
