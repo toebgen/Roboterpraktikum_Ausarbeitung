@@ -12,15 +12,21 @@
 \authorsection{\editoroier}
 
 
-Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so kann man das in Abstraktionsschichten einteilen:
-LowLevel-Ansteuerung, Inverse Kinematik, Bahnplanung und Kollisionsvermeidung.
-Außerdem sollte man das alles auch simulieren können.
+Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so ist eine Einteilung in Abstraktionsschichten möglich:
+\begin{itemize}
+	\item Motoransteuerung
+	\item inverse Kinematik und manuelle Steuerung
+	\item Bahnplanung	
+\end{itemize}
+Zusätzlich ist eine Simulation notwendig.
 
-Für die LowLevel Ansteuerung ist die plattformspezifische Ansteuerung und Simulation notwendig. Außerdem sollte man auch die Pose aus Odometriedaten bestimmen können.
+Für die Motoransteuerung ist die plattformspezifische Ansteuerung und Simulation notwendig. Außerdem sollte man auch die Pose aus Odometriedaten bestimmen können.
 
 Die inverse Kinematik dient dazu, aus einer gegebenen Pose eine oder mehrere bis hin zu unendlich vielen Roboterkonfigurationen zu berechnen. Letzteres passiert, wenn es Raumpunkte gibt die zu Singularitäten führen. Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden. Im Falle einer mobilen Plattform würde man als inverse Kinematik die Berechnung einer Radstellung zu einer Pose (x, y, yaw) betrachten. Die Bestimmung der Geschwindigkeit wird danach durch inverse Odometrie gemacht. Zu lösende Aufgaben im Bereich der inversen Kinematik sind: die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
 
-Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Menschendaten, sprich die Daten der Kinect-Kamera verarbeitet werden. Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, welches nebenbei kollisionsfrei sein sollte. Als letztes soll das Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
+Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Menschendaten, sprich die Daten der Kinect-Kamera verarbeitet werden. 
+Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, welches nebenbei kollisionsfrei sein sollte. Als letztes soll das 
+Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
 
 
 %Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung und die inverse Kinematik. Sonst waren, Bahnplanung/Steuerung und Kollisionsvermeidung zunächst nicht vorhanden. Eine Simulationsumgebung war vorhanden, es fehlte aber noch die Programmierung der Gui .
@@ -239,13 +245,13 @@ Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der 
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.5]{graphics/mca2architecture.png}
-	\caption{\label{fig:mca2architecture} Architektur der Software wo man die Vernetzung der einzelnen Module sehen kann}
+	\caption{\label{fig:mca2architecture} Darstellung der Softwarearchitektur durch die vernetzten Gruppen.}
 \end{figure}
 
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.5]{graphics/segwayHal.png}
-	\caption{\label{fig:segwayHal} Das Modul \lstinline{SegwayOmniHal}, welches für die Motoransteuerung zuständig ist}
+	\caption{\label{fig:segwayHal} Das Modul \lstinline{SegwayOmniHal}, welches für die Motoransteuerung zuständig ist.}
 \end{figure}
 % evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
 %		bzw. Abb. 2.3 von WS09/10
@@ -335,28 +341,14 @@ Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht.
- In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren,
- die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
+Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen, zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit, die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
 
-\todo[inline]{Bild zur Verwendung des Virtual Protective Field}
-
-
-%\begin{itemize}
-%	\item Was konkret passiert -> Umwandlung der Trajektorie in (Plattformunabhängige) Geschwindigkeiten.
-%	\item Limitierung der Beschleunigung
-%	\item Was geht rein, was kommt raus
-%	\item Virtual Protective Field verwenden um kollisionsfrei zu fahren.
-%	\item was gab es schon
-%	\begin{itemize}
-%		\item Modul Reflexes von Odete Projekt
-%		\item Bewegungsart abhängige Konvertierung einer Trajektorie
-%		\item Differential Drive, Omni Drive
-%		\item Safety Modul für Beschleunigung
-%	\end{itemize}
-%	\item Erweitert um Sicherheitsmodul welches das Virtual Protective Field berücksichtigt
-%\end{itemize}
-
+\begin{figure}
+	\label{fig:bahnplanung_umsetzung_vpf}
+	\centering
+	\includegraphics[scale=2]{graphics/SCHEMA-vpf.pdf}
+	\caption{Schematische Darstellung wie das Vritual Protective Field eingesetzt wird um Kollisionen zu vermeiden.}
+\end{figure}
 
 % -----------------------------------------------------------------------------
 %													Bahnplanung
