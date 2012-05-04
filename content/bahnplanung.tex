@@ -50,7 +50,7 @@ Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die M
 \subsection{Steuerung}
 \label{bahnplanung_steuerung_sec}
 
-Weil die gefundene Trajektorie normalerweise nicht glatt, ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
+Weil die gefundene Trajektorie normalerweise nicht glatt ist, werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
 Die Bahnsteuerung kann im kartesischen Raum oder im Konfigurationsraum stattfinden.
 Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen.
 Die Steuerung im Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher.
@@ -91,7 +91,6 @@ Wenn man allerdings segmentweise interpoliert, werden die Endbedingungen der Tei
 	\caption{\label{fig:segmentinterpolation} Beispiel der segmentweisen Bahninterpolation \citep{rob1}}
 \end{figure}
  
- 
 Bei der approximativen Bahnsteuerung werden anders als bei der Bahninterpolation nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert.
 Neben Bernsteinpolynomen wird hier besonders Überschleifen benutzt, um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht.
 Letzteres wurde auch im Praktikum eingesetzt.
@@ -101,12 +100,9 @@ Letzteres wurde auch im Praktikum eingesetzt.
 	\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierten Bahnsteuerung mit Überschleifen \citep{rob1}}
 \end{figure}
 
-
-
-
+\subsection{Bahnplanung}
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
-\subsection{Bahnplanung}
 
 Bahnplanung befasst sich mit dem Problem, eine kollisionsfreie Bahn zu finden, die ein Robotersystem von der aktuellen Position in die Zielposition überführt.
 Damit gehört es zu einer der Basisprobleme der Robotik.
@@ -137,10 +133,10 @@ Nach Vollständigkeit:
 Nach Navigationsart:
 \begin{itemize}
 \item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen, wenn dem Roboter eine Karte der Umgebung vorliegt und er sich dort lokalisieren kann.
-\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Konbination mit einem globalen Planer benutzt. 
+\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Kombination mit einem globalen Planer benutzt. 
 \end{itemize}
 
-Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr Freiheitsgraden als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
+Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr als drei Freiheitsgraden sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
 \Dh, dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
 So wird der Konfigurationsraum während der Suche exploriert.
 
@@ -153,11 +149,9 @@ Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell200
 \subsubsection{Lokale Planer}
 \label{bahnplanung_lokale_planer_sec}
 
-
 In diesem Abschnitt werden einige gängige lokale Planer vorgestellt.
 
 \paragraph{A*-Algorithmus} 
-
 
 Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse der informierten Graphensuchalgorithmen.
 Dies heißt, dass eine Schätzungsfunktion benutzt wird, um die Suche zu lenken.
@@ -182,14 +176,13 @@ In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit An
 \caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}  \citep{innoKonz}}
 \end{figure}
 
-
 Der \textit{A*-Algorithmus}, obwohl er nicht mehr als state-of-the-art gilt\citep{innoKonz}, ist als lokaler Planer, vor allem in 2D, sehr gut.
 Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter.
-Außerdem kann man den Grundalgorithmus noch sehr viel optimieren.
+Außerdem kann man den Grundalgorithmus noch weiter optimieren.
 Zum Beispiel mit dem Hierarchischen \textit{A*}, damit er, wenn keine Hindernisse in der Nähe liegen, größere Schritte und sonst kleinere Schritte macht.
-Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
+Es gibt zusätzliche Erweiterungen für die bidirektionale Suche, die parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
 Man könnte auch den Algorithmus stoppen, sobald man einen Weg gefunden hat, dann ist der Algorithmus natürlich nicht mehr optimal.
-Diese Erweiterungen sind von den zu lösenden Aufgabe abhängig, mehrere Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich sein.
+Diese Erweiterungen sind von der zu lösenden Aufgabe abhängig, mehrere Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich sein.
 
 \paragraph{Potentialfelder}
 
@@ -202,7 +195,6 @@ F(q) = - \nabla U(q)
 \end{equation}
 wobei $U(q)$ die Summe der Abstoßungs- und Anziehungspotentiale ist.
 Diese Summe ist in Abbildung \ref{fig:potentialfeld} dargestellt.
-
 
 \begin{figure}[h]
 \center
@@ -264,6 +256,13 @@ Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der 
 \todo[inline]{Julian: Schreiben}
 In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters. Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung. Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb nicht aktiv kommt die Ausgabe der Gruppe \lstinline{SegwayOmniAutoReflexes} zur Verwendung. So ist es möglich zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
 
+\begin{figure}[h]
+	\label{fig:bahnplanung_reflexes_gruppe}
+	\center
+	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniReflexes.png}
+	\caption{Die Gruppe \lstinline{SegwayOmniReflexes}, zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
+\end{figure}
+
 Die manuelle Steuerung ist mittels der zur Simulation erstellten \lstinline{MCAGUI} Oberfläche oder - beim Test am realen Roboter - mit einem Gamepad möglich.
 
 Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind bereitgestellt:
@@ -274,28 +273,34 @@ Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{Se
 \end{description}
 
 \begin{figure}[h]
+\label{fig:bahnpl_umsetz_schema_inv_kinem}
+\centering
 \includegraphics[scale=0.9]{graphics/SCHEMA-invKinem.pdf}
-\caption{\label{fig:bahnpl_umsetz_schema_inv_kinem} Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
+\caption{Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
 \end{figure}
 
 Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
 
 Zuletzt findet mit Hilfe des Virtual Protective Field (siehe \ref{lokalisierung_umsetzung_sec}) eine Kollisionsvermeidung statt.
 
-Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
+\begin{figure}[h]
+	\label{fig:bahnplanung_umsetzung_auto_refl}
+	\center
+	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniAutoReflexes.png}
+	\caption{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail. Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert.}
+\end{figure}
 
-\todo[inline]{Bild der Gruppe mit kurzer Erläuterung bzgl. wo was passiert}
+Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
 
 \subsubsection{Vorhandene Software}
 \label{bahnplanung_inv_kinem_vorhandene_software_sec}
 
-Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war. Insbesondere der zentrale Teil, die Module \lstinline{DriveAlongPath} bzw. \lstinline{OmniDriveAlongPath} welche für die inverse Kinematik zuständig sind wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden und konnten ohne Veränderung integriert werden.
+Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war. Insbesondere der zentrale Teil, die Module \lstinline{DriveAlongPath} bzw. \lstinline{OmniOrientedDriveAlongPath} welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden verursachten im laufenden Betrieb allerdings Probleme.
 
 \subsubsection{Erweiterungen}
 \label{bahnplanung_inv_kinem_erweiterung_sec}
 
-Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle das Modul \lstinline{AutoReflexesManager}. Dieses Modul vereinfacht und automatisiert verschiedene Funktionen der Module \lstinline{DriveAlongPath}, \lstinline{OmniDriveAlongPath}, \lstinline{Safety} und \lstinline{VirtualProtectiveSafety}:
-\todo[inline]{Richtige Namen der modul nachschauen}
+Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle das Modul \lstinline{AutoReflexesManager}. Dieses Modul vereinfacht und automatisiert verschiedene Funktionen der Module \lstinline{DriveAlongPath}, \lstinline{OmniOrientedDriveAlongPath}, \lstinline{SafetyModule} und \lstinline{ObstacleSafety}:
 \begin{description}
 	\item[DriveAlongPath]
 	\begin{itemize}
@@ -303,16 +308,21 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 		\item Aktualisieren des Zählers zum Signalisieren das eine neue Trajektorie anliegt
 		\item Aktivieren/Deaktivieren des Moduls
 	\end{itemize}
-	\item[Safety] Aktivieren/Deaktivieren des Moduls
-	\item[VirtualProtectiveSafety] Aktivieren/Deaktivieren des Moduls
+	\item[SafetyModule] 
+	\begin{itemize}
+		\item Aktivieren/Deaktivieren des Moduls
+	\end{itemize}
+	\item[ObstacleSafety] 
+	\begin{itemize}
+	\item Aktivieren/Deaktivieren des Moduls	
+	\end{itemize}
 \end{description}
-
 Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem Virtual Protective Field mit ein, um kollisionsfreies Fahren zu ermöglichen.
 
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{VIRTUALPROTECTIVEBLA} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
+Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
 
 \todo[inline]{Bild zur Verwendung des Virtual Protective Field}
 
@@ -502,12 +512,12 @@ So kann gewährleistet werden, dass die Kinect den Menschen weiterhin im Fokus h
 
 Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Module, sowie eine Helfer-Klasse verwendet:
 \begin{itemize}
-	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{planer_integration_sec} für weitere Informationen zur globalen Zustandsmaschine) aktiv
-	\item \lstinline{LoadRoboterPositionsFromFile}: Während dem Modus Während dem Modus \lstinline{followPath} (s. Abs. \ref{planer_integration_sec}) aktiv
+	\item \lstinline{StoreRoboterPositionsToFile}: Während dem Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec} für weitere Informationen zur globalen Zustandsmaschine) aktiv\todoprivate{evtl. ref noch auf subsec}
+	\item \lstinline{LoadRoboterPositionsFromFile}: Während dem Modus Während dem Modus \lstinline{followPath} (s. Abs. \ref{umsetzung_integration_sec}) aktiv\todoprivate{evtl. ref noch auf subsec}
 	\item \lstinline{fileUtil}
 \end{itemize}
 
-Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{planer_integration_sec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
+Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Einlernen eines neuen Pfades, schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
 Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
 Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand des euklidischen Abstands festgelegt:
 Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
@@ -524,7 +534,7 @@ Eine beispielhafter abgespeicherter Pfad ist in Listing \ref{lst:dump_file} darg
 	999:888.8:77.77
 \end{lstlisting}
 
-Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{planer_integration_sec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
+Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{umsetzung_integration_sec}\todoprivate{evtl. ref noch auf subsec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
 Der euklidische Abstand findet wieder Verwendung, um den Zeitpunkt festzulegen, an welchem der nächste Punkt in die Trajektorie aufgenommen wird.
 Dies geschieht, sobald der Abstand des Roboters zu $following$ kleiner ist als der zu $next$:
 \begin{equation}
@@ -626,14 +636,29 @@ Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine I
 In der ursprünglichen Implementierung wurde die Manhattan-Distanz zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann ist es sinnvoll stattdessen die Euler-Distanz zu verwenden.
 \todo[inline]{eventuell noch eine Fußnote dazu?}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\label{fig:bahnplanung_umsetzung_algorithm_antigrav}
-	\includegraphics[scale=0.9]{graphics/BILD-AlgoAstar.png}
-	\caption{Darstellung der Hinderniskarte mit Antigravitationsfeld und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus.}
+	\label{fig:bahnplanung_umsetzung_algorithm}
+	\subfloat[Ursrpüngliche Hinderniskarte]
+	{\includegraphics[scale=0.8]{graphics/BILD-Astar_normale_hindernisse.png}}
+	\quad
+	\subfloat[Hinderniskarte mit großen Hindernissen]
+	{\includegraphics[scale=0.8]{graphics/BILD-Astar_grosse_hindernisse.png}}
+	\quad
+	\subfloat[Hinderniskarte mit Antigravitationsfeld]
+	{\includegraphics[scale=0.8]{graphics/BILD-Astar_antigrav.png}}
+	\caption{Darstellung der Hinderniskarte und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus, mit vergrößerten Hindernissen und mit Antigravitationsfeld.}
 \end{figure}
 
-\todo[inline]{Bild ohne Antig-Feld und mit einfacher Vergrößerung}
+
+%\begin{figure}[h]
+%  \centering
+%  \subfloat[Geplante Umgebung]{\label{fig:map_fzi_plan}\includegraphics[width=0.45\textwidth]{graphics/map_fzi_plan}}
+%  \quad %add desired spacing between images, e. g. ~, \quad, \qquad etc. (or a blank line to force the subfig onto a new line)
+%  \subfloat[Umgebung mit \protect\gls{hollie} und realen Scannerdaten]{\label{fig:map_fzi_hollie}\includegraphics[width=0.4\textwidth]{graphics/map_fzi}}
+%  \caption{Simulierte Büroumgebung für weitere Tests}
+%  \label{fig:map_fzi}
+%\end{figure}
 
 In der Praxis stellte sich bei der Verwendung des A*-Algorithmus heraus, dass die verwendete Implementierung nicht den optimalen, also kürzesten Weg, findet und sich an Hindernissen entlang bewegt. Dieses Verhalten führte bereits in der Simulation zu erheblichen Problemen, konnte allerdings durch die Erweiterung um ein Antigravitationsfeld abgemildert werden.
 
