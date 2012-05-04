@@ -6,7 +6,7 @@ Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Service
  ist Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel
  statt eines reinen Staubsaugroboters einen Haushaltsroboters zu verwenden.
  Im Fokus steht außerdem, wie auch in der Informationstechnologie eine kostengünstige Verbesserung des Mensch-Maschine-Interface.
-\todo[inline]{Quelle kann nicht identifiziert werden}
+ \citep{IP08}
 
 Die Forschungsfelder in Industrie- und Servicerobotik nähern sich dabei im Laufe der Jahre immer weiter an.
  So müssen Industrieroboter in Zusammenarbeit mit dem Menschen ihre Aufgaben verrichten und Serviceroboter
@@ -93,15 +93,15 @@ Mobile Roboterplattformen werden in den meisten Fällen zu Forschungszwecken ver
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.5]{graphics/PR2Struktur.jpg}
-\caption{\label{fig:PR2Struktur} Struktur des PR2 [5]}
+\caption{\label{fig:PR2Struktur} Struktur des PR2 \citep{hspecsWG2012}}
 \end{figure}
 
 Der PR2 ist ein kommerziell erhältlicher, weit entwickelter humanoider Roboter, der den typische Aufbau humanoider Roboterplattformen aufweist.
- Er hat folgende, \gls{hollie} ähnlicher, technische Eigenschaften [5]:
+ Er hat folgende, \gls{hollie} ähnlicher, technische Eigenschaften \citep{hspecsWG2012}:
 
 \begin{itemize}
-  \item 2 Arme mit Greifern (Arm 4 DoF, Handgelenk 3 DoF, Greifer 1DoF)
-  \item Kopf mir 2DoF
+  \item 2 Arme mit Greifern (Arm 4 DoF, Handgelenk 3 DoF, Greifer 1 DoF)
+  \item Kopf mir 2 DoF
   \item Omnidirektionale Basis (3 DoF)
 \end{itemize}
 
@@ -139,7 +139,7 @@ Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders infor
 Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
  Die \gls{openni}-API stellt eine Vielzahl an Schnittstellen bereit, um
  entsprechende Applikationen zu programmieren. Der Hauptzweck von \gls{openni}
-  ist eine Standard-API bereitzustellen, die folgende Eigenschaften vereint [6]:
+  ist eine Standard-API bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
 
 \begin{itemize}
   \item Kommunikation mit Video und Audiosensoren
@@ -168,7 +168,7 @@ Dabei stellt \gls{openni} eine Reihe von APIs bereit, die sowohl von  (3D-Kamera
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.8]{graphics/openNI.jpg}
-\caption{\label{fig:openNI} \gls{openni} Architektur [6]}
+\caption{\label{fig:openNI} \gls{openni} Architektur \citep{openNI2012}}
 \end{figure}
 
 OpenNI basiert auf einigen Grundkonzepten:
@@ -179,6 +179,9 @@ OpenNI basiert auf einigen Grundkonzepten:
   \item Produktionsketten
 \end{itemize}
 
+\newpage
+\todo[inline]{Ein gepfuscht hier \ldots falls wer Lust hat kann er das
+ja ändern}
 \begin{description}
 \item[Modularität]
 \end{description}
@@ -233,7 +236,7 @@ Wie bereits dargestellt können mehrere Module gleichzeitig an der selben \gls{o
  Diese Abhängigkeit bzw. sequenzielle Herunterbrechen der Aufgabe der Produktionsknoten wird als Produktionskette verstanden.
  Vorteilhaft ist an dieser Struktur, dass Anwendungen nur die oberste Schicht mit ihren Fähigkeiten nutzt.
  Die Konfiguration der darunter liegenden Schichten bleibt dabei verborgen und erlaubt Herstellern größere Freiheit
- in der Gestaltung der niedrigeren Hierarchieebenen [6].
+ in der Gestaltung der niedrigeren Hierarchieebenen \citep{openNI2012}.
 
 \subsubsection{Microsoft SDK}
 
@@ -241,16 +244,16 @@ Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles Software D
  das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft SDK
  hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden.
  Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
- Dort kann Microsoft SDK auch kostenlos heruntergeladen werden [7].
+ Dort kann Microsoft SDK auch kostenlos heruntergeladen werden \citep{kinectDevKfW2012}.
 
 Die Sprachß und Gestenerkennung finde nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
  wie zum Beispiel bei Microsofts Internetsuchmaschine bing. Eine neu entwickelte Körperscan Software erlaubt es,
  Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu
- verwenden, siehe Abbildung \ref{fig:skelettracking} [8].
+ verwenden, siehe Abbildung \ref{fig:skelettracking} \citep{noGameKinect2012}.
 
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.8]{graphics/skelettracking.jpg}
 \caption{\label{fig:skelettracking} Beispielhafte Anwendung von Skelettracking
-[8]}
+\citep{noGameKinect2012}}
 \end{figure}
