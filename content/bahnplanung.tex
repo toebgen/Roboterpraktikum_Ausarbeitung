@@ -50,7 +50,7 @@ Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die M
 \subsection{Steuerung}
 \label{bahnplanung_steuerung_sec}
 
-Weil die gefundene Trajektorie normalerweise nicht glatt, ist werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
+Weil die gefundene Trajektorie normalerweise nicht glatt ist, werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
 Die Bahnsteuerung kann im kartesischen Raum oder im Konfigurationsraum stattfinden.
 Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen.
 Die Steuerung im Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher.
@@ -91,7 +91,6 @@ Wenn man allerdings segmentweise interpoliert, werden die Endbedingungen der Tei
 	\caption{\label{fig:segmentinterpolation} Beispiel der segmentweisen Bahninterpolation \citep{rob1}}
 \end{figure}
  
- 
 Bei der approximativen Bahnsteuerung werden anders als bei der Bahninterpolation nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert.
 Neben Bernsteinpolynomen wird hier besonders Überschleifen benutzt, um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht.
 Letzteres wurde auch im Praktikum eingesetzt.
@@ -101,12 +100,9 @@ Letzteres wurde auch im Praktikum eingesetzt.
 	\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierten Bahnsteuerung mit Überschleifen \citep{rob1}}
 \end{figure}
 
-
-
-
+\subsection{Bahnplanung}
 \label{bahnplanung_grundlagen_sec}
 \authorsection{\editoroier}
-\subsection{Bahnplanung}
 
 Bahnplanung befasst sich mit dem Problem, eine kollisionsfreie Bahn zu finden, die ein Robotersystem von der aktuellen Position in die Zielposition überführt.
 Damit gehört es zu einer der Basisprobleme der Robotik.
@@ -137,10 +133,10 @@ Nach Vollständigkeit:
 Nach Navigationsart:
 \begin{itemize}
 \item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen, wenn dem Roboter eine Karte der Umgebung vorliegt und er sich dort lokalisieren kann.
-\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Konbination mit einem globalen Planer benutzt. 
+\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Kombination mit einem globalen Planer benutzt. 
 \end{itemize}
 
-Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr Freiheitsgraden als 3 sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
+Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr als drei Freiheitsgraden sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
 \Dh, dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
 So wird der Konfigurationsraum während der Suche exploriert.
 
@@ -153,11 +149,9 @@ Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell200
 \subsubsection{Lokale Planer}
 \label{bahnplanung_lokale_planer_sec}
 
-
 In diesem Abschnitt werden einige gängige lokale Planer vorgestellt.
 
 \paragraph{A*-Algorithmus} 
-
 
 Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse der informierten Graphensuchalgorithmen.
 Dies heißt, dass eine Schätzungsfunktion benutzt wird, um die Suche zu lenken.
@@ -182,14 +176,13 @@ In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit An
 \caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}  \citep{innoKonz}}
 \end{figure}
 
-
 Der \textit{A*-Algorithmus}, obwohl er nicht mehr als state-of-the-art gilt\citep{innoKonz}, ist als lokaler Planer, vor allem in 2D, sehr gut.
 Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter.
-Außerdem kann man den Grundalgorithmus noch sehr viel optimieren.
+Außerdem kann man den Grundalgorithmus noch weiter optimieren.
 Zum Beispiel mit dem Hierarchischen \textit{A*}, damit er, wenn keine Hindernisse in der Nähe liegen, größere Schritte und sonst kleinere Schritte macht.
-Es gibt weitere Erweiterungen für bidirektionale Suche, parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
+Es gibt zusätzliche Erweiterungen für die bidirektionale Suche, die parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
 Man könnte auch den Algorithmus stoppen, sobald man einen Weg gefunden hat, dann ist der Algorithmus natürlich nicht mehr optimal.
-Diese Erweiterungen sind von den zu lösenden Aufgabe abhängig, mehrere Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich sein.
+Diese Erweiterungen sind von der zu lösenden Aufgabe abhängig, mehrere Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich sein.
 
 \paragraph{Potentialfelder}
 
@@ -202,7 +195,6 @@ F(q) = - \nabla U(q)
 \end{equation}
 wobei $U(q)$ die Summe der Abstoßungs- und Anziehungspotentiale ist.
 Diese Summe ist in Abbildung \ref{fig:potentialfeld} dargestellt.
-
 
 \begin{figure}[h]
 \center
