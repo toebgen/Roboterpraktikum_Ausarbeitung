@@ -1,21 +1,47 @@
-
 \chapter{Einleitung}
 \label{einleitung_cha}
+\todo[inline]{Author hinzufügen}
+\authorsection{\editordummy}
+Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Servicerobotik
+ ist Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel
+ statt eines reinen Staubsaugroboters einen Haushaltsroboters zu verwenden.
+ Im Fokus steht außerdem, wie auch in der Informationstechnologie eine kostengünstige Verbesserung des Mensch-Maschine-Interface.
+\todo[inline]{Quelle kann nicht identifiziert werden}
 
-\todo[inline]{Kinect-Gruppe: Schreiben}
+Die Forschungsfelder in Industrie- und Servicerobotik nähern sich dabei im Laufe der Jahre immer weiter an.
+ So müssen Industrieroboter in Zusammenarbeit mit dem Menschen ihre Aufgaben verrichten und Serviceroboter
+ in Zukunft auch komplexe Handhabungsaufgaben lösen. Die Entwicklung findet daher besonders im Bereich der
+ Informationstechnologie und der Sensorik statt \citep{Michael2010}.
+ 
+In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt.
+ Zur meist funktionsrelevanten Interaktion eines Serviceroboters mit der Umwelt muss
+ ein Roboter aufgrund der Vielfalt möglicher Umgebungen adaptiv in der Lage sein reichhaltige
+ Informationen darüber zu gewinnen. Unstrukturierte Umgebungen lassen sich nicht vollständig modellieren.
+ Roboter müssen somit durch Interaktion mit ihrer Umwelt lernen, sich orientieren und auf Menschen bzw. Informationen reagieren.
+ Besonders anspruchsvoll sind dabei Perzeption und Verarbeitung von Signalen.
 
-\section{Motivation}
+\section{Motivation und Problemstellung}
 \label{motivation_sec}
+\todo[inline]{Author hinzufügen}
 \authorsection{\editordummy}
 
-\todo[inline]{Kinect-Gruppe: Schreiben}
+In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden in denen es nicht möglich ist diese durch
+ (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}.
+ Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
+ Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
+ zu 3D-Tiefenbildern erweitert werden. 
 
-
-\section{Aufgabenstellung}
-\label{aufgabenstellung_sec}
-\authorsection{\editordummy}
-\todo[inline]{Kinect-Gruppe: Schreiben}
-
+Das Identifizieren und Verfolgen geometrischer Objekte in (Tiefen-) Bildern ist ein weit entwickeltes Feld mit hoher Reife und etablierten Methoden.
+ Die große Herausforderung ist die semantische Interpretation dieser Daten. Besonders das zuverlässige Gewinnen funktionsrelevanter Informationen,
+ wie zum Beispiel interaktiver Charakteristika, kinematischer, werkstofftechnischer und  Oberflächen-Beschaffenheit aus (Tiefen-) Bildern stellt sich
+ als problematisch dar. In unstrukturierten Umgebungen versagen andere Sensorentypen allein jedoch oder deren Anwendung ist bisher aufgrund des Preises sinnlos.
+ 
+Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst man weitere Sensorinformationen durch Interaktion eines Roboters mit der Umgebung,
+ zum anderen werden dem Roboter weitreichende erwartete Zusammenhänge von Informationen bereitgestellt. Entwickler können bei diesen Aufgaben auf weit entwickelte Roboterplattformen
+ zurückgreifen, wie den PR2 der Firma willow garage und wie in diesem Praktikum
+ \gls{hollie} des \gls{fzi} Karlsruhe. Willow garage stellt auch umfangreiche
+ Software zur (Tiefen-) Bildverarbeitung und Robotersteuerung zur Verfügung,
+ wie \gls{opencv}, \gls{pcl} und \gls{ros}.
 
 \section{Stand der Technik}
 \label{stand_der_technik_sec}
