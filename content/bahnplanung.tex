@@ -256,6 +256,13 @@ Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der 
 \todo[inline]{Julian: Schreiben}
 In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters. Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung. Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb nicht aktiv kommt die Ausgabe der Gruppe \lstinline{SegwayOmniAutoReflexes} zur Verwendung. So ist es möglich zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
 
+\begin{figure}[h]
+	\label{fig:bahnplanung_reflexes_gruppe}
+	\center
+	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniReflexes.png}
+	\caption{Die Gruppe \lstinline{SegwayOmniReflexes}, zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
+\end{figure}
+
 Die manuelle Steuerung ist mittels der zur Simulation erstellten \lstinline{MCAGUI} Oberfläche oder - beim Test am realen Roboter - mit einem Gamepad möglich.
 
 Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind bereitgestellt:
@@ -276,20 +283,24 @@ Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Be
 
 Zuletzt findet mit Hilfe des Virtual Protective Field (siehe \ref{lokalisierung_umsetzung_sec}) eine Kollisionsvermeidung statt.
 
-Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
+\begin{figure}[h]
+	\label{fig:bahnplanung_umsetzung_auto_refl}
+	\center
+	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniAutoReflexes.png}
+	\caption{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail. Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert.}
+\end{figure}
 
-\todo[inline]{Bild der Gruppe mit kurzer Erläuterung bzgl. wo was passiert}
+Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
 
 \subsubsection{Vorhandene Software}
 \label{bahnplanung_inv_kinem_vorhandene_software_sec}
 
-Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war. Insbesondere der zentrale Teil, die Module \lstinline{DriveAlongPath} bzw. \lstinline{OmniDriveAlongPath} welche für die inverse Kinematik zuständig sind wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden und konnten ohne Veränderung integriert werden.
+Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war. Insbesondere der zentrale Teil, die Module \lstinline{DriveAlongPath} bzw. \lstinline{OmniOrientedDriveAlongPath} welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden verursachten im laufenden Betrieb allerdings Probleme.
 
 \subsubsection{Erweiterungen}
 \label{bahnplanung_inv_kinem_erweiterung_sec}
 
-Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle das Modul \lstinline{AutoReflexesManager}. Dieses Modul vereinfacht und automatisiert verschiedene Funktionen der Module \lstinline{DriveAlongPath}, \lstinline{OmniDriveAlongPath}, \lstinline{Safety} und \lstinline{VirtualProtectiveSafety}:
-\todo[inline]{Richtige Namen der modul nachschauen}
+Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle das Modul \lstinline{AutoReflexesManager}. Dieses Modul vereinfacht und automatisiert verschiedene Funktionen der Module \lstinline{DriveAlongPath}, \lstinline{OmniOrientedDriveAlongPath}, \lstinline{SafetyModule} und \lstinline{ObstacleSafety}:
 \begin{description}
 	\item[DriveAlongPath]
 	\begin{itemize}
@@ -297,22 +308,21 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 		\item Aktualisieren des Zählers zum Signalisieren das eine neue Trajektorie anliegt
 		\item Aktivieren/Deaktivieren des Moduls
 	\end{itemize}
-	\item[Safety] 
+	\item[SafetyModule] 
 	\begin{itemize}
 		\item Aktivieren/Deaktivieren des Moduls
 	\end{itemize}
-	\item[VirtualProtectiveSafety] 
+	\item[ObstacleSafety] 
 	\begin{itemize}
 	\item Aktivieren/Deaktivieren des Moduls	
 	\end{itemize}
 \end{description}
-
 Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem Virtual Protective Field mit ein, um kollisionsfreies Fahren zu ermöglichen.
 
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{VirtualProtectiveSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden.
+Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
 
 \todo[inline]{Bild zur Verwendung des Virtual Protective Field}
 
