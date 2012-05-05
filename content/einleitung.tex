@@ -1,11 +1,9 @@
 \chapter{Einleitung}
 \label{einleitung_cha}
 \todo[inline]{Author hinzufügen}
-\authorsection{\editordummy}
-Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Servicerobotik
- ist Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel
- statt eines reinen Staubsaugroboters einen Haushaltsroboters zu verwenden.
- Im Fokus steht außerdem, wie auch in der Informationstechnologie eine kostengünstige Verbesserung des Mensch-Maschine-Interface.
+\authorsection{Kinect-Gruppe}
+Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Servicerobotik ist, Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel statt eines reinen Staubsaugroboters einen Haushaltsroboter zu verwenden.
+Im Fokus steht außerdem, wie auch in der Informationstechnologie, eine kostengünstige Verbesserung des Mensch-Maschine-Interface.
  \citep{IP08}
 
 Die Forschungsfelder in Industrie- und Servicerobotik nähern sich dabei im Laufe der Jahre immer weiter an.
@@ -15,7 +13,7 @@ Die Forschungsfelder in Industrie- und Servicerobotik nähern sich dabei im Lauf
  
 In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt.
  Zur meist funktionsrelevanten Interaktion eines Serviceroboters mit der Umwelt muss
- ein Roboter aufgrund der Vielfalt möglicher Umgebungen adaptiv in der Lage sein reichhaltige
+ ein Roboter aufgrund der Vielfalt möglicher Umgebungen adaptiv in der Lage sein, reichhaltige
  Informationen darüber zu gewinnen. Unstrukturierte Umgebungen lassen sich nicht vollständig modellieren.
  Roboter müssen somit durch Interaktion mit ihrer Umwelt lernen, sich orientieren und auf Menschen bzw. Informationen reagieren.
  Besonders anspruchsvoll sind dabei Perzeption und Verarbeitung von Signalen.
@@ -23,9 +21,9 @@ In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt
 \section{Motivation und Problemstellung}
 \label{motivation_sec}
 \todo[inline]{Author hinzufügen}
-\authorsection{\editordummy}
+\authorsection{Kinect-Gruppe}
 
-In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden in denen es nicht möglich ist diese durch
+In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden, in denen es nicht möglich ist, diese durch
  (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}.
  Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
  Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
@@ -34,7 +32,7 @@ In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zur
 Das Identifizieren und Verfolgen geometrischer Objekte in (Tiefen-) Bildern ist ein weit entwickeltes Feld mit hoher Reife und etablierten Methoden.
  Die große Herausforderung ist die semantische Interpretation dieser Daten. Besonders das zuverlässige Gewinnen funktionsrelevanter Informationen,
  wie zum Beispiel interaktiver Charakteristika, kinematischer, werkstofftechnischer und  Oberflächen-Beschaffenheit aus (Tiefen-) Bildern stellt sich
- als problematisch dar. In unstrukturierten Umgebungen versagen andere Sensorentypen allein jedoch oder deren Anwendung ist bisher aufgrund des Preises sinnlos.
+ als problematisch dar. In unstrukturierten Umgebungen jedoch versagen andere Sensorentypen oder deren Anwendung ist bisher aufgrund des Preises sinnlos.
  
 Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst man weitere Sensorinformationen durch Interaktion eines Roboters mit der Umgebung,
  zum anderen werden dem Roboter weitreichende erwartete Zusammenhänge von Informationen bereitgestellt. Entwickler können bei diesen Aufgaben auf weit entwickelte Roboterplattformen
@@ -46,28 +44,29 @@ Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst m
 \section{Stand der Technik}
 \label{stand_der_technik_sec}
 \todo[inline]{Author hinzufügen}
-\authorsection{\editordummy}
+\authorsection{Kinect-Gruppe}
 
 \subsection{Hardware}
 \subsubsection{3D Kameras (am Beispiel Microsoft Kinect)}
 Die Abbildung \ref{fig:Kinect} zeigt ein Bild der Kinect. Sie ist mit
- laser-basiertem IR Projektor und einem monochromen CMOS Sensor ausgestattet.
- Der IR-Projektor projiziert ein Muster auf die beobachtete Szenerie,
- während der CMOS Sensor die Verformungen des Musters detektiert und gegen
+ laser-basiertem \gls{ir} Projektor und einem monochromen \gls{cmos} Sensor ausgestattet.
+ Der \gls{ir}-Projektor projiziert ein Muster auf die beobachtete Szenerie,
+ während der \gls{cmos} Sensor die Verformungen des Musters detektiert und gegen
  ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
  Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen
- und einer RGB-Kamera ausgestattet. Horizontal hat die Kamera einen Öffnungswinkel
+ und einer \gls{rgb}-Kamera ausgestattet. Horizontal hat die Kamera einen Öffnungswinkel
  von $57^\circ$ und vertikal $43^\circ$. Die Arbeitsentfernung der Kinect liegt
- zwischen $0.8$ und $3.5$ m. Die Auflösung der Tiefenkamera beträgt $3$ mm in
- der X/Y Ebene und $10$ mm in Z-Richtung bei einem Abstand von $2$ Metern. Die
- Auflösung ist $640$ x $480$ Bildpunkte bei einer Bildfrequenz von $30$ Hz. Das
- Tiefenbild hat eine $11$ bit Auflösung mit Werten zwischen $0$ und $2047$.
+ zwischen $0,8$ und $3,5m$. Die Auflösung der Tiefenkamera beträgt $3mm$ in
+ der X/Y Ebene und $10mm$ in Z-Richtung bei einem Abstand von $2$ Metern. Die
+ Auflösung ist $640$ x $480$ Bildpunkte bei einer Bildfrequenz von $30Hz$. Das
+ Tiefenbild hat eine $11bit$ Auflösung mit Werten zwischen $0$ und $2047$.
 
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.3]{graphics/Kinect.jpg}
 \caption{\label{fig:Kinect} Kinect}
 \end{figure}
+\todo{Quelle des Kinect-Bilds??}
 
 Für die Kinect wurden in den letzten Jahren mehrere Entwicklerbibliotheken erstellt,
  die sich wachsender Beliebtheit erfreuen. Es ist eine rasant wachsende Anzahl von Applikationen vorhanden,
@@ -81,10 +80,10 @@ Mobile Roboterplattformen werden in den meisten Fällen zu Forschungszwecken ver
  Wissenschaftler verschiedener Disziplinen wirken an Design und Programmierung mit.
  Sie weisen teils stark unterschiedliche Konfigurationen auf.
  Seit vielen Jahren wird jedoch intensiv an menschenähnliche Prototypen gearbeitet.
- Nach der Konstruktion dienen solche Plattformen häufig dazu durch verschiedenste Programmierungen
+ Nach der Konstruktion dienen solche Plattformen häufig dazu, durch verschiedenste Programmierungen
  vorgegebene Aufgaben zu erfüllen. Im Rahmen des Mobile Roboterpraktikums haben
  wir an der Plattform \gls{hollie} des \gls{fzi} Karlsruhe gearbeitet. Auch die
- Roboterplattform ARMAR wurde in Karlsruhe am KIT entwickelt.
+ Roboterplattform ARMAR wurde in Karlsruhe am \gls{kit} entwickelt.
  Aufgrund der großen Popularität, technischen Ausgereiftheit und guten
  Dokumentation soll jedoch exemplarisch an dieser Stelle die Roboterplattform
  PR2 der Firma willow garage dargestellt werden, siehe Abbildung
@@ -100,9 +99,9 @@ Der PR2 ist ein kommerziell erhältlicher, weit entwickelter humanoider Roboter,
  Er hat folgende, \gls{hollie} ähnlicher, technische Eigenschaften \citep{hspecsWG2012}:
 
 \begin{itemize}
-  \item 2 Arme mit Greifern (Arm 4 DoF, Handgelenk 3 DoF, Greifer 1 DoF)
-  \item Kopf mir 2 DoF
-  \item Omnidirektionale Basis (3 DoF)
+  \item 2 Arme mit Greifern (Arm 4 \gls{dof}, Handgelenk 3 \gls{dof}, Greifer 1 \gls{dof})
+  \item Kopf mir 2 \gls{dof}
+  \item Omnidirektionale Basis (3 \gls{dof})
 \end{itemize}
 
 Außerdem ist der PR2 mit einer großen Anzahl an Sensoren ausgestattet
@@ -114,16 +113,16 @@ Außerdem ist der PR2 mit einer großen Anzahl an Sensoren ausgestattet
   \item 5 MP Kamera
   \item Stereokamerasystem
   \item Kleinwinkelkamera
-  \item LED Musterrojektor
+  \item \gls{led} Musterrojektor
   \item Laserscanner
   \item Mikrofonarray
   \item Beschleunigungssensorik in den Armen
   \item Kraftsensorik in den Greifern
-  \item Kalibrierungs-LEDs
+  \item Kalibrierungs-\glspl{led}
 \end{itemize}
 
 Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt
- (u.a. TU München, Stanford University und MIT) und es existieren Arbeiten in verschiedensten Bereichen,
+ (u.a. \gls{tu} München, Stanford University und \gls{mit}) und es existieren Arbeiten in verschiedensten Bereichen,
  wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz
  in Dienstleistungsbetrieben.
 
@@ -137,9 +136,9 @@ Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders infor
 
 \gls{openni} ist ein plattformübergreifendes Framework zur Entwicklung von
 Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
- Die \gls{openni}-API stellt eine Vielzahl an Schnittstellen bereit, um
+ Die \gls{openni}-\gls{api} stellt eine Vielzahl an Schnittstellen bereit, um
  entsprechende Applikationen zu programmieren. Der Hauptzweck von \gls{openni}
-  ist eine Standard-API bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
+  ist eine Standard-\gls{api} bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
 
 \begin{itemize}
   \item Kommunikation mit Video und Audiosensoren
@@ -147,10 +146,10 @@ Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
   wie die Unterstützung bei der Objektdetektion in Bildern
 \end{itemize}
 
-Dabei stellt \gls{openni} eine Reihe von APIs bereit, die sowohl von  (3D-Kamera-)
+Dabei stellt \gls{openni} eine Reihe von \glspl{api} bereit, die sowohl von  (3D-Kamera-)
  Sensoren als auch Middleware Komponenten implementiert werden können.
  Durch das Entkoppeln von Sensor und Middleware können mit \gls{openni} angefertigte Softwareprodukte
- ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (“write once, deploy everywhere“).
+ ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (\glqq write once, deploy everywhere\grqq).
  Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild-) Formaten aufbauen,
  unabhängig von der Sensorik-Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite
  Sensoren zur Verfügung stellen, die diese Bildformate generieren können. \gls{openni} steht kostenlos
@@ -195,7 +194,7 @@ Unter Modularität ist in diesem Zusammenhang vor allem die Austauschbarkeit von
 \item \textbf{Sensoren:}
 \begin{itemize}
   \item 3D Sensoren
-  \item RGB Kameras
+  \item \gls{rgb} Kameras
   \item Infrarot Kameras
   \item Mikrofone / Mikrofonarrays
 \end{itemize}
@@ -238,16 +237,16 @@ Wie bereits dargestellt können mehrere Module gleichzeitig an der selben \gls{o
  Die Konfiguration der darunter liegenden Schichten bleibt dabei verborgen und erlaubt Herstellern größere Freiheit
  in der Gestaltung der niedrigeren Hierarchieebenen \citep{openNI2012}.
 
-\subsubsection{Microsoft SDK}
+\subsubsection{Microsoft \glsentrytext{sdk}}
 
-Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles Software Development Kit (SDK)
- das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft SDK
- hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden.
+Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles \gls{sdk},
+ das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft \gls{sdk}
+ hat man Zugang zu Werkzeugen, mit denen Menschen und Sprache erkannt werden.
  Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
- Dort kann Microsoft SDK auch kostenlos heruntergeladen werden \citep{kinectDevKfW2012}.
+ Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \citep{kinectDevKfW2012}.
 
-Die Sprachß und Gestenerkennung finde nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
- wie zum Beispiel bei Microsofts Internetsuchmaschine bing. Eine neu entwickelte Körperscan Software erlaubt es,
+Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
+ wie zum Beispiel bei Microsofts Internetsuchmaschine bing\footnote{\url{www.bing.com/}}. Eine neu entwickelte Körperscan Software erlaubt es,
  Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu
  verwenden, siehe Abbildung \ref{fig:skelettracking} \citep{noGameKinect2012}.
 
