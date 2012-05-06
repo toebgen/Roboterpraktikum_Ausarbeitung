@@ -79,7 +79,7 @@ Gelenke\\
 - Geplante Trajektorie nicht immer ausführbar & - Formulierung der Trajektorie umständlicher\\
 \hline
 		\end{tabular}
-		\caption{\label{fig:steurungProContra} Vor und Nachteile der Steuerung im Kartesischen und Konfigurationsraum Quelle: \citep{rob1}}
+		\caption{\label{fig:steurungProContra} Vor und Nachteile der Steuerung im Kartesischen und Konfigurationsraum \citep{rob1}}
 		\end{table}	
 Es gibt unterschiedliche Interpolationsarten:
 Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
@@ -276,7 +276,7 @@ In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die 
 	\label{fig:bahnplanung_reflexes_gruppe}
 	\center
 	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniReflexes.png}
-	\caption{Die Gruppe \lstinline{SegwayOmniReflexes}, zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
+	\caption[Reflexes-Gruppe]{Die Gruppe \lstinline{SegwayOmniReflexes}, zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
 \end{figure}
 
 Die manuelle Steuerung ist mittels der zur Simulation erstellten \lstinline{MCAGUI} Oberfläche oder - beim Test am realen Roboter - mit einem Gamepad möglich.
@@ -303,7 +303,7 @@ Zuletzt findet mit Hilfe des Virtual Protective Field (siehe \ref{lokalisierung_
 	\label{fig:bahnplanung_umsetzung_auto_refl}
 	\center
 	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniAutoReflexes.png}
-	\caption{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail. Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert.}
+	\caption[Reflexes-Gruppe im Detail]{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail. Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert.}
 \end{figure}
 
 Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
@@ -347,7 +347,7 @@ Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidire
 	\label{fig:bahnplanung_umsetzung_vpf}
 	\centering
 	\includegraphics[scale=2]{graphics/SCHEMA-vpf.pdf}
-	\caption{Schematische Darstellung wie das Vritual Protective Field eingesetzt wird um Kollisionen zu vermeiden.}
+	\caption[Einsatz des Virtual Protective Fields]{Schematische Darstellung wie das Virtual Protective Field eingesetzt wird um Kollisionen zu vermeiden.}
 \end{figure}
 
 % -----------------------------------------------------------------------------
@@ -646,7 +646,7 @@ In der ursprünglichen Implementierung wurde die \gls{Manhattan-Distanz} zwische
 	\quad
 	\subfloat[Hinderniskarte mit Antigravitationsfeld]
 	{\includegraphics[scale=0.8]{graphics/BILD-Astar_antigrav.png}}
-	\caption{Darstellung der Hinderniskarte und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus, mit vergrößerten Hindernissen und mit Antigravitationsfeld.}
+	\caption[Hinderniskarte und Trajektorie mit A*-Alg.]{Darstellung der Hinderniskarte und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus, mit vergrößerten Hindernissen und mit Antigravitationsfeld.}
 \end{figure}
 
 
