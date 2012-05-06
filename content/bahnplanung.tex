@@ -176,7 +176,7 @@ benutzt.
 Dabei sind $g(x)$ die Pfadkosten, um $x$ vom Startknoten zu erreichen.
 $h(x)$ ist die Heuristik, sprich die Schätzung der Pfadkosten, das Ziel von $x$ aus zu erreichen.
 Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss, das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist.
-Als Heuristik wird oft der Euklidische Abstand oder die Manhattan Distanz benutzt.
+Als Heuristik wird oft die \gls{Euklidische-Distanz} oder die \gls{Manhattan-Distanz} benutzt.
 In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit Angaben zum Ablauf dargestellt.
 
 \begin{figure}[h]
@@ -527,7 +527,7 @@ Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Modu
 Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{integration_umsetzung_hierarchie_sec}), also während dem Einlernen eines neuen Pfades,
  schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
 Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
-Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand des euklidischen Abstands festgelegt:
+Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand der \glsdisp{Euklidische-Distanz}{Euklidischen-Distanz} festgelegt:
 Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
 $d_{save}$ kann als Parameter in einer externen Konfigurationsdatei definiert werden.
 \begin{equation}
@@ -538,7 +538,7 @@ Innerhalb des \lstinline{dumpFile}s werden die $x$, $y$ bzw. $yaw$-Werte zeilenw
 $x_i:y_i:yaw_i$
 
 Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{integration_umsetzung_hierarchie_sec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
-Der euklidische Abstand findet wieder Verwendung, um den Zeitpunkt festzulegen, an welchem der nächste Punkt in die Trajektorie aufgenommen wird.
+Die \gls{Euklidische-Distanz} findet wieder Verwendung, um den Zeitpunkt festzulegen, an welchem der nächste Punkt in die Trajektorie aufgenommen wird.
 Dies geschieht, sobald der Abstand des Roboters zu $following$ kleiner ist als der zu $next$:
 \begin{equation}
 	\| s_{foll} - s_{act} \|_2 \quad < \quad \| s_{next} - s_{act} \|_2
@@ -627,13 +627,13 @@ Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum E
 Diese Implementierung kann einfach eingebunden und erweitert werden. Zum Einbinden des Algorithmus sind drei wesentliche Änderungen bzw. Erweiterungen notwendig:
 \begin{description}
 	\item[Hinderniskarte] Eine Schnittstelle zur Verwendung eines \lstinline{CByteImage} als Hinderniskarte.
-	\item[Heuristik] Ersetzen der ursprünglichen Heuristik durch die Euler-Distanz.
+	\item[Heuristik] Ersetzen der ursprünglichen Heuristik durch die \gls{Euklidische-Distanz}.
 	\item[Antigravitationsfeld] Erweiterung um ein Antigravitationsfeld.
 \end{description}
 
 Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine Interface-Klasse geschaffen. Bei deren Umsetzung muss eine Funktion implementiert werden die für eine Koordinate auf der Hinderniskarte die Information liefert ob sich dort ein Hindernis befindet oder nicht. Eine entsprechende Implementierung wurde sowohl für ein \lstinline{CByteImage} als auch für ein \lstinline{IplImage} vorgenommen.
 
-In der ursprünglichen Implementierung wurde die Manhattan-Distanz zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann ist es sinnvoll stattdessen die Euler-Distanz zu verwenden.
+In der ursprünglichen Implementierung wurde die \gls{Manhattan-Distanz} zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann, ist es sinnvoll stattdessen die \gls{Euklidische-Distanz} zu verwenden.
 \todo[inline]{eventuell noch eine Fußnote dazu?}
 
 \begin{figure}[h]
