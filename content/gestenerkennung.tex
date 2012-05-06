@@ -54,7 +54,7 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 \subsubsection{Tiefensensor}
 \label{kinect_umsetzung_tiefensensor}
 
-Dieser Sensor besteht aus der Kombination einer 830nm Laser Diode und einem Tiefensensor CMOS welcher die reflektierten Infrarotstrahlenempfangen kann. Aus der Laufzeit kann so die Tiefe der einzelnen Punkte berechnet werden.
+Dieser Sensor besteht aus der Kombination einer 830nm Laser Diode und einem Tiefensensor \gls{cmos} welcher die reflektierten Infrarotstrahlenempfangen kann. Aus der Laufzeit kann so die Tiefe der einzelnen Punkte berechnet werden.
 
 \begin{itemize}
 	\item Auflösung: 640x480 Pixels
@@ -66,7 +66,7 @@ Ein Tiefenbild besteht somit aus 640x480 Pixeln mit je einer Tiefeninformation p
 
 \subsubsection{Kamerasensor}
 
-Neben dem Tiefensensor besitzt die Kinect eine normale RGB-Kamera. Diese löst mit 640x480 Pixeln auf.
+Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}-Kamera. Diese löst mit 640x480 Pixeln auf.
 
 \subsubsection{Audio}
 
@@ -78,10 +78,10 @@ Der Kinect-Sensor beinhaltet einen 3D-Neigesensor und einen Motor mit welchem de
 
 \subsubsection{LED-Steuerung}
 
-Das Integrierte LED kann ebenfalls angesteuert werden. Folgende Modus sind möglich:
+Das Integrierte \gls{led} kann ebenfalls angesteuert werden. Folgende Modus sind möglich:
 
 \begin{itemize}
-	\item LED-Ausgeschaltet
+	\item \gls{led}-Ausgeschaltet
 	\item Grün
 	\item Rot
 	\item Gelb (Orange)
@@ -92,23 +92,23 @@ Das Integrierte LED kann ebenfalls angesteuert werden. Folgende Modus sind mögl
 
 \noindent Die wichtigsten technischen der Kinect sind:
 \begin{itemize}
-  \item VGA-Auflösung (640x480 Pixel), weshalb die Bildqualität vergleichsweise
+  \item \gls{vga}-Auflösung (640x480 Pixel), weshalb die Bildqualität vergleichsweise
   schwach ist.
   \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot TOF-Kamera und kodiert
   die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare
-  Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 FPS.
+  Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
 \end{itemize}
 
-Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (OpenNI, OpenCV, Matlab, etc.).
- Unsere Wahl war OpenNI, weil wir sie durch C++ Umgebung in das
+Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}, \gls{opencv}, Matlab, etc.).
+ Unsere Wahl war \gls{openni}, weil wir sie durch C++ Umgebung in das
  \lstinline{MCA2}-Rahmenwerk einbinden konnten.
 
-\subsection{OpenNI}
+\subsection{\glstext{openni}}
 
-Mit OpenNI besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das OpenNI-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
+Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
 
-Das OpenNI-Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C-Sharp.
-Für den Softwareentwickler stehen die folgenden Komponenten des OpenNI-Frameworks im Vordergrund:
+Das \gls{openni}-Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C-Sharp.
+Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}-Frameworks im Vordergrund:
 
 \begin{itemize}
 	\item Context:  Definiert des Umfeld des Sensors. Dies Beinhaltet z.b. die Auflösung der Sensoren bzw. die Sicht auf die ganze Szene als solches.
@@ -116,7 +116,7 @@ Für den Softwareentwickler stehen die folgenden Komponenten des OpenNI-Framewor
 	\item UserGenerator: Liefert Informationen zu aktuell erkannten Benutzern
 \end{itemize}
 
-Mit NITE  sind in OpenNI  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann OpenNI zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
+Mit NITE  sind in \gls{openni}  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
 \todo[inline]{Bild von Hamza in OpenNI}
 
 Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
@@ -126,14 +126,14 @@ Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Krit
 \todo[inline]{Author hinzufügen}
 \authorsection{\editordummy}
 
-OpenNI ist eine Klassenbibliothek, die für die Programmierer einen einheitlichen Zugriff und Verarbeitungsmöglichkeiten
+\gls{openni} ist eine Klassenbibliothek, die für die Programmierer einen einheitlichen Zugriff und Verarbeitungsmöglichkeiten
  der Sensordaten (Farbbild, Tiefenbild, Audiosignale) anbietet. Bei natürlicher Interaktion (NI steht für „natural interaction“) wird der Input,
  wie Handbewegungen, bestimmte Körperhaltungen, als Steuerungssignale für die Anwendung interpretiert. Die Systemstruktur OpenNIs ist modular.
  Mit dem entsprechenden (sensorspezifischen) Interface muss immer die generelle, wiederverwendbare Struktur ergänzt werden.
  Ein solches Interface und Treibersoftware für den Kinect-Sensor ist von Prime
  Sense erhältlich. 
 
-OpenNI liefert eine eingebaute Segmentierung, die nach unserer Erfahrungen robust funktioniert.
+\gls{openni} liefert eine eingebaute Segmentierung, die nach unserer Erfahrungen robust funktioniert.
  Anfangs muss nur eine bestimmte Kalibrierungspose eingenommen werden. Danach wird der Körper kontinuierlich segmentiert und
  auf dem Bildschirm mit einer Farbe gekennzeichnet. Der zugrunde liegenede Algorithmus ist gekapselt und war somit von uns nicht einsehbar.
  Der Ansatz das Modul zu verwenden schien eine gute Wahl zu sein.
@@ -152,7 +152,7 @@ Wie im vorigen Absatz erläutert werden Personen kontinuierlich segmentiert. Das
  Poseninformationen in der weiteren Verarbeitung. Alleinig die Handgelenke/Handflächen bildeten eine Ausnahme,
  da deren Orientierungen (aus unbekanntem Anlass) stets schlechte Konfidenzwerte lieferten. Die relevnten Positionsmessungen der Hände waren jedoch gut.
 
-Aus dem OpenNI-Modul importierten wir nur Tiefenbilder, um diese im
+Aus dem \gls{openni}-Modul importierten wir nur Tiefenbilder, um diese im
 \lstinline{MCABrowser} anzuzeigen. Dazu wurde ein spezieller Datentyp,
 „Blackboard“, verwendet (normalerweise können an den Kanten nur Double-Werte zwischen den Modulen weitergegeben werden).
 
@@ -168,7 +168,7 @@ unseres Moduls in \lstinline{MCABrowser}}
 
 Zur Geschwindigkeitsschätzung wird der Torso (Rumpfmittelpunkt) auf den Boden projiziert
  (die Z-Koordinate – im Welt-Koordinatensystem - wird auf 0 gesetzt). Da die
- Positionsinformation wegen der hohen FPS-Rate mit viel Rauschen belastet wird
+ Positionsinformation wegen der hohen \gls{fps}-Rate mit viel Rauschen belastet wird
  (man bewegt sich langsam, die geringe Auflösung der Kinect aber interpretiert
  dies jedoch als geringfügige Posenänderungen im Ruhezustand.), muss die Positionveränderungen
  in größeren Zeitschritten ausgewertet werden. Dazu verwenden wir einen Glättungsfilter über
@@ -178,14 +178,14 @@ Bevor die Geschwindigkeit für eine Abtastperiode aus der Differenz von den
 aktuellen und vorherigen Werten kalkuliert wird (\lstinline{Speed Estimator}),
 müssen die Koordinaten aus dem Kinect-Koordinatensystem in Roboterkoordinaten transformiert werden
  (\lstinline{CamToWorld}). Dieser Schritt benötigt die Kamerakalibration des
- Kinect-Sensors. Dies muss nur einmal gemacht werden, und kann mit OpenCV oder
+ Kinect-Sensors. Dies muss nur einmal gemacht werden, und kann mit \gls{opencv} oder
  in MATLAB (Camera Calibration Toolbox) durchgeführt werden. Die Ergebnisse (die extrinsischen Parameter)
  sollen durch ein ``Init-File'' (``calibration\_data.txt'' genannt) für das
  Programm zur Verfügung stehen.
  Anhand dieser Datei stellt die Anwendung die ``Kamera zu Roboter'' Transformationswerte automatisch ein.
  
-Noch eine wichtige Bemerkung zur Geschwindigkeitsberechnung: da die FPS-Rate
- sich kontinuierlich ändert, muss stets der aktuelle FPS-Wert eingeholt werden.
+Noch eine wichtige Bemerkung zur Geschwindigkeitsberechnung: da die \gls{fps}-Rate
+ sich kontinuierlich ändert, muss stets der aktuelle \gls{fps}-Wert eingeholt werden.
  Dazu wird eine Zeitmessung zwischen zwei Abtastwerten eingeholt.
 
 Die Zeit wird in Sekunden, die Entfernungen und Bewegungen werden in Millimeter gemessen.
@@ -315,7 +315,7 @@ Sichtbereich der Kamera ist, wird automatisch \lstinline{UNDEFIED_GESTURE}
 zurückgegeben. Dies ist eine vorbeugende Maßnahme gegen falsche Berechnungen.
 
 Eine weitere Möglichkeit der Umsetzung ist das Erkennen des zeitlichen Verlaufs von Gesten (bspw. Winken, Kreisen).
- In OpenNI und NITE Modulen wurden solche Funktionen implementiert, jedoch konnten wir diese aufgrund von Konfigurationsproblemen nicht nutzen.
+ In \gls{openni} und NITE Modulen wurden solche Funktionen implementiert, jedoch konnten wir diese aufgrund von Konfigurationsproblemen nicht nutzen.
 Bei der Anwendung werden stets einzelne Personen verfolgt. Sollten sich mehrere Personen im Sichtfeld der Kamera aufhalten, wird nur die zuerst getrackte Person beachtet.
 
 \subsection{Fazit}
