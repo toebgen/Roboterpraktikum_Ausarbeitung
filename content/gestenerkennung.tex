@@ -117,6 +117,7 @@ Für den Softwareentwickler stehen die folgenden Komponenten des OpenNI-Framewor
 \end{itemize}
 
 Mit NITE  sind in OpenNI  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann OpenNI zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
+\todo[inline]{Bild von Hamza in OpenNI}
 
 Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
 
@@ -193,6 +194,19 @@ Die Zeit wird in Sekunden, die Entfernungen und Bewegungen werden in Millimeter 
 
 Die Gestenerkennung wurde in einem zweiten Modul (\lstinline{GestureClassifier})
 umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
+
+Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
+
+\todo[inline]{Bild Hamsa Skeleton-Modell und Hand-Modell}
+
+\subsubsection{Probleme}
+
+Die gleichmäßige Farbgebung und geringe Texturierung der Menschlichen Hand machen eine Erkennung von inneren Kanten und somit die Segmentierung einzelner nicht ausgestreckter Finger schwierig. 
+Die hohen Geschwindigkeiten für Translation (bis 5m/s) und Rotation ($300^\circ/s$) die für die globale Handbewegung erreicht werden können und die relativ niedrigen Kamerafrequenzen zwischen 30 und 60 Herz machen ein durchgehendes Tracking sehr schneller Bewegungen nahezu unmöglich.
+Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
+In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen , die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet . 
+
+
 
 \subsection{Gestenerkennung}
 
