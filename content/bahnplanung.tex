@@ -619,14 +619,11 @@ Die Implementierung dieses Algorithmus wird im nächsten Abschnitt beschrieben.
 
 Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gls{wk} umgerechnet, und an die Gruppe \lstinline{SegwayOmniReflexes} weiter gegeben.
 
-
-
 \subsubsection{Algorithmus}
 \authorsection{\editorjulian}
 \todo[inline]{Julian: Schreiben}
 
-Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones zurückgegriffen.
-\todoprivate{Website und ref angeben}
+Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones\cite{jonesAstar} zurückgegriffen. 
 Diese Implementierung kann einfach eingebunden und erweitert werden. Zum Einbinden des Algorithmus sind drei wesentliche Änderungen bzw. Erweiterungen notwendig:
 \begin{description}
 	\item[Hinderniskarte] Eine Schnittstelle zur Verwendung eines \lstinline{CByteImage} als Hinderniskarte.
