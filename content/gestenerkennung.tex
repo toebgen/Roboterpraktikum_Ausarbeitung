@@ -4,7 +4,7 @@
 \section{Aufgabenstellung}
 \label{kinect_aufgabenstellung_sec}
 \todo[inline]{Author hinzufügen}
-\authorsection{\editordummy}
+\authorsection{Kinect-Gruppe}
 
 Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
  Tiefenbildes eine Person zu verfolgen und ihre speziellen
@@ -28,7 +28,7 @@ Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
 \section{Grundlagen Kinect}
 \label{kinect_grundlagen_sec}
 \todo[inline]{Author hinzufügen}
-\authorsection{\editordummy}
+\authorsection{Kinect-Gruppe}
 
 Sowohl die Bildqualität von Sensoren, als auch die Verarbeitungsalgorithmen zeigten eine erhebliche Entwicklung in den letzten Jahren.
  Heutzutage sind 3D-Entfernungskameras durch rapide Entwicklung des
@@ -50,6 +50,7 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 
 \subsection{Technische Daten}
 \label{kinect_umsetzung_technische_daten}
+\authorsection{\editorhamza}
 
 \subsubsection{Tiefensensor}
 \label{kinect_umsetzung_tiefensensor}
@@ -104,6 +105,7 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
  \lstinline{MCA2}-Rahmenwerk einbinden konnten.
 
 \subsection{\glstext{openni}}
+\authorsection{\editorhamza}
 
 Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
 
@@ -124,7 +126,7 @@ Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Krit
 \section{Umsetzung}
 \label{kinect_umsetzung_sec}
 \todo[inline]{Author hinzufügen}
-\authorsection{\editordummy}
+\authorsection{Kinect-Gruppe}
 
 \gls{openni} ist eine Klassenbibliothek, die für die Programmierer einen einheitlichen Zugriff und Verarbeitungsmöglichkeiten
  der Sensordaten (Farbbild, Tiefenbild, Audiosignale) anbietet. Bei natürlicher Interaktion (NI steht für „natural interaction“) wird der Input,
@@ -200,6 +202,7 @@ Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom ge
 \todo[inline]{Bild Hamsa Skeleton-Modell und Hand-Modell}
 
 \subsubsection{Probleme}
+\authorsection{\editorhamza}
 
 Die gleichmäßige Farbgebung und geringe Texturierung der Menschlichen Hand machen eine Erkennung von inneren Kanten und somit die Segmentierung einzelner nicht ausgestreckter Finger schwierig. 
 Die hohen Geschwindigkeiten für Translation (bis 5m/s) und Rotation ($300^\circ/s$) die für die globale Handbewegung erreicht werden können und die relativ niedrigen Kamerafrequenzen zwischen 30 und 60 Herz machen ein durchgehendes Tracking sehr schneller Bewegungen nahezu unmöglich.
@@ -209,6 +212,7 @@ In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen 
 
 
 \subsection{Gestenerkennung}
+\authorsection{Kinect-Gruppe}
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
  Diesem Ansatz liegt ein binärer Entscheidungsbaum zu Grunde, dem den einzelnen
