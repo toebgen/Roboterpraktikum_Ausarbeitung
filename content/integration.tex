@@ -143,8 +143,7 @@ Trajektorie gespeichert und der Roboter gestoppt ist, erfolgt die Rückmeldung, 
 Zustandsmaschine in den Zustand \lstinline{idle} wechselt. Dieser neue Zustand wird 
 im \lstinline{Sense}-Teil der globalen Zustandsmaschine verarbeitet und falls alle weiteten 
 Bedingungen erfüllt sind wird die Aufgabe durch einen letzten Zustandswechsel, ebenfalls in 
-den Zustand \lstinline{idle} beendet.
-\todo[inline]{Bild zu sense, control -> zwei Zustandsdiagramme die das Entsprechende darstellen}
+den Zustand \lstinline{idle}, beendet (siehe \ref{fig:integration_statemachine}).
 
 
 \subsection{Benutzerschnittstelle}
@@ -164,6 +163,13 @@ Folge von Haltungen einzunehmen die signalisieren dass man auch wirklich den Rob
 Ausführen einer Geste um eine bestimmte Funktion des Roboters, etwa das Abfahren eines Pfades, zu aktivieren ist 
 es notwendig zuerst eine Anrückhaltung einzunehmen und von dieser zu einer Haltung überzugehen die letztlich die 
 Funktion aktiviert.
+
+\begin{figure}
+	\label{fig:integration_statemachine}
+	\includegraphics[scale=0.43]{graphics/SCHEMA-GlobalStateMachine-hk.pdf}
+	\caption{Zustandsdiagramm der Globalen Zustandsmaschine.}
+\end{figure}
+
 
 %\begin{itemize}
 %\item Ausführbare Handlungen
