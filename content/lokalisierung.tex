@@ -70,65 +70,36 @@ Die Aufgabe der Bahnplanung besteht darin auf Grundlage der Lokalisierung und de
 % ********************************************************************************
 \section{Grundlagen Lokalisierung}
 \label{lokalisierung_grundlagen_sec}
-\authorsection{\editorandreas}
+\authorsection{\editoranne}
 \begin{flushright}\textit{Einige Abschnitte aus dem Projektwiki übernommen deren
-Autoren: Dirk~Toewe und Anne~Güntner}\end{flushright}
+Autor: Dirk~Toewe}\end{flushright}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
-Nachdem wir im vorigen Abschnitt neben einer kurzen Erläuterung der
-Materie hauptsächlich die Aufgaben und deren Ziele betrachtet haben,
- wollen wir hier eine detaillierte Betrachtung der Möglichkeiten
- und Verfahren zur Positionsbestimmung durchführen.
+Um die im vorangegangenen Abschnitt vorgestellten Aufgaben und Ziele umzusetzen, gibt es verschiedene Möglichkeiten. Wir gehen nun etwas detailierter auf grundlegende Verfahren ein, die für die Durchführung einer Positionsbestimmung von Nutzen sind.
  
 \subsubsection{Odometrie}
-Ein einfacher Ansatz zur Positionsbestimmung ist die Verwendung
- von Schrittzählern, welche die Bewegung der Roboterräder oder
- -Beine misst. Über eine Umrechnungsfunktion (meist: lineare
- Abbildung) lässt sich aus der Anzahl der zurückgelegten Schritte
- eine Pose relativ zur Ausgangspose berechnen.
+Die erste vorgestellte Methode zur Positionsbestimmung ist die Odometrie. Dieser aus dem griechischen kommende Begriff steht sinngemäß für ''Wegmessung'' und beschreibt im Wesentlichen schon die Hauptaufgabe. Die Odometrie umfasst die technischen Einrichtungen, die während des Betriebes des Roboters die zurückgelegte Wegstrecke ausmessen.
 
-\begin{itemize}
-  \item Vorteile:
-  \begin{itemize}
-    \item Relativ Stör-unanfällig unter Normalbedingungen\\ 
-    (Ausnahmen: glatter, weicher, unebener Untergrund)
-    \item Vernachlässigbarer Rechenaufwand
-    \item Vernachlässigbarer Implementations-Aufwand
-  \end{itemize}
-  \item Nachteile:
-  \begin{itemize}
-    \item Offset-Fehler steigt linear mit dem Betrag der Schrittzahl
-    \item Ursprungsposition muss bekannt sein (vorgegeben werden)
-    \item Fehler abhängig vom Untergrund
-    \item Bei auf Schlupf basierenden (omnidirektionalen)
-     Plattformen Fehler höher
-   \end{itemize}
-\end{itemize}
+Ein sehr einfacher und dennoch effektiver Ansatz zur Wegbestimmung ist die Verwendung von Schrittzählern. Bewegt sich der Roboter mittels Beinen fort, wird die Anzahl der gemachten Schritte gezählt. Werden dagegen Rädern  zur Fortbewegung genutzt, können schwarz-weisse Musterscheiben angebracht werden. Diese werden mittels einem oder mehrerer Sensoren abgetastet. Eine einfache, zumeist lineare, Abbildung ermittelt aus der Anzahl der schwarzen und weissen Flächen die zurückgelegte Wegstrecke. Es kann anschließend relativ zur Ausgangpose eine neue Roboterpose angegeben werden.
+
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.5]{graphics/odo_einbau.jpg}
+\caption{\label{fig:Odo_Einbau} Beispiel einer eingebauten Musterscheibe an einer Radachse}
+\end{figure}
+\todo[inline]{Quelle vom Bild einfügen - Quelle als Kommentar im Text}
+%http://www.hic-net.de/komponenten/2_rad_roboter/odometrie.html
+
+Die Vorteile liegen bei diesem Ansatz in der Einfachheit der Konstruktion. Der benötigte Aufwand zur Installation, bzw. Implementation ist nicht sehr hoch und auch nach dem Einbau ist der Rechenaufwand vernachlässigbar gering, da keine komplizierten Funktionsberechnungen nötig sind. Die Nachteile der Methode beruhen vor allem auf den Fehlern, die mit dieser Methode entstehen. Ist der Boden uneben oder besitzt zu viel Schlupf sind die Radumdrehungen nicht mehr konsistent zur zurückgelegten Strecke. Auch die Annahmen über die Rad- und Fahrgestellgeometrie können Ungenauigkeiten enthalten. So ist zum Beispiel ein Rad nicht gänzlich rund oder die Radabstände wurden ungenau gemessen oder haben sich durch Verschleiß und Benutzung verändert. Zu diesen NAchteilen, die an sich schon eine fehlerhafte Wegbestimmung nach sich ziehen kommen noch erschwerend hinzu, dass die Odometrie keine rückgekoppelte Methode ist, sich eingeschlichene Fehler selbstverständlich mit dem Betrag der zurückgelegten Wegstrecke aufsummieren und dies auch noch abhängig von der aktuellen Situation in unterschiedlichem Maße. Der Fehler kann also nicht fest mit ein- oder gar gänzlich herausgerechnet werden. Des Weiteren kann nur eine relativ zu einer Ausgangspose berechnete neue Roboterpose angegeben werden. Diese Methode eignet sich daher nur für eine lokale, nicht jedoch für eine globale Lokalisierung. Die Ursprungsposition muss dem Roboter von aussen mitgeteilt werden.
 
 \subsubsection{Kartenbasierte Lokalisierung}
 
-Anhand von gegebenem Kartenmaterial kann aus einem Sensorbild
- der Umgebung die Position des Roboter geschätzt werden.
- Dazu werden zum Beispiel markante Punkte aus dem Sensorbild mit den
- Daten des Kartenmaterials abgeglichen. Im bestmöglichen Fall
- existiert nur eine mögliche Übereinstimmung, anhand derer der
- Roboter seine eigene Position bestimmen kann.
+\todo[inline]{Bild laserpunkte - kantenextraktion - matching mit Quellenangabe einfügen}
 
-\begin{itemize}
-  \item Vorteile:
-  \begin{itemize}
-    \item Keine Fehlerakkumulation über Zeitverlauf
-    \item Keine Ursprungsposition notwendig
-  \end{itemize}
-  \item Nachteile:
-  \begin{itemize}
-    \item Störanfällig (spiegelnde Oberflächen, bewegende Objekte)
-    \item Benötigt aktuelles Kartenmaterial
-    \item hoher Rechenaufwand
-    \item hoher Implementierungs-Aufwand
-   \end{itemize}
-\end{itemize}
+Ist eine Karte der Umgebung gegeben, in der sich der Roboter aufhält, so kann mittels geeigneter Sensordaten die Roboterpose geschätzt, bzw. eindeutig bestimmt werden. Eine Möglichkeit besteht darin, Laser an dem Roboter anzubringen und mittels Abstandsdaten Gegenstände, Wände und Flächen zu erkennen. Dazu wird aus einer Punktwolke eine Menge von geometrischen Figuren, wie zum Beispiel Kanten extrahiert. Diese werden mit den Kartenmaterial abgeglichen und man erhält im schlechten Fall mehrere mögliche Positionen, im optimalen Fall eine eindeutige Position an der sich der Roboter aktuell befindet.
+
+Hierbei wird immer die aktuelle Roboterpose berechnet ohne auf vorhergehende Roboterposen angewiesen zu sein. Dies ist vorteilhaft, da sich im Laufe des Betriebes keine Fehler akkumulieren können und man nicht einmal eine Ausgangspose benötigt. Allerdings ist der Roboter auf möglichst detailgetreues Kartenmaterial angewiesen, welches selbstverständlich aktuell gehalten werden muss. In einer Umgebung in der keine markanten Stellen zu finden sind, wird die Zahl der möglichen Roboterposen eventuell unangenehm hoch sein. Dazu kommen die Nachteile der Technik, die verwendet wird um Informationen über die Umwelt zu erhalten. Bei einem Laser muss darauf geachtet werden, dass er freie Sicht hat und gerade am Roboter angebracht ist. Zusätzlich kann der Laser fehlerhafte Daten zurückliefern, wenn er auf spiegelnde, glatte Flächen trifft, durch eine Glaswand hindurchsieht oder von sich bewegenden Gegenständen umgeben ist.  
 
 \subsubsection{Landmarkbasierte Lokalisierung}
 
@@ -178,7 +149,7 @@ Kalman-Filter}
 \label{lokalisierung_umsetzung_sec}
 \authorsection{\editorandreas}
 \begin{flushright}\textit{Einige Abschnitte aus dem Projektwiki übernommen deren
-Autoren: Dirk~Toewe und Anne~Güntner}\end{flushright}
+Autor: Dirk~Toewe}\end{flushright}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung} 
