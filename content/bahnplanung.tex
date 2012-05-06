@@ -634,7 +634,6 @@ Diese Implementierung kann einfach eingebunden und erweitert werden. Zum Einbind
 Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine Interface-Klasse geschaffen. Bei deren Umsetzung muss eine Funktion implementiert werden die für eine Koordinate auf der Hinderniskarte die Information liefert ob sich dort ein Hindernis befindet oder nicht. Eine entsprechende Implementierung wurde sowohl für ein \lstinline{CByteImage} als auch für ein \lstinline{IplImage} vorgenommen.
 
 In der ursprünglichen Implementierung wurde die \gls{Manhattan-Distanz} zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann, ist es sinnvoll stattdessen die \gls{Euklidische-Distanz} zu verwenden.
-\todo[inline]{eventuell noch eine Fußnote dazu?}
 
 \begin{figure}[h]
 	\centering

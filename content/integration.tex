@@ -70,15 +70,36 @@ Funktion aktiviert werden. In diesem Beispiel würde die
 eines Menschen ausführen und die \lstinline{SegwayOmni-Behaviours}-Gruppe das
 Verhalten zum Abfahren eines gespeicherten Pfades.
 
-Die Funktionen des Roboters können, auf oberster Ebene, in einzelne, unabhängige Aufgaben getrennt werden. 
-\todo[inline]{itemize mit Aufgaben oder Tabelle mit Aufgaben und entsprech. Verhalten}
-
+Die Funktionen des Roboters können, auf oberster Ebene, in einzelne, unabhängige Aufgaben getrennt werden. Zur Erfüllung dieser Aufgaben müssen wiederum bestimmte Verhalten ausgeführt werden.
+\begin{table}[h]
+	\label{tab:integration_aufgaben}
+	\centering
+	\begin{tabular}{|p{3.7cm}|p{3cm}|p{3.2cm}|}
+	\hline
+	\textbf{Aufgabenebene}	&	\multicolumn{2}{c|}{\textbf{Verhaltensebene}}\\
+		&	\textbf{Bahnpl./Steur.}	&	\textbf{Kinect}	\\
+	\hline
+	Initialisierung	&	Initialisierung	&	Initialisierung \\
+	\hline
+	Warten auf Person	&	Idle	&	Warten auf Person + Warten auf Geste \\
+	\hline
+	Warten auf Geste	&	Idle	&	Warten auf Geste \\
+	\hline
+	Verfolge Person	&	Verfolge Person + Zeichne Pfad auf	&	Tracke Person + Warte auf Geste \\
+	\hline
+	Kehre zum Start zurück	&	Kehre zum Start zurück	&	Warte auf Geste \\
+	\hline
+	Zeige Pfad	& Zeige Pfad	&	Tracke Person + Warte auf Geste \\
+	\hline
+	\end{tabular}
+	\caption{Darstellung der Aufgaben und der entsprechenden Verhalten.}
+\end{table}
 In einem ersten Schritt ist es sinnvoll diese Funktionen zu strukturieren, in dem jeder Aufgabe ein 
 interner Zustand zugewiesen wird. Da bei diesem Projekt nicht der Dialog mit dem Roboter sondern lediglich 
 die Aktivierung verschiedener Funktionen durch Gesten gewünscht ist, erfolgt der Wechsel der internen 
 Zustände durch eine deterministische Zustandsmaschine\todo[inline]{ref zu wiki artikel}. Bei komplexeren 
 Aufgaben, oder in Szenarien bei der die beobachtete Umwelt nicht deterministisch aufgefasst wird, stößt 
-eine Zustandsmaschine an ihre Grenzen und es muss eine Planer\todo[inline]{ref zu planer} verwendet werden. 
+eine einfache Zustandsmaschine an ihre Grenzen und es muss eine Planer\todo[inline]{ref zu planer} verwendet werden. 
 Neben der globalen Zustandsmaschine im Modul
 \lstinline{SegwayOmniStateMode-Manager} erhält jede Gruppe in der darunterliegenden Hierarchieebene (die Verhaltensebene) ebenfalls eine Zustandsmaschine; 
 realisiert sind diese in den Modulen \lstinline{SegwayOmniBehavioursManager} bzw. \lstinline{SegwayOmniKinectManager}.
@@ -93,14 +114,12 @@ Ein gängiges Konzept zur Steuerung von Robotern bildet
 eine \textit{Sense-Plan-Act-Schleife}\footnote{Dt.: Beobachten-Planen-Handeln-Schleife}, bei der 
 ständig die Umwelt sensorisch erfasst und entsprechend der Beobachtung und des aktuellen Zustandes 
 eine Handlung ausgeführt wird.
-
 \begin{figure}[h]
 	\label{fig:integration_sense_plan_act}
 	\centering
 	\includegraphics[scale=0.5]{graphics/SCHEMA-SensePlanAct.pdf}
 	\caption{Schematische Darstellung des Konzeptes der Sense-Plan-Act-Schleife.}
 \end{figure}
-
 Die globale Zustandsmaschine bildet in diesem Konzept das Plan-Modul. Sie erhält von den Gruppen auf 
 der Verhaltensebene Informationen, auf Basis derer die Entscheidung für einen Zustandswechsel 
 getroffen wird. Ändert sich der Zustand der globalen Zustandsmaschine kann, muss aber nicht, eine 
