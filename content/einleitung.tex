@@ -41,6 +41,51 @@ Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst m
  Software zur (Tiefen-) Bildverarbeitung und Robotersteuerung zur Verfügung,
  wie \gls{opencv}, \gls{pcl} und \gls{ros}.
 
+\section{Aufgabenstellung}
+\label{einleitung_aufgabenstellung_sec}
+\authorsection{\editorjulian, \editortobias}
+
+Das Szenario, welches im Rahmen des Praktikums bearbeitet werden soll, ist folgendes:
+Besucher des \gls{fzi} sollen in Zukunft von der mobilen Roboterplattform \gls{hollie} (s. Abb. \ref{fig:hollie}) durch das Gebäude geführt werden können.
+Dazu ist es notwendig, dass der Roboter einen Pfad einlernen, und diesen anschließend einem Besucher vorführen kann.
+Die Steuerung sollte dabei mittels Gesten möglich sein.
+Dem Roboter muss es selbstständig möglich sein, Hindernisse, die auf dem Pfad liegen, zu umfahren, und einen kolissionsfreien Weg zu finden.
+
+
+Konkret muss der Roboter folgende Aufgaben bewältigen können:
+
+\begin{itemize}
+  \item Bedienung von \gls{hollie} mittels Gesten
+	\begin{itemize}
+	\item Gestenerkennung durch Kinect
+	\end{itemize}
+  \item Lokalisierung des Roboters in gegebener Karte
+  \item Verfolgung des Menschen
+	\begin{itemize}
+	  \item Tracking des Menschen (Position und Geschwindigkeit)
+	  \item Bahnplanung von Roboter zu Mensch
+	  \item Speicherung des Pfads
+	\end{itemize}
+  \item Abfahren des gespeicherten Pfads
+	\begin{itemize}
+	  \item Rückkehr zum Startpunkt
+	  \item Erneutes Abfahren (vorwärts)
+	\end{itemize}
+  \item Hindernis-Umfahrung
+	\begin{itemize}
+	  \item Bahnplanung
+	  \item Protective-Field
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[h]
+	\center
+	\includegraphics[width=0.5\textwidth]{graphics/hollie}
+	\caption{\label{fig:hollie} Die mobile Roboterplattform \gls{hollie}}
+\end{figure}
+
+
+
 \section{Stand der Technik}
 \label{stand_der_technik_sec}
 \todo[inline]{Author hinzufügen}
