@@ -7,13 +7,6 @@
 \section{Aufgabenstellung}
 \label{aufgabenstellung_integration_sec}
 
-%\begin{itemize}
-%\item Überblick was alles unter Integration fällt
-%\item Zusammenführen der einzelnen Teilprojekte
-%\item Zustandsmaschinen zur Steuerung/Beobachtung der einzelnen Teile
-%\item Userinterface zur Steuerung des Roboters
-%\end{itemize}
-
 Die Aufgaben im Bereich der Integration lassen sich unter folgende Punkte einordnen:
 
 \begin{description}
@@ -32,16 +25,6 @@ Zur Kontrolle des Roboters durch Benutzer muss eine Benutzerschnittstelle implem
 erlaubt die einzelnen Funktionen der Software zu aktivieren.
 
 \end{description}
-
-%\section{Grundlagen der Planung}
-%\label{grundlagen_integration_sec}
-
-%\begin{itemize}
-%\item Generell Planen: sense -> plan -> act (loop)
-%\item Unterschiedliche Problemstellungen
-%\item Mögliche Ansätze
-%\item State of the Art
-%\end{itemize}
 
 \section{Umsetzung}
 \label{umsetzung_integration_sec}
@@ -97,9 +80,9 @@ Die Funktionen des Roboters können, auf oberster Ebene, in einzelne, unabhängi
 In einem ersten Schritt ist es sinnvoll diese Funktionen zu strukturieren, in dem jeder Aufgabe ein 
 interner Zustand zugewiesen wird. Da bei diesem Projekt nicht der Dialog mit dem Roboter sondern lediglich 
 die Aktivierung verschiedener Funktionen durch Gesten gewünscht ist, erfolgt der Wechsel der internen 
-Zustände durch eine deterministische Zustandsmaschine\todo[inline]{ref zu wiki artikel}. Bei komplexeren 
+Zustände durch eine deterministische Zustandsmaschine. Bei komplexeren 
 Aufgaben, oder in Szenarien bei der die beobachtete Umwelt nicht deterministisch aufgefasst wird, stößt 
-eine einfache Zustandsmaschine an ihre Grenzen und es muss eine Planer\todo[inline]{ref zu planer} verwendet werden. 
+eine einfache Zustandsmaschine an ihre Grenzen und es muss eine Planer verwendet werden.
 Neben der globalen Zustandsmaschine im Modul
 \lstinline{SegwayOmniStateMode-Manager} erhält jede Gruppe in der darunterliegenden Hierarchieebene (die Verhaltensebene) ebenfalls eine Zustandsmaschine; 
 realisiert sind diese in den Modulen \lstinline{SegwayOmniBehavioursManager} bzw. \lstinline{SegwayOmniKinectManager}.
@@ -159,29 +142,14 @@ Es trat das Problem auf, dass während des Einnehmens einer bestimmten Haltung, 
 der Kinect-Gruppe einer Geste entsprach, regelmäßig eine nicht gewünschte Geste erkannt wurde. Um dieses Problem 
 zu lösen kommt eine Steuerung zum Einsatz, bei der nur durch eine Folge von Körperhaltungen eine Geste erkannt 
 wird und so eine Funktion auslöst. Bereits bei der Initialisierung einer Person ist es notwendig eine korrekte 
-Folge von Haltungen einzunehmen die signalisieren dass man auch wirklich den Roboter steuern möchte. Auch beim 
-Ausführen einer Geste um eine bestimmte Funktion des Roboters, etwa das Abfahren eines Pfades, zu aktivieren ist 
-es notwendig zuerst eine Anrückhaltung einzunehmen und von dieser zu einer Haltung überzugehen die letztlich die 
+Folge von Haltungen einzunehmen die signalisieren dass man auch wirklich den Roboter steuern möchte. Auch beim Ausführen einer Geste um eine bestimmte Funktion des Roboters, etwa das Abfahren eines Pfades, zu aktivieren, ist es notwendig zuerst eine Anrückhaltung einzunehmen und von dieser zu einer Haltung überzugehen die letztlich die 
 Funktion aktiviert.
 
+\begin{landscape}
 \begin{figure}
 	\label{fig:integration_statemachine}
-	\includegraphics[scale=0.43]{graphics/SCHEMA-GlobalStateMachine-hk.pdf}
-	\caption{Zustandsdiagramm der globalen Zustandsmaschine.}
+	\includegraphics[scale=0.43,angle=90]{graphics/SCHEMA-GlobalStateMachine-hk.pdf}
+	\caption{Zustandsdiagramm der globalen Zustandsmaschine}
 \end{figure}
+\end{landscape}
 
-
-%\begin{itemize}
-%\item Ausführbare Handlungen
-%\item Steuerung über Gesten
-%\item Ausführen der entsprechenden Handlung
-%\end{itemize}
-
-%\section{Probleme}
-%\label{probleme_integration_sec}
-
-
-%\begin{itemize}
-%\item Definition der Schnittstellen
-%\item Definition der Funktionen des Roboters
-%\end{itemize}
