@@ -108,7 +108,11 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
 \authorsection{\editorhamza}
 
 Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
-
+\begin{figure}
+\label{fig:gesten_openni}
+\centering
+\includegraphics[scale=0.7]{graphics/BILD-OpenNI.png}
+\end{figure}
 Das \gls{openni}-Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C-Sharp.
 Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}-Frameworks im Vordergrund:
 
@@ -119,7 +123,6 @@ Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}-Fr
 \end{itemize}
 
 Mit NITE  sind in \gls{openni}  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
-\todo[inline]{Bild von Hamza in OpenNI}
 
 Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
 
@@ -198,8 +201,19 @@ Die Gestenerkennung wurde in einem zweiten Modul (\lstinline{GestureClassifier})
 umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 
 Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
+\begin{figure}[h]
+\label{fig:gesten_skelett}
+\centering
+\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
+\caption{Dreidimensionales Körpermodell.}
+\end{figure}
 
-\todo[inline]{Bild Hamsa Skeleton-Modell und Hand-Modell}
+\begin{figure}[h]
+\label{fig:gesten_skelett}
+\centering
+\includegraphics[scale=0.7]{graphics/BILD-HandModell.png}
+\caption{Modell der menschlichen Hand mit 27 Freiheitsgraden.}
+\end{figure}
 
 \subsubsection{Probleme}
 \authorsection{\editorhamza}
@@ -207,11 +221,10 @@ Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom ge
 Die gleichmäßige Farbgebung und geringe Texturierung der Menschlichen Hand machen eine Erkennung von inneren Kanten und somit die Segmentierung einzelner nicht ausgestreckter Finger schwierig. 
 Die hohen Geschwindigkeiten für Translation (bis 5m/s) und Rotation ($300^\circ/s$) die für die globale Handbewegung erreicht werden können und die relativ niedrigen Kamerafrequenzen zwischen 30 und 60 Herz machen ein durchgehendes Tracking sehr schneller Bewegungen nahezu unmöglich.
 Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
-In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen , die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet . 
-
-
+In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet. 
 
 \subsection{Gestenerkennung}
+\label{gestenerkennung_gestenerkennung_sec}
 \authorsection{Kinect-Gruppe}
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
