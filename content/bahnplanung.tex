@@ -291,7 +291,7 @@ Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{Se
 \begin{figure}[h]
 \label{fig:bahnpl_umsetz_schema_inv_kinem}
 \centering
-\includegraphics[scale=0.9]{graphics/SCHEMA-invKinem.pdf}
+\includegraphics[width=\textwidth]{graphics/SCHEMA-invKinem.pdf}
 \caption{Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
 \end{figure}
 
@@ -441,24 +441,25 @@ mit
 	next = 			\begin{pmatrix} x_{next} \\ y_{next} \\ yaw_{next}	\end{pmatrix},
 	following =	\begin{pmatrix}	x_{following} \\ y_{following}							\end{pmatrix}
 \end{equation}
-Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate.
-$following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
 
-\begin{wrapfigure}{r}{0.35\textwidth}	%\begin{figure}[h]
+%\begin{wrapfigure}{r}{0.35\textwidth}
+\begin{figure}[h]
 	\center
 	\includegraphics[width=0.3\textwidth]{graphics/roll_pitch_yaw.pdf}
 	\caption{Roll-Pitch-Yaw-Winkel \cite{rollPitchYaw}}
 	\label{fig:roll_pitch_yaw}
-\end{wrapfigure}	%\end{figure}
-
-Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten vom Modul \lstinline{HumanPosition} vorliegen.
+%\end{wrapfigure}
+\end{figure}
+Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate.
+$following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
+Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten von \lstinline{HumanPosition} vorliegen.
 Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
 $next$ ist eine Roboter-Pose, die sich im Abstand $d_{hum}$ vor dem Menschen auf dem Vektor Roboter-Mensch befindet.
 Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem Vektor next-estimated befindet sich der dritte Punkt der Trajektorie: $following$.
 Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig $1,75m$.
 In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 
-\begin{figure}[h]
+\begin{figure}
 	\center
 	\input{graphics/trajectory}
 	\caption{Berechnung der Trajektorien-Punkte}
