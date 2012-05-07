@@ -85,16 +85,12 @@ Ein sehr einfacher und dennoch effektiver Ansatz zur Wegbestimmung ist die Verwe
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.5]{graphics/odo_einbau.jpg}
-\caption{\label{fig:Odo_Einbau} Beispiel einer eingebauten Musterscheibe an einer Radachse}
+\caption{\label{fig:Odo_Einbau} Beispiel einer eingebauten Musterscheibe an einer Radachse\citep{odom}}
 \end{figure}
-\todo[inline]{Quelle vom Bild einfügen - Quelle als Kommentar im Text}
-%http://www.hic-net.de/komponenten/2_rad_roboter/odometrie.html
 
 Die Vorteile liegen bei diesem Ansatz in der Einfachheit der Konstruktion. Der benötigte Aufwand zur Installation, bzw. Implementation ist nicht sehr hoch und auch nach dem Einbau ist der Rechenaufwand vernachlässigbar gering, da keine komplizierten Funktionsberechnungen nötig sind. Die Nachteile der Methode beruhen vor allem auf den Fehlern, die mit dieser Methode entstehen. Ist der Boden uneben oder besitzt zu viel Schlupf sind die Radumdrehungen nicht mehr konsistent zur zurückgelegten Strecke. Auch die Annahmen über die Rad- und Fahrgestellgeometrie können Ungenauigkeiten enthalten. So ist zum Beispiel ein Rad nicht gänzlich rund oder die Radabstände wurden ungenau gemessen oder haben sich durch Verschleiß und Benutzung verändert. Zu diesen Nachteilen, die an sich schon eine fehlerhafte Wegbestimmung nach sich ziehen, kommt noch erschwerend hinzu, dass die Odometrie keine rückgekoppelte Methode ist, sich eingeschlichene Fehler selbstverständlich mit dem Betrag der zurückgelegten Wegstrecke aufsummieren und dies auch noch abhängig von der aktuellen Situation in unterschiedlichem Maße. Der Fehler kann also nicht fest mit ein- oder gar gänzlich herausgerechnet werden. Des Weiteren kann nur eine relativ zu einer Ausgangspose berechnete neue Roboterpose angegeben werden. Diese Methode eignet sich daher nur für eine lokale, nicht jedoch für eine globale Lokalisierung. Die Ursprungsposition muss dem Roboter von aussen mitgeteilt werden.
 
 \subsubsection{Kartenbasierte Lokalisierung}
-
-\todo[inline]{Bild laserpunkte - kantenextraktion - matching mit Quellenangabe einfügen}
 
 Ist eine Karte der Umgebung gegeben, in der sich der Roboter aufhält, so kann mittels geeigneter Sensordaten die Roboterpose geschätzt, bzw. eindeutig bestimmt werden. Eine Möglichkeit besteht darin, Laser an dem Roboter anzubringen und mittels Abstandsdaten Gegenstände, Wände und Flächen zu erkennen. Dazu wird aus einer Punktwolke eine Menge von geometrischen Figuren, wie zum Beispiel Kanten extrahiert. Diese werden mit den Kartenmaterial abgeglichen und man erhält im schlechten Fall mehrere mögliche Positionen, im optimalen Fall eine eindeutige Position an der sich der Roboter aktuell befindet.
 
@@ -133,30 +129,19 @@ Um die Nachteile der verschiedenen Lokalisierungsmethoden zu
  aktuelle Roboterpose bestimmen.
  
 \subsubsection{Kalman-Filter}
-\todo[inline]{Kalman-Filter}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Das Kalman-Filter ist eine der wichtigsten Entdeckungen des letzten Jahrhunderts, entwickelt von dem Ingenieur Rudolf E. Kalman.
+Sind nun eine Reihe von Messwerten in Form von möglichen Roboterposen gegeben, die von unterschiedlichen Messverfahren herrühren und mit einem Rauschen behaftet sind, so schätzt das Kalman-Filter eine aktuelle Roboterpose.
+Die Grundidee sieht man an der Ausgangsgleichung \[ \hat{x}_k = G_k v_k + (1-G_k) \hat{x}_{k-1}, \] wobei \(\hat{x}_k\) der aktuelle und  \(\hat{x}_{k-1}\) der vorherige Schätzwert sei. \(G_k\) das sogenannte Kalman-Gain und \(v_k\) der aktuelle Messwert, der allerdings verrauscht ist und daher mit einem Fehler behaftet. Das Kalman-Gain gewichtet die bisherigen Messwerte in Bezug auf den akuell gemessenen Wert und berechnet daraus den aktuellen Schätzwert \(\hat{x}_k\).
+Das Ziel ist einen möglichst guten Schätzwert \(\hat{x}_k\) zu finden, der den Wert \(v_k\) am besten beschreibt.
+In den Iterationsschritten wechseln sich nun Prädiktion und Korrektion ab: Aus den letzten \(k-1\) Messungen wird ein vorraussichtlicher Wert \(k\) vorhergesagt (''Prädiktion''). Nachdem die \(k\)te Messung stattgefunden hat, man also eine Information mehr dazu gewonnen hat, wird der Messwert zum Zeitpunkt \(k\) verbesserert (''Korrektur''). Dabei kann in jedem Schritt aus den gemachten Beobachtungen das Kalman-Gain neu angepasst werden.
 
 \subsubsection{Partikel-Filter}
-\todo[inline]{Quellenangabe}
-%http://de.wikipedia.org/wiki/Sequenzielle_Monte-Carlo-Methode
 
 Als Alternative zum Kalman-Filter existiert die Sequentielle Monte-Carlo-Methode. Auch bekannt als Partikel-Filter. Mit Hilfe dieser Methode können ebenfalls kontinuierlich Ort und Geschwindigkeit, insbesondere eines autonomen Roboters, ermittelt werden, obwohl nur ungenaue Messwerte vorliegen.
 Ist das Prozessmodell nicht linear oder sind die äußeren Einflüsse, die zu fehlerhaften Messwerten führen nicht normalverteilt, kann auch nicht von einer Normalverteilung des zu schätzendes Zustandes ausgegangen werden. Eine Normalverteilung hat die Eigenschaft nur ein Maxima aufzuweisen und somit nur einen möglichen besten Zustand zurück zu liefern. Liegt diese nicht vor, muss angenommen werden, dass die Wahrscheinlichkeitsdichte mehrere Maxima aufweist, das heisst, das mehrere mögliche Zustände in Frage kommen, als die Besten und Wahrscheinlichsten zum gegenwärtigen Zeitpunkt zu gelten.
 Diese unbekannte, aber gerade aktuelle Warscheinlichkeitsdichte auf dem Zustandsraum soll nun geschätzt werden, um daraus den wahrscheinlichsten Zustand zu schätzen. Dazu wird eine Menge von Partikeln erzeugt. Jeder Partikel ist dabei ein Paar aus Gewicht und einem Punkt im Zustandsraum. Die Menge der Partikel repräsentiert die Wahrscheinlichkeitsdichte.
-Jedem Partikel wird dann eine mögliche Lösungskurve zugeordnet und je besser diese zu den tatsächlichen Messwerten passt, desto mehr wird das Gewicht des Partikels angepasst. Im Laufe der Messungen verbessert sich somit die Schätzung der Wahrscheinlichkeitsdichte, welches durch Methoden der nichtparametrischen Dichteschätzung erfolgt.
+Jedem Partikel wird dann eine mögliche Lösungskurve zugeordnet und je besser diese zu den tatsächlichen Messwerten passt, desto mehr wird das Gewicht des Partikels angepasst. Im Laufe der Messungen verbessert sich somit die Schätzung der Wahrscheinlichkeitsdichte, welches durch Methoden der nichtparametrischen Dichteschätzung erfolgt.\citep{rob3}
 
  
 % ********************************************************************************
