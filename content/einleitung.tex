@@ -20,8 +20,9 @@ In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt
 
 \section{Motivation und Aufgabenstellung}
 \label{motivation_sec}
-\todo[inline]{Author hinzufügen}
-\authorsection{Kinect-Gruppe}
+%\todo[inline]{Author hinzufügen}
+%\authorsection{Kinect-Gruppe}
+\authorsection{\editorjulian, \editortobias}
 
 \section{Motivation}
 \label{motivation_real_sec}
@@ -30,28 +31,24 @@ In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt
 In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden, in denen es nicht möglich ist, diese durch
  (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}. Aber nicht nur Roboter müssen sich in solchen Umgebungen zurechtfinden, auch Menschen müssen eine neue Umgebung zuerst kennenlernen. In vielen Situation, etwa bei der Besichtigung eines Museums oder einer Firma, wird auf das Konzept des Zeigens oder Vormachen zurückgegriffen. Eine Person die mit der konkreten Situation oder Umgebung vertraut ist, teilt ihr Wissen mit anderen Personen in dem sie eine Führung anbietet oder den Weg zu einem bestimmten Ziel zeigt.
 
-In modernen Forschungseinrichtungen, wie etwa dem \gls{fzi} in Karlsruhe, wird besonderen Wert auf das Sehen und Anfassen aktueller Forschungsprojekte gelegt\todo[inline]{Quelle.http://www.fzi.de/index.php/en/news/press-reports/7809-27042012-das-fzi-house-of-living-labs-vernetzt-informatik-anwendungsforschung-ueber-branchen-und-disziplingrenzen-hinweg}
-Um Besuchern die Räumlichkeiten und Forschungsprojekte zu zeigen ist es hier ebenfalls notwendig Führungen anzubieten. Um die Erfahrung Servicerobotik zu intensivieren liegt es auf der Hand eine solche Führung von einem Roboter ausführen zu lassen. Und um noch einen Schritt weiter zu gehen bietet es sich an die Definition einer Route, welche der Roboter späteren Besuchern zeigen soll, nicht fest zu programmieren, sondern die Möglichkeit zu schaffen, dass es dem Roboter möglich ist einem Menschen zu folgen und von ihm diese Route zu lernen.
-
+In modernen Forschungseinrichtungen, wie etwa dem \gls{fzi} in Karlsruhe, wird besonderen Wert auf das Sehen und Anfassen aktueller Forschungsprojekte gelegt\cite{fziHoLL}.
+Um Besuchern die Räumlichkeiten und Forschungsprojekte zu zeigen ist es hier ebenfalls notwendig Führungen anzubieten. Um die Erfahrung Servicerobotik zu intensivieren liegt es auf der Hand eine solche Führung von einem Roboter ausführen zu lassen. Und um noch einen Schritt weiter zu gehen bietet es sich an die Definition einer Route, welche der Roboter späteren Besuchern zeigen soll, nicht fest zu programmieren, sondern die Möglichkeit zu schaffen, dass es dem Roboter möglich ist einem Menschen zu folgen und von ihm diese Route einzulernen. Somit schließt sich der Kreislauf; der Roboter lernt vom Menschen und Besucher können wiederum vom Roboter lernen.
  
- 
-Unter eine solche unstrukturierte Umwelt fällt beispielsweise eine Büroumgebung. Es gibt zwar einen festen Lageplan in dem Räume, Türen, bis hin zu Kopierern alles erfasst ist, jedoch kommt es immer wieder zu Veränderungen. Topfpflanzen werden aufgestellt oder auch zusätzliche Aktenschränke und Ablagemöglichkeiten, die im ursprünglichen Plan nicht vorgesehen waren.
- 
- Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
- Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
- zu 3D-Tiefenbildern erweitert werden. 
-
-Das Identifizieren und Verfolgen geometrischer Objekte in (Tiefen-) Bildern ist ein weit entwickeltes Feld mit hoher Reife und etablierten Methoden.
- Die große Herausforderung ist die semantische Interpretation dieser Daten. Besonders das zuverlässige Gewinnen funktionsrelevanter Informationen,
- wie zum Beispiel interaktiver Charakteristika, kinematischer, werkstofftechnischer und  Oberflächen-Beschaffenheit aus (Tiefen-) Bildern stellt sich
- als problematisch dar. In unstrukturierten Umgebungen jedoch versagen andere Sensorentypen oder deren Anwendung ist bisher aufgrund des Preises sinnlos.
- 
-Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst man weitere Sensorinformationen durch Interaktion eines Roboters mit der Umgebung,
- zum anderen werden dem Roboter weitreichende erwartete Zusammenhänge von Informationen bereitgestellt. Entwickler können bei diesen Aufgaben auf weit entwickelte Roboterplattformen
- zurückgreifen, wie den PR2 der Firma willow garage und wie in diesem Praktikum
- \gls{hollie} des \gls{fzi} Karlsruhe. Willow garage stellt auch umfangreiche
- Software zur (Tiefen-) Bildverarbeitung und Robotersteuerung zur Verfügung,
- wie \gls{opencv}, \gls{pcl} und \gls{ros}.
+% Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
+% Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
+% zu 3D-Tiefenbildern erweitert werden. 
+%
+%Das Identifizieren und Verfolgen geometrischer Objekte in (Tiefen-) Bildern ist ein weit entwickeltes Feld mit hoher Reife und etablierten Methoden.
+% Die große Herausforderung ist die semantische Interpretation dieser Daten. Besonders das zuverlässige Gewinnen funktionsrelevanter Informationen,
+% wie zum Beispiel interaktiver Charakteristika, kinematischer, werkstofftechnischer und  Oberflächen-Beschaffenheit aus (Tiefen-) Bildern stellt sich
+% als problematisch dar. In unstrukturierten Umgebungen jedoch versagen andere Sensorentypen oder deren Anwendung ist bisher aufgrund des Preises sinnlos.
+% 
+%Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst man weitere Sensorinformationen durch Interaktion eines Roboters mit der Umgebung,
+% zum anderen werden dem Roboter weitreichende erwartete Zusammenhänge von Informationen bereitgestellt. Entwickler können bei diesen Aufgaben auf weit entwickelte Roboterplattformen
+% zurückgreifen, wie den PR2 der Firma willow garage und wie in diesem Praktikum
+% \gls{hollie} des \gls{fzi} Karlsruhe. Willow garage stellt auch umfangreiche
+% Software zur (Tiefen-) Bildverarbeitung und Robotersteuerung zur Verfügung,
+% wie \gls{opencv}, \gls{pcl} und \gls{ros}.
 
 \section{Aufgabenstellung}
 \label{einleitung_aufgabenstellung_sec}
@@ -60,11 +57,11 @@ Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst m
 Das Szenario, welches im Rahmen des Praktikums bearbeitet werden soll, ist folgendes:
 Besucher des \gls{fzi} sollen in Zukunft von der mobilen Roboterplattform \gls{hollie} (s. Abb. \ref{fig:hollie}) durch das Gebäude geführt werden können.
 Dazu ist es notwendig, dass der Roboter einen Pfad einlernen, und diesen anschließend einem Besucher vorführen kann.
-Die Steuerung sollte dabei mittels Gesten möglich sein.
+Die durch Dynamik geprägte Büroumgebung setzt zudem voraus, dass eine Reaktion des Roboters auf neue Hindernisse erfolgt.
 Dem Roboter muss es selbstständig möglich sein, Hindernisse, die auf dem Pfad liegen, zu umfahren, und einen kolissionsfreien Weg zu finden.
+Zur intuitiven Kontrolle des Roboters soll die Steuerung mittels Gesten möglich sein.
 
-
-Konkret muss der Roboter folgende Aufgaben bewältigen können:
+Zusammenfassend muss der Roboter folgende Aufgaben bewältigen können:
 
 \begin{itemize}
   \item Bedienung von \gls{hollie} mittels Gesten
