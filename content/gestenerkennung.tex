@@ -1,10 +1,8 @@
-
 \chapter{Tracking und Gestenerkennung}
 
 \section{Aufgabenstellung}
 \label{kinect_aufgabenstellung_sec}
-\todo[inline]{Author hinzufügen}
-\authorsection{Kinect-Gruppe}
+\authorsection{Márton Kelemen}
 
 Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
  Tiefenbildes eine Person zu verfolgen und ihre speziellen
@@ -27,8 +25,7 @@ Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
 
 \section{Grundlagen Kinect}
 \label{kinect_grundlagen_sec}
-\todo[inline]{Author hinzufügen}
-\authorsection{Kinect-Gruppe}
+\authorsection{Márton Kelemen}
 
 Sowohl die Bildqualität von Sensoren, als auch die Verarbeitungsalgorithmen zeigten eine erhebliche Entwicklung in den letzten Jahren.
  Heutzutage sind 3D-Entfernungskameras durch rapide Entwicklung des
@@ -51,54 +48,54 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 \subsection{Technische Daten}
 \label{kinect_umsetzung_technische_daten}
 \authorsection{\editorhamza}
-
-\subsubsection{Tiefensensor}
-\label{kinect_umsetzung_tiefensensor}
-
-Dieser Sensor besteht aus der Kombination einer 830nm Laser Diode und einem Tiefensensor \gls{cmos} welcher die reflektierten Infrarotstrahlenempfangen kann. Aus der Laufzeit kann so die Tiefe der einzelnen Punkte berechnet werden.
-
-\begin{itemize}
-	\item Auflösung: 640x480 Pixels
-	\item Tiefenbereich: 0.5m - 10m, Ideal 2m-2.5m
-	\item Tiefengenauigkeit: 1cm
-\end{itemize}
-
-Ein Tiefenbild besteht somit aus 640x480 Pixeln mit je einer Tiefeninformation proPixel. Diese Tiefeninformation bewegt sich in einem Bereich von 50cm bis 1000cm mit einer Auflösung von 1cm. Pro Sekunde liefert der Kinect-Sensor 30 Tiefenbilder.
-
-\subsubsection{Kamerasensor}
-
-Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}-Kamera. Diese löst mit 640x480 Pixeln auf.
-
-\subsubsection{Audio}
-
-Der Kinect-Sensor ist mit 4 Mikrofonen ausgestattet. Mit diesen ist eine 3D Lokalisierungmöglich. Der Zugriff auf die Audio-Daten ist jedoch noch mit keinem Framework möglich und es sind auch keine weiteren Informationen bekannt.
-
-\subsubsection{Neigesteuerung}
-
-Der Kinect-Sensor beinhaltet einen 3D-Neigesensor und einen Motor mit welchem der Neigungswinkel gegen vorne angepasst werden kann. Der Neigungswinkel beträgt zwischen $-31^\circ$und $+30^\circ$ relativ zum Standfuss.
-
-\subsubsection{LED-Steuerung}
-
-Das Integrierte \gls{led} kann ebenfalls angesteuert werden. Folgende Modus sind möglich:
-
-\begin{itemize}
-	\item \gls{led}-Ausgeschaltet
-	\item Grün
-	\item Rot
-	\item Gelb (Orange)
-	\item Gelb (Orange) blinkend
-	\item Grün
-	\item Gelb (Orange)-Rot blinkend
-\end{itemize}
-
-\noindent Die wichtigsten technischen der Kinect sind:
-\begin{itemize}
-  \item \gls{vga}-Auflösung (640x480 Pixel), weshalb die Bildqualität vergleichsweise
-  schwach ist.
-  \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot \gls{tof}-Kamera und kodiert
-  die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare
-  Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
-\end{itemize}
+\todo[inline]{Hamza}
+%\subsubsection{Tiefensensor}
+%\label{kinect_umsetzung_tiefensensor}
+%
+%Dieser Sensor besteht aus der Kombination einer 830nm Laser Diode und einem Tiefensensor \gls{cmos} welcher die reflektierten Infrarotstrahlen empfangen kann. Aus der Laufzeit kann so die Tiefe der einzelnen Punkte berechnet werden.
+%
+%\begin{itemize}
+%	\item Auflösung: 640x480 Pixels
+%	\item Tiefenbereich: 0.5m - 10m, Ideal 2m-2.5m
+%	\item Tiefengenauigkeit: 1cm
+%\end{itemize}
+%
+%Ein Tiefenbild besteht somit aus 640x480 Pixeln mit je einer Tiefeninformation proPixel. Diese Tiefeninformation bewegt sich in einem Bereich von 50cm bis 1000cm mit einer Auflösung von 1cm. Pro Sekunde liefert der Kinect-Sensor 30 Tiefenbilder.
+%
+%\subsubsection{Kamerasensor}
+%
+%Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}-Kamera. Diese löst mit 640x480 Pixeln auf.
+%
+%\subsubsection{Audio}
+%
+%Der Kinect-Sensor ist mit 4 Mikrofonen ausgestattet. Mit diesen ist eine 3D Lokalisierung möglich. Der Zugriff auf die Audio-Daten ist jedoch noch mit keinem Framework möglich und es sind auch keine weiteren Informationen bekannt.
+%
+%\subsubsection{Neigesteuerung}
+%
+%Der Kinect-Sensor beinhaltet einen 3D-Neigesensor und einen Motor mit welchem der Neigungswinkel gegen vorne angepasst werden kann. Der Neigungswinkel beträgt zwischen $-31^\circ$und $+30^\circ$ relativ zum Standfuss.
+%
+%\subsubsection{LED-Steuerung}
+%
+%Das Integrierte \gls{led} kann ebenfalls angesteuert werden. Folgende Modus sind möglich:
+%
+%\begin{itemize}
+%	\item \gls{led}-Ausgeschaltet
+%	\item Grün
+%	\item Rot
+%	\item Gelb (Orange)
+%	\item Gelb (Orange) blinkend
+%	\item Grün
+%	\item Gelb (Orange)-Rot blinkend
+%\end{itemize}
+%
+%\noindent Die wichtigsten technischen der Kinect sind:
+%\begin{itemize}
+%  \item \gls{vga}-Auflösung (640x480 Pixel), weshalb die Bildqualität vergleichsweise
+%  schwach ist.
+%  \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot \gls{tof}-Kamera und kodiert
+%  die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare
+%  Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
+%\end{itemize}
 
 Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}, \gls{opencv}, Matlab, etc.).
  Unsere Wahl war \gls{openni}, weil wir sie durch C++ Umgebung in das
@@ -106,30 +103,29 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
 
 \subsection{\glstext{openni}}
 \authorsection{\editorhamza}
-
-Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
-\begin{figure}
-\label{fig:gesten_openni}
-\centering
-\includegraphics[scale=0.7]{graphics/BILD-OpenNI.png}
-\end{figure}
-Das \gls{openni}-Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C-Sharp.
-Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}-Frameworks im Vordergrund:
-
-\begin{itemize}
-	\item Context:  Definiert des Umfeld des Sensors. Dies Beinhaltet z.b. die Auflösung der Sensoren bzw. die Sicht auf die ganze Szene als solches.
-	\item DepthGenerator:  Erzeugt für den Softwareentwickler ein kontinuierliches Signalwelches aus den Daten des Tiefensensors gespiesen wird.
-	\item UserGenerator: Liefert Informationen zu aktuell erkannten Benutzern
-\end{itemize}
-
-Mit NITE  sind in \gls{openni}  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
+\todo[inline]{Hamza}
+%Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
+%\begin{figure}
+%\label{fig:gesten_openni}
+%\centering
+%\includegraphics[scale=0.7]{graphics/BILD-OpenNI.png}
+%\end{figure}
+%Das \gls{openni}-Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C-Sharp.
+%Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}-Frameworks im Vordergrund:
+%
+%\begin{itemize}
+%	\item Context:  Definiert des Umfeld des Sensors. Dies Beinhaltet z.b. die Auflösung der Sensoren bzw. die Sicht auf die ganze Szene als solches.
+%	\item DepthGenerator:  Erzeugt für den Softwareentwickler ein kontinuierliches Signalwelches aus den Daten des Tiefensensors gespiesen wird.
+%	\item UserGenerator: Liefert Informationen zu aktuell erkannten Benutzern
+%\end{itemize}
+%
+%Mit NITE  sind in \gls{openni}  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
 
 Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
 
 \section{Umsetzung}
 \label{kinect_umsetzung_sec}
-\todo[inline]{Author hinzufügen}
-\authorsection{Kinect-Gruppe}
+\authorsection{Márton Kelemen}
 
 \gls{openni} ist eine Klassenbibliothek, die für die Programmierer einen einheitlichen Zugriff und Verarbeitungsmöglichkeiten
  der Sensordaten (Farbbild, Tiefenbild, Audiosignale) anbietet. Bei natürlicher Interaktion (NI steht für „natural interaction“) wird der Input,
@@ -200,32 +196,33 @@ Die Zeit wird in Sekunden, die Entfernungen und Bewegungen werden in Millimeter 
 Die Gestenerkennung wurde in einem zweiten Modul (\lstinline{GestureClassifier})
 umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 
-Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
-\begin{figure}[h]
-\label{fig:gesten_skelett}
-\centering
-\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
-\caption{Dreidimensionales Körpermodell.}
-\end{figure}
-
-\begin{figure}[h]
-\label{fig:gesten_skelett}
-\centering
-\includegraphics[scale=0.7]{graphics/BILD-HandModell.png}
-\caption{Modell der menschlichen Hand mit 27 Freiheitsgraden.}
-\end{figure}
+\todo[inline]{Hamza}
+%Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
+%\begin{figure}[h]
+%\label{fig:gesten_skelett}
+%\centering
+%\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
+%\caption{Dreidimensionales Körpermodell.}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\label{fig:gesten_skelett}
+%\centering
+%\includegraphics[scale=0.7]{graphics/BILD-HandModell.png}
+%\caption{Modell der menschlichen Hand mit 27 Freiheitsgraden.}
+%\end{figure}
 
 \subsubsection{Probleme}
 \authorsection{\editorhamza}
-
-Die gleichmäßige Farbgebung und geringe Texturierung der Menschlichen Hand machen eine Erkennung von inneren Kanten und somit die Segmentierung einzelner nicht ausgestreckter Finger schwierig. 
-Die hohen Geschwindigkeiten für Translation (bis 5m/s) und Rotation ($300^\circ/s$) die für die globale Handbewegung erreicht werden können und die relativ niedrigen Kamerafrequenzen zwischen 30 und 60 Herz machen ein durchgehendes Tracking sehr schneller Bewegungen nahezu unmöglich.
-Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
+\todo[inline]{Hamza}
+%Die gleichmäßige Farbgebung und geringe Texturierung der Menschlichen Hand machen eine Erkennung von inneren Kanten und somit die Segmentierung einzelner nicht ausgestreckter Finger schwierig. 
+%Die hohen Geschwindigkeiten für Translation (bis 5m/s) und Rotation ($300^\circ/s$) die für die globale Handbewegung erreicht werden können und die relativ niedrigen Kamerafrequenzen zwischen 30 und 60 Herz machen ein durchgehendes Tracking sehr schneller Bewegungen nahezu unmöglich.
+%Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
 In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet. 
 
 \subsection{Gestenerkennung}
 \label{gestenerkennung_gestenerkennung_sec}
-\authorsection{Kinect-Gruppe}
+\authorsection{Márton Kelemen}
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
  Diesem Ansatz liegt ein binärer Entscheidungsbaum zu Grunde, dem den einzelnen

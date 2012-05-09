@@ -262,8 +262,7 @@ Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der 
 \subsection{Inverse Kinematik und manuelle Steuerung}
 \label{inverse_kinematik_subsec}
 \authorsection{\editorjulian}
-
-\todo[inline]{Julian: Schreiben}
+%\todo[inline]{Julian: Schreiben}
 In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters.
  Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung.
  Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe
@@ -622,20 +621,25 @@ Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gl
 
 \subsubsection{Algorithmus}
 \authorsection{\editorjulian}
-\todo[inline]{Julian: Schreiben}
-
-Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet. Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones\cite{jonesAstar} zurückgegriffen. 
-Diese Implementierung kann einfach eingebunden und erweitert werden. Zum Einbinden des Algorithmus sind drei wesentliche Änderungen bzw. Erweiterungen notwendig:
+%\todo[inline]{Julian: Schreiben}
+Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet.
+Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones\cite{jonesAstar} zurückgegriffen.
+Diese Implementierung kann einfach eingebunden und erweitert werden.
+Zum Einbinden des Algorithmus sind drei wesentliche Änderungen bzw.
+Erweiterungen notwendig:
 \begin{description}
 	\item[Hinderniskarte] Eine Schnittstelle zur Verwendung eines \lstinline{CByteImage} als Hinderniskarte.
 	\item[Heuristik] Ersetzen der ursprünglichen Heuristik durch die \gls{Euklidische-Distanz}.
-	\item[Antigravitationsfeld] Erweiterung um ein Antigravitationsfeld.
+	\item[Kostenfeld] Erweiterung um ein Feld, welches die Kosten zum Befahren eines bestimmten Punktes der Karte beschreibt.
 \end{description}
 
-Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine Interface-Klasse geschaffen. Bei deren Umsetzung muss eine Funktion implementiert werden die für eine Koordinate auf der Hinderniskarte die Information liefert ob sich dort ein Hindernis befindet oder nicht. Eine entsprechende Implementierung wurde sowohl für ein \lstinline{CByteImage} als auch für ein \lstinline{IplImage} vorgenommen.
+Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine Interface-Klasse geschaffen.
+Bei der individuellen Implementierung muss eine Funktion erstellt werden, die für eine Koordinate auf der Hinderniskarte die Information liefert ob sich dort ein Hindernis befindet oder nicht bzw.
+wie \glqq teuer\grqq\ eine Fahrt dorthin ist.
+Eine entsprechende Umsetzung wurde sowohl für ein \lstinline{CByteImage} als auch für ein \lstinline{IplImage} vorgenommen.
 
-In der ursprünglichen Implementierung wurde die \gls{Manhattan-Distanz} zwischen zwei Punkten als Heuristik für den A*-Algorithmus verwendet. Da sich der Roboter omnidirektional bewegen kann, ist es sinnvoll stattdessen die \gls{Euklidische-Distanz} zu verwenden.
-
+In der ursprünglichen Implementierung des A*-Algorithmus kommt als Heuristik, für die Distanz zwischen zwei Punkten, die \gls{Manhattan-Distanz} zur Verwendung.
+Da sich der Roboter omnidirektional bewegen kann, ist es sinnvoll stattdessen die \gls{Euklidische-Distanz} zu verwenden.
 \begin{figure}[h]
 	\centering
 	\label{fig:bahnplanung_umsetzung_algorithm}
@@ -645,26 +649,34 @@ In der ursprünglichen Implementierung wurde die \gls{Manhattan-Distanz} zwische
 	\subfloat[Hinderniskarte mit großen Hindernissen]
 	{\includegraphics[scale=0.8]{graphics/BILD-Astar_grosse_hindernisse.png}}
 	\quad
-	\subfloat[Hinderniskarte mit Antigravitationsfeld]
+	\subfloat[Hinderniskarte mit Kostenfeld]
 	{\includegraphics[scale=0.8]{graphics/BILD-Astar_antigrav.png}}
-	\caption[Hinderniskarte und Trajektorie mit A*-Alg.]{Darstellung der Hinderniskarte und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus, mit vergrößerten Hindernissen und mit Antigravitationsfeld.}
+	\caption[Hinderniskarte und Trajektorie mit A*-Alg.]{Darstellung der Hinderniskarte und der gefundenen Trajektorie mit Hilfe des A*-Algorithmus, mit vergrößerten Hindernissen und mit Kostenfeld.}
 \end{figure}
+In der Praxis stellt sich bei der Verwendung des A*-Algorithmus heraus, dass die verwendete Implementierung zwar einen optimalen, also kürzesten Weg, findet, jedoch entspricht dieser Weg nicht immer der optimalen Näherung an eine direkte Verbindung.
+Außerdem bewegt sich der gefundene Pfad häufig in direkter Nachbarschaft von Hindernissen.
+Dieses Verhalten führte bereits in der Simulation zu erheblichen Problemen, kann allerdings durch die Erweiterung um ein Kostenfeld abgemildert werden.
 
+Um einen gewissen Abstand zu den Hindernissen einzuhalten sind zwei Lösungen denkbar.
+Die einfachste Variante ist es, die Hindernisse in der Hinderniskarte \glqq aufzublasen\grqq\ und so in der Realität für einen Mindestabstand zu sorgen.
+Alternativ gibt es die Möglichkeit ein Kostenfeld einzusetzen. 
 
-%\begin{figure}[h]
-%  \centering
-%  \subfloat[Geplante Umgebung]{\label{fig:map_fzi_plan}\includegraphics[width=0.45\textwidth]{graphics/map_fzi_plan}}
-%  \quad %add desired spacing between images, e. g. ~, \quad, \qquad etc. (or a blank line to force the subfig onto a new line)
-%  \subfloat[Umgebung mit \protect\gls{hollie} und realen Scannerdaten]{\label{fig:map_fzi_hollie}\includegraphics[width=0.4\textwidth]{graphics/map_fzi}}
-%  \caption{Simulierte Büroumgebung für weitere Tests}
-%  \label{fig:map_fzi}
-%\end{figure}
+An engen Passagen auf der Hinderniskarte, bei denen der Roboter wenig Platz zu beiden Seiten hat, kommt es durch das Aufblasen der Hindernisse zu einem Verschluss dieser Passagen.
+Das Finden eines Pfades ist dann unmöglich, da die ursprüngliche Passage nunmehr ein Hindernis ist.
+Dies kann beispielsweise bei Türen der Fall sein.
+Um diesem Problem zu begegnen kommt die zweite Lösungsmöglichkeit zur Verwendung.
 
-In der Praxis stellte sich bei der Verwendung des A*-Algorithmus heraus, dass die verwendete Implementierung nicht den optimalen, also kürzesten Weg, findet und sich an Hindernissen entlang bewegt. Dieses Verhalten führte bereits in der Simulation zu erheblichen Problemen, konnte allerdings durch die Erweiterung um ein Antigravitationsfeld abgemildert werden.
+Unter einem Feld versteht man in der Physik die räumliche Verteilung einer physikalischen Größe und speziell bei einem Skalarfeld die Zuordnung eines Skalars zu jedem Raumpunkt \cite{allgFeld},\cite{skalarFeld}.
+Um das Finden eines Pfades zu verbessern, kann in einem solchen Feld zusätzliche Information über Hindernisse gespeichert werden.
+Eine Möglichkeit zur Verwendung eines solchen Feldes, um sichere und weiche Trajektorien zu erstellen, kommt in \cite{Garrido2007} zur Sprache. In dieser Arbeit wird in einem ersten Schritt jedem freien Punkt der Hinderniskarte die Information abgelegt wie weit der nächste Hindernispunkt entfernt ist. Interpretiert in Form des Brechungsindex für elektromagnetische Wellen, kann in einem zweiten Schritt für jeden Punkt die Berechnung der Geschwindigkeit einer im Startpunkt ausgesendeten Wellenfront erfolgen. Die Trajektorie ergibt sich aus dem (zeitlich) kürzesten Weg um auf Basis dieser Ausbreitungsgeschwindigkeit vom Startpunkt zum Ziel zu kommen.
 
-Um einen gewissen Abstand zu Hindernissen einzuhalten sind zwei Lösungen denkbar. Die einfachste Variante ist es die Hindernisse in der Hinderniskarte \glqq aufzublasen\grqq\ und so in der Realität für einen Mindestabstand zu sorgen. Alternativ gibt es die Möglichkeit ein Antigravitationsfeld einzusetzen. 
+Im Rahmen des Praktikums wurde ein einfacherer Ansatz gewählt. Es kommt ein Kostenfeld zur Verwendung.
+Der Begriff \glqq Kostenfeld \grqq\ bezieht sich auf die Tatsache, das der Wert den das Feld an einem bestimmten Punkt besitzt die Kosten repräsentiert die es benötigt auf auf diesen Punkt zu fahren.
+In der Nähe von Hindernissen sind die Kosten hoch, in größerer Entfernung geringer.
 
-Beim einfachen Vergrößern der Hindernisse kommt es an Passagen bei denen der Roboter, in der ursprünglichen Hinderniskarte, wenig Platz auf beiden Seiten hat, zum Verschluss dieser Durchgänge. Dies kann beispielsweise bei Türen der Fall sein. Das Finden eines kollisionsfreien Pfades ist unmöglich, da die Passage nunmehr ein Hindernis ist. Um diesem Problem zu begegnen kommt die zweite Lösungsmöglichkeit zur Verwendung. Das Antigravitationsfeld wird realisiert in dem das Fahren in der Nähe von Hindernissen mit Kosten verbunden ist. Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, welche die Kosten repräsentieren die es benötigt um \glqq auf\grqq\ diesen Pixel zu fahren. Der Algorithmus versucht den günstigsten Weg zu finden und vermeidet das fahren auf \glqq teueren\grqq\ Pixeln. Da es aber erlaubt ist auf diesen Pixeln zu fahren kann ein kollisionsfreier Pfad auch durch enge Passagen gefunden werden.
+Die Generierung des Kostenfeldes erfolgt, in dem jedem frei befahrbaren Punkt auf der Hinderniskarte, der sich noch in einem bestimmten Abstand zu einem Hindernispunkt befindet, ein Wert zugeordnet wird.
+Dieser Wert verringert sich linear mit der Entfernung die dieser Punkt zum nächstgelegenen Hindernispunkt hat. So bietet jeder Punkt zusätzliche Informationen, die zur Pfadplanung verwendet werden können.
+Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, welche die Kosten repräsentieren die es benötigt um \glqq auf\grqq\ diesen Pixel zu fahren. Der Algorithmus versucht den günstigsten Weg zu finden und vermeidet das Fahren auf \glqq teuren\grqq\ Pixeln, die sich in der Nähe von Hindernissen befinden. Da es aber generell erlaubt ist auf diesen Pixeln zu fahren kann ein kollisionsfreier Pfad auch durch enge Passagen gefunden werden.
 
 
 

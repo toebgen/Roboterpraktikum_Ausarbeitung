@@ -12,6 +12,7 @@
 *.ind
 *.ist
 *.glg
+*.gls
 *.glo
 *.idx
 *.lof
@@ -21,6 +22,7 @@
 Roboterpraktikum.pdf
 *.pre
 *.synctex.gz
+*.tcp
 *.tdo
 *.thm
 *.tps
