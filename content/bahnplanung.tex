@@ -12,7 +12,10 @@
 \authorsection{\editoroier}
 
 
-Was die Aufgabestellung für die Bahnplanung und Steuerung betrifft, so ist eine Einteilung in Abstraktionsschichten möglich:
+Was die Aufgabestellung für betrifft, so soll der Roboter einen Menschen sicher und elegant, sprich ohne ruckartige Richtungswechseln, folgen können. Dabei soll es sicher durch die Innenräume fahren ohne mit Hindernissen zu kollidieren. Den abgefahrenen Pfad sollte dabei gespeichert werden, damit der Roboter später von alleine zur Startposition zurückkehren kann und danach vielleicht den gleichen Weg nochmal abfahren kann.
+
+
+Für die Bahnsteuerung und Bahnplanung ist eine Einteilung in Abstraktionsschichten sinnvoll, da es der zu lösende Aufgabe hilft.
 \begin{itemize}
 	\item Motoransteuerung
 	\item inverse Kinematik und manuelle Steuerung
@@ -22,28 +25,13 @@ Zusätzlich ist eine Simulation notwendig.
 
 Für die Motoransteuerung ist die plattformspezifische Ansteuerung und Simulation notwendig. Außerdem sollte man auch die Pose aus Odometriedaten bestimmen können.
 
-Die inverse Kinematik dient dazu, aus einer gegebenen Pose eine oder mehrere bis hin zu unendlich vielen Roboterkonfigurationen zu berechnen. Letzteres passiert, wenn es Raumpunkte gibt die zu Singularitäten führen. Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden. Im Falle einer mobilen Plattform würde man als inverse Kinematik die Berechnung einer Radstellung zu einer Pose (x, y, yaw) betrachten. Die Bestimmung der Geschwindigkeit wird danach durch inverse Odometrie gemacht. Zu lösende Aufgaben im Bereich der inversen Kinematik sind: die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
+Die inverse Kinematik dient dazu, die erforderliche Gelenkeinstellung und Motorbewegungen zu berechnen, um zu einer bestimmten gewünschte Roboterpose zu gelangen. Probleme gibt es wenn es Raumpunkte gibt die zu Singularitäten führen. Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden. Die Vorwärtskinematik hingegen berechnet die Roboterpose auf Basis der interne Gelenkeinstellungen und Sensoren. Bei mobilen Robotern wird das auch Odometrie genannt.
 
-Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Menschendaten, sprich die Daten der Kinect-Kamera verarbeitet werden. 
-Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, welches nebenbei kollisionsfrei sein sollte. Als letztes soll das 
+Im Falle einer mobilen Plattform spricht man eher von Bahnplanung anstatt inverse Kinematik. Bei dieser Art von Robotern arbeitet die Regelung, um die geplante Bahn zu fahren, auf Basis der Odometrie in kartesische Koordinaten. Zu lösende Aufgaben im Bereich der inversen Kinematik sind: die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
+
+Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Daten der Kinect-Kamera verarbeitet werden. 
+Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, welches kollisionsfrei sein muss. Als letztes soll das 
 Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
-
-
-%Als Ausgangssituation hatte man die Grundlagen der Odete für die LowLevel-Ansteurung und die inverse Kinematik. Sonst waren, Bahnplanung/Steuerung und Kollisionsvermeidung zunächst nicht vorhanden. Eine Simulationsumgebung war vorhanden, es fehlte aber noch die Programmierung der Gui .
-%
-%Nach dem Bottom-Up Prinzip hat man zunächst, die LowLevel-Ansteuerung von der Odete angepasst und mittels Simulation getestet.
-
-%Das \textit{DriveAlongPath} Modul, welches sich mit der inverse Kinematik beschäftigt, dient um aus eine Trajektorie aus 3 Punkte die nötige Koordinaten für \textit{OmniDrive} zu berechnen.
-%Falls es sich bspw. um ein Industrieroboter handeln würde, dann würde die inverse Kinematik die nötige Gelenkwinkeleinstellungen berechnen, um mit dem Greifer eine neue Position zu erreichen.
-%Danach würde die inverse Dynamik die entsprechende Motor-Kräfte und Momente berechnen.
-%
-%Die Bahnplanung berechnet Trajektoriepunkte auf Basis der Mensch-Position und Geschwindigkeit, welche von der Kinect-Kamera geliefert werden.
-%Außerdem werden hier diverse Transformationen von Welt zu Roboter bzw. Bild-Koordinaten und zurück gemacht.
-%Nebenbei, wird der Pfad gespeichert damit der Roboter es später alleine abfahren kann.
-%
-%Zum Schluß wird eine ständige Überprüfung der geplante Trajektorie gemacht, um Kollisionen zu vermeiden.
-%Um Hindernisse zu umfahren, werden der A*-Algorithmus und ein Potentialfeld eingesetzt.
-%Letzteres wirkt, dass es \glqq teuer\grqq \space ist in der nähe von Hindernisse zu fahren.
 
 
 
@@ -58,7 +46,7 @@ Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie
 
 Weil die gefundene Trajektorie normalerweise nicht glatt ist, werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
 Die Bahnsteuerung kann im kartesischen Raum oder im Konfigurationsraum stattfinden.
-Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber für jeden Punkt die inverse Kinematik berechnen.
+Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber normalerweise für jeden Punkt die inverse Kinematik berechnen. Eine Ausnahme wären Radkinematiken bei mobilen Robotern. Bei mobilen Plattformen sind auch alle geplante Trajektorien ausführbar, insbesondere wenn sie omnidirektional sind, was bei Roboterarmen nicht der Fall ist. 
 Die Steuerung im Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher.
 Vor und Nachteile beider Optionen kann man in der Tabelle \ref{fig:steurungProContra} sehen.
 
@@ -74,9 +62,9 @@ einfacher\\
 + Interpolation ist einfacher & + Trajektorie ist eindeutig und
 berücksichtigt Grenzen\\
 
-- Inverse Kinematik ist für jeden Trajektorienpunkt zu lösen & - Interpolation für mehrere
+- Inverse Kinematik ist für jeden Trajektorienpunkt zu lösen (außer bei mobilen Radkinematiken) & - Interpolation für mehrere
 Gelenke\\
-- Geplante Trajektorie nicht immer ausführbar & - Formulierung der Trajektorie umständlicher\\
+- Geplante Trajektorie nicht immer ausführbar (außer bei mobile Plattformen) & - Formulierung der Trajektorie umständlicher\\
 \hline
 		\end{tabular}
 		\caption{\label{fig:steurungProContra} Vor und Nachteile der Steuerung im Kartesischen und Konfigurationsraum \citep{rob1}}
@@ -185,8 +173,8 @@ In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit An
 \caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}  \citep{innoKonz}}
 \end{figure}
 
-Der \textit{A*-Algorithmus}, obwohl er nicht mehr als state-of-the-art gilt\citep{innoKonz}, ist als lokaler Planer, vor allem in 2D, sehr gut.
-Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter.
+Der \textit{A*-Algorithmus}, obwohl er nicht mehr für bestimmte Anwendungszwecke als state-of-the-art gilt\citep{innoKonz}, ist als lokaler Planer, vor allem in 2D, sehr gut.
+Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter. Als globaler Planer kann man es auch anwenden, zum Beispiel bei Navigationsgeräten. Diese benutzen Erweiterungen vom Grundalgorithmus, weil die Zustandsräume sehr komplex sind. 
 Außerdem kann man den Grundalgorithmus noch weiter optimieren.
 Zum Beispiel mit dem Hierarchischen \textit{A*}, damit er, wenn keine Hindernisse in der Nähe liegen, größere Schritte und sonst kleinere Schritte macht.
 Es gibt zusätzliche Erweiterungen für die bidirektionale Suche, die parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
@@ -688,7 +676,7 @@ Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, wel
 
 Für die Simulation war schon eine Simulationsumgebung vorhanden.
 Aufgabe war es, eine grafische Oberfläche mit Mcagui zu erstellen.
-Warum ist die Simulation nützlich oder notwendig?
+Die Simulation ist aus mehreren Gründen notwendig.
 In erster Linie konnte man am Anfang am realen Roboter nicht testen, weil der Roboter noch gebaut wurde oder zum Beispiel nicht alle von uns programmierten Komponenten (wie bspw. die Lokalisierung) funktionsfähig waren.
 Dank der Simulation wurde das Testen von einzelnen Funktionalitäten und die Darstellung des Roboterzustands möglich, wie man in Abbildung \ref{fig:mcagui} sehen kann.
 \ZB wurde die Simulation sehr oft benutzt, um schnell Änderungen im Bahnplanungsalgorithmus zu testen.
