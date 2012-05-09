@@ -18,13 +18,25 @@ In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt
  Roboter müssen somit durch Interaktion mit ihrer Umwelt lernen, sich orientieren und auf Menschen bzw. Informationen reagieren.
  Besonders anspruchsvoll sind dabei Perzeption und Verarbeitung von Signalen.
 
-\section{Motivation und Problemstellung}
+\section{Motivation und Aufgabenstellung}
 \label{motivation_sec}
 \todo[inline]{Author hinzufügen}
 \authorsection{Kinect-Gruppe}
 
+\section{Motivation}
+\label{motivation_real_sec}
+
+
 In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden, in denen es nicht möglich ist, diese durch
- (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}.
+ (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}. Aber nicht nur Roboter müssen sich in solchen Umgebungen zurechtfinden, auch Menschen müssen eine neue Umgebung zuerst kennenlernen. In vielen Situation, etwa bei der Besichtigung eines Museums oder einer Firma, wird auf das Konzept des Zeigens oder Vormachen zurückgegriffen. Eine Person die mit der konkreten Situation oder Umgebung vertraut ist, teilt ihr Wissen mit anderen Personen in dem sie eine Führung anbietet oder den Weg zu einem bestimmten Ziel zeigt.
+
+In modernen Forschungseinrichtungen, wie etwa dem \gls{fzi} in Karlsruhe, wird besonderen Wert auf das Sehen und Anfassen aktueller Forschungsprojekte gelegt\todo[inline]{Quelle.http://www.fzi.de/index.php/en/news/press-reports/7809-27042012-das-fzi-house-of-living-labs-vernetzt-informatik-anwendungsforschung-ueber-branchen-und-disziplingrenzen-hinweg}
+Um Besuchern die Räumlichkeiten und Forschungsprojekte zu zeigen ist es hier ebenfalls notwendig Führungen anzubieten. Um die Erfahrung Servicerobotik zu intensivieren liegt es auf der Hand eine solche Führung von einem Roboter ausführen zu lassen. Und um noch einen Schritt weiter zu gehen bietet es sich an die Definition einer Route, welche der Roboter späteren Besuchern zeigen soll, nicht fest zu programmieren, sondern die Möglichkeit zu schaffen, dass es dem Roboter möglich ist einem Menschen zu folgen und von ihm diese Route zu lernen.
+
+ 
+ 
+Unter eine solche unstrukturierte Umwelt fällt beispielsweise eine Büroumgebung. Es gibt zwar einen festen Lageplan in dem Räume, Türen, bis hin zu Kopierern alles erfasst ist, jedoch kommt es immer wieder zu Veränderungen. Topfpflanzen werden aufgestellt oder auch zusätzliche Aktenschränke und Ablagemöglichkeiten, die im ursprünglichen Plan nicht vorgesehen waren.
+ 
  Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
  Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
  zu 3D-Tiefenbildern erweitert werden. 
@@ -176,127 +188,128 @@ Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders infor
 
 \subsection{Software}
 
-\subsubsection{OpenNI}
-
-\gls{openni} ist ein plattformübergreifendes Framework zur Entwicklung von
-Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
- Die \gls{openni}-\gls{api} stellt eine Vielzahl an Schnittstellen bereit, um
- entsprechende Applikationen zu programmieren. Der Hauptzweck von \gls{openni}
-  ist eine Standard-\gls{api} bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
-
-\begin{itemize}
-  \item Kommunikation mit Video und Audiosensoren
-  \item Bereitstellung von Middleware zur Video- und Audiodatenverarbeitung,\\
-  wie die Unterstützung bei der Objektdetektion in Bildern
-\end{itemize}
-
-Dabei stellt \gls{openni} eine Reihe von \glspl{api} bereit, die sowohl von  (3D-Kamera-)
- Sensoren als auch Middleware Komponenten implementiert werden können.
- Durch das Entkoppeln von Sensor und Middleware können mit \gls{openni} angefertigte Softwareprodukte
- ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (\glqq write once, deploy everywhere\grqq).
- Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild-) Formaten aufbauen,
- unabhängig von der Sensorik-Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite
- Sensoren zur Verfügung stellen, die diese Bildformate generieren können. \gls{openni} steht kostenlos
- als open source Quelle zur Verfügung. In Abbildung \ref{fig:openNI} ist das
- Konzept von \gls{openni} in 3 Schichten dargestellt:
-
-\begin{description}
-  \item[Oben:] Software, die Natürliche Interaktion auf \gls{openni} aufbauend
-  verwendet
-  \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu
-  Hardware- als auch zu\\ Softwarekomponenten zur Verfügung stellt
-  \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
-\end{description}
-
-\begin{figure}[h]
-\center
-\includegraphics[scale=0.8]{graphics/openNI.jpg}
-\caption{\label{fig:openNI} \gls{openni} Architektur \citep{openNI2012}}
-\end{figure}
-
-OpenNI basiert auf einigen Grundkonzepten:
-
-\begin{itemize}
-  \item Modularität
-  \item Produktionsknoten
-  \item Produktionsketten
-\end{itemize}
-
-\newpage
-\todo[inline]{Ein wenig gepfuscht hier \ldots falls wer Lust hat kann er das
-ja ändern}
-\begin{description}
-\item[Modularität]
-\end{description}
-
-Unter Modularität ist in diesem Zusammenhang vor allem die Austauschbarkeit von Komponenten
- und die Architektur des Systems zu verstehen.
- Es werden folgende Module unterstützt:
-
-
-\begin{itemize}
-\item \textbf{Sensoren:}
-\begin{itemize}
-  \item 3D Sensoren
-  \item \gls{rgb} Kameras
-  \item Infrarot Kameras
-  \item Mikrofone / Mikrofonarrays
-\end{itemize}
-\item \textbf{Middleware Komponenten:}
-\begin{description}
-  \item[Ganzkörperanalyse Middleware:] Softwarekomponente, die Sensordaten
-  verarbeitet und daraus relevante Informationen wie Gelenkposen ableitet
-  \item[Handanalyse Middleware:] Software, die hilft Sensordaten zu verarbeiten,
-  um die Positionen von Händen zu ermitteln
-  \item[Gestendetektion:] Softwarekomponente, die Gesten erkennt und diese
-  Information an die Anwendungen weitergibt
-  \item[Szenenanalyse:] Software, die verschiedene Szenenrelevanten
-  Informationen ableitet, wie Hintergrundseparation, Erkennen der Bodenebene und Identifikation und Detektion von verschiedenen Personen
-\end{description}
-\end{itemize}
-
-
-\begin{description}
-\item[Produktionsknoten]
-\end{description}
-
-
-In \gls{openni} werden sogenannte Produktionsknoten definiert die die Aufgabe haben,
- für verschiedene Anwendungen die Daten zur Verfügung zu stellen.
- Produktionsknoten stehen dabei in einer Hierarchie zueinander.
- Sie können sowohl Produktionsknoten eines niedrigeren Levels verwenden als auch von Knoten höheren
- Levels verwendet werden. Konkret bietet \gls{openni} einen User Generator, der alle Daten einer getrackten Person
- liefern kann. Hierfür verwendet der User Generator einen Tiefenbildgenerator, aus dem er seine Informationen ableitet.
-
-\begin{description}
-\item[Produktionsketten]
-\end{description}
-
-Wie bereits dargestellt können mehrere Module gleichzeitig an der selben \gls{openni} Distribution angemeldet sein.
- Diese Topologie erlaubt Anwendungen flexibel auf Aufnahme- und Verarbeitungsmodule zuzugreifen.
- Als Produktionsketten werden die bereits angesprochenen hierarchischen Verarbeitungsketten der Produktionsknoten verstanden.
- Der erwähnte User Generator verwendet einen Tiefengenerator, der wiederum seine Daten von einem Tiefensensor bezieht.
- Diese Abhängigkeit bzw. sequenzielle Herunterbrechen der Aufgabe der Produktionsknoten wird als Produktionskette verstanden.
- Vorteilhaft ist an dieser Struktur, dass Anwendungen nur die oberste Schicht mit ihren Fähigkeiten nutzt.
- Die Konfiguration der darunter liegenden Schichten bleibt dabei verborgen und erlaubt Herstellern größere Freiheit
- in der Gestaltung der niedrigeren Hierarchieebenen \citep{openNI2012}.
-
-\subsubsection{Microsoft \glsentrytext{sdk}}
-
-Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles \gls{sdk},
- das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft \gls{sdk}
- hat man Zugang zu Werkzeugen, mit denen Menschen und Sprache erkannt werden.
- Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
- Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \citep{kinectDevKfW2012}.
-
-Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
- wie zum Beispiel bei Microsofts Internetsuchmaschine bing\footnote{\url{www.bing.com/}}. Eine neu entwickelte Körperscan Software erlaubt es,
- Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu
- verwenden, siehe Abbildung \ref{fig:skelettracking} \citep{noGameKinect2012}.
-
-\begin{figure}[h]
-\center
-\includegraphics[scale=0.8]{graphics/skelettracking.jpg}
-\caption{\label{fig:skelettracking} Beispielhafte Anwendung von Skelettracking
-\citep{noGameKinect2012}}
-\end{figure}
+\todo[inline]{ehemals der kopierte Text}
+%\subsubsection{OpenNI}
+%
+%\gls{openni} ist ein plattformübergreifendes Framework zur Entwicklung von
+%Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
+% Die \gls{openni}-\gls{api} stellt eine Vielzahl an Schnittstellen bereit, um
+% entsprechende Applikationen zu programmieren. Der Hauptzweck von \gls{openni}
+%  ist eine Standard-\gls{api} bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
+%
+%\begin{itemize}
+%  \item Kommunikation mit Video und Audiosensoren
+%  \item Bereitstellung von Middleware zur Video- und Audiodatenverarbeitung,\\
+%  wie die Unterstützung bei der Objektdetektion in Bildern
+%\end{itemize}
+%
+%Dabei stellt \gls{openni} eine Reihe von \glspl{api} bereit, die sowohl von  (3D-Kamera-)
+% Sensoren als auch Middleware Komponenten implementiert werden können.
+% Durch das Entkoppeln von Sensor und Middleware können mit \gls{openni} angefertigte Softwareprodukte
+% ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (\glqq write once, deploy everywhere\grqq).
+% Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild-) Formaten aufbauen,
+% unabhängig von der Sensorik-Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite
+% Sensoren zur Verfügung stellen, die diese Bildformate generieren können. \gls{openni} steht kostenlos
+% als open source Quelle zur Verfügung. In Abbildung \ref{fig:openNI} ist das
+% Konzept von \gls{openni} in 3 Schichten dargestellt:
+%
+%\begin{description}
+%  \item[Oben:] Software, die Natürliche Interaktion auf \gls{openni} aufbauend
+%  verwendet
+%  \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu
+%  Hardware- als auch zu\\ Softwarekomponenten zur Verfügung stellt
+%  \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
+%\end{description}
+%
+%\begin{figure}[h]
+%\center
+%\includegraphics[scale=0.8]{graphics/openNI.jpg}
+%\caption{\label{fig:openNI} \gls{openni} Architektur \citep{openNI2012}}
+%\end{figure}
+%
+%OpenNI basiert auf einigen Grundkonzepten:
+%
+%\begin{itemize}
+%  \item Modularität
+%  \item Produktionsknoten
+%  \item Produktionsketten
+%\end{itemize}
+%
+%\newpage
+%\todo[inline]{Ein wenig gepfuscht hier \ldots falls wer Lust hat kann er das
+%ja ändern}
+%\begin{description}
+%\item[Modularität]
+%\end{description}
+%
+%Unter Modularität ist in diesem Zusammenhang vor allem die Austauschbarkeit von Komponenten
+% und die Architektur des Systems zu verstehen.
+% Es werden folgende Module unterstützt:
+%
+%
+%\begin{itemize}
+%\item \textbf{Sensoren:}
+%\begin{itemize}
+%  \item 3D Sensoren
+%  \item \gls{rgb} Kameras
+%  \item Infrarot Kameras
+%  \item Mikrofone / Mikrofonarrays
+%\end{itemize}
+%\item \textbf{Middleware Komponenten:}
+%\begin{description}
+%  \item[Ganzkörperanalyse Middleware:] Softwarekomponente, die Sensordaten
+%  verarbeitet und daraus relevante Informationen wie Gelenkposen ableitet
+%  \item[Handanalyse Middleware:] Software, die hilft Sensordaten zu verarbeiten,
+%  um die Positionen von Händen zu ermitteln
+%  \item[Gestendetektion:] Softwarekomponente, die Gesten erkennt und diese
+%  Information an die Anwendungen weitergibt
+%  \item[Szenenanalyse:] Software, die verschiedene Szenenrelevanten
+%  Informationen ableitet, wie Hintergrundseparation, Erkennen der Bodenebene und Identifikation und Detektion von verschiedenen Personen
+%\end{description}
+%\end{itemize}
+%
+%
+%\begin{description}
+%\item[Produktionsknoten]
+%\end{description}
+%
+%
+%In \gls{openni} werden sogenannte Produktionsknoten definiert die die Aufgabe haben,
+% für verschiedene Anwendungen die Daten zur Verfügung zu stellen.
+% Produktionsknoten stehen dabei in einer Hierarchie zueinander.
+% Sie können sowohl Produktionsknoten eines niedrigeren Levels verwenden als auch von Knoten höheren
+% Levels verwendet werden. Konkret bietet \gls{openni} einen User Generator, der alle Daten einer getrackten Person
+% liefern kann. Hierfür verwendet der User Generator einen Tiefenbildgenerator, aus dem er seine Informationen ableitet.
+%
+%\begin{description}
+%\item[Produktionsketten]
+%\end{description}
+%
+%Wie bereits dargestellt können mehrere Module gleichzeitig an der selben \gls{openni} Distribution angemeldet sein.
+% Diese Topologie erlaubt Anwendungen flexibel auf Aufnahme- und Verarbeitungsmodule zuzugreifen.
+% Als Produktionsketten werden die bereits angesprochenen hierarchischen Verarbeitungsketten der Produktionsknoten verstanden.
+% Der erwähnte User Generator verwendet einen Tiefengenerator, der wiederum seine Daten von einem Tiefensensor bezieht.
+% Diese Abhängigkeit bzw. sequenzielle Herunterbrechen der Aufgabe der Produktionsknoten wird als Produktionskette verstanden.
+% Vorteilhaft ist an dieser Struktur, dass Anwendungen nur die oberste Schicht mit ihren Fähigkeiten nutzt.
+% Die Konfiguration der darunter liegenden Schichten bleibt dabei verborgen und erlaubt Herstellern größere Freiheit
+% in der Gestaltung der niedrigeren Hierarchieebenen \citep{openNI2012}.
+%
+%\subsubsection{Microsoft \glsentrytext{sdk}}
+%
+%Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles \gls{sdk},
+% das sich leicht in Visual Studio und Dot Net integrieren lässt. Mit dem Kinect Sensor und Microsoft \gls{sdk}
+% hat man Zugang zu Werkzeugen, mit denen Menschen und Sprache erkannt werden.
+% Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
+% Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \citep{kinectDevKfW2012}.
+%
+%Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
+% wie zum Beispiel bei Microsofts Internetsuchmaschine bing\footnote{\url{www.bing.com/}}. Eine neu entwickelte Körperscan Software erlaubt es,
+% Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu
+% verwenden, siehe Abbildung \ref{fig:skelettracking} \citep{noGameKinect2012}.
+%
+%\begin{figure}[h]
+%\center
+%\includegraphics[scale=0.8]{graphics/skelettracking.jpg}
+%\caption{\label{fig:skelettracking} Beispielhafte Anwendung von Skelettracking
+%\citep{noGameKinect2012}}
+%\end{figure}
