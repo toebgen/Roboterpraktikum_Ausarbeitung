@@ -8,4 +8,4 @@ makeglossaries %file%
 pdflatex %file%
 pdflatex %file%
 
-#%file%.pdf
+::%file%.pdf
