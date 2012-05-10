@@ -49,34 +49,36 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 \label{kinect_umsetzung_technische_daten}
 \authorsection{\editorhamza}
 \todo[inline]{Hamza}
+
 %\subsubsection{Tiefensensor}
 %\label{kinect_umsetzung_tiefensensor}
 %
-%Dieser Sensor besteht aus der Kombination einer 830nm Laser Diode und einem Tiefensensor \gls{cmos} welcher die reflektierten Infrarotstrahlen empfangen kann. Aus der Laufzeit kann so die Tiefe der einzelnen Punkte berechnet werden.
+%Dieser Sensor enthält 830nm Laser Diode und einem Tiefensensor \gls{cmos}, der die reflektierten Infrarotstrahlen empfangen kann.Durch die berechnete Strahllaufzeit werden die Abständen von jedem Pixel gemessen.
 %
 %\begin{itemize}
 %	\item Auflösung: 640x480 Pixels
 %	\item Tiefenbereich: 0.5m - 10m, Ideal 2m-2.5m
-%	\item Tiefengenauigkeit: 1cm
+%	\item Tiefengenauigkeit: 1mm bei einer Entfernung von 0.5m. Dieser Wert wird größer bei größeren Abständen.  
+%%% Quelle: http://ntuzhchen.blogspot.de/2010/12/how-kinect-works-prime-sense.html
 %\end{itemize}
 %
-%Ein Tiefenbild besteht somit aus 640x480 Pixeln mit je einer Tiefeninformation proPixel. Diese Tiefeninformation bewegt sich in einem Bereich von 50cm bis 1000cm mit einer Auflösung von 1cm. Pro Sekunde liefert der Kinect-Sensor 30 Tiefenbilder.
+%Jedes Pixel aus den 640x480 Pixeln enthält eine Tiefeninformation proPixel. Diese Tiefeninformation bewegt sich zwischen 0.5m und 10m mit einer Auflösung von 1cm. der Kinect-Sensor liefert  Pro Sekunde 30 Tiefenbilder.
 %
 %\subsubsection{Kamerasensor}
 %
-%Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}-Kamera. Diese löst mit 640x480 Pixeln auf.
+%Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}-Kamera. Diese hat genauso 640x480 Pixeln.
 %
 %\subsubsection{Audio}
 %
-%Der Kinect-Sensor ist mit 4 Mikrofonen ausgestattet. Mit diesen ist eine 3D Lokalisierung möglich. Der Zugriff auf die Audio-Daten ist jedoch noch mit keinem Framework möglich und es sind auch keine weiteren Informationen bekannt.
+%Der Kinect-Sensor hat 4 Mikrofonen,die eine 3D Lokalisierung ermöglicht.
 %
 %\subsubsection{Neigesteuerung}
 %
-%Der Kinect-Sensor beinhaltet einen 3D-Neigesensor und einen Motor mit welchem der Neigungswinkel gegen vorne angepasst werden kann. Der Neigungswinkel beträgt zwischen $-31^\circ$und $+30^\circ$ relativ zum Standfuss.
+%Der 3D-Neigesensor hat die  Aufgabe den Kinect-Sensor durch einen Motor auf der richtige Neigungswinkel zu halten. Der Neigungswinkel liegt zwischen $-31^\circ$und $+30^\circ$ relativ zum Standfuss.
 %
 %\subsubsection{LED-Steuerung}
 %
-%Das Integrierte \gls{led} kann ebenfalls angesteuert werden. Folgende Modus sind möglich:
+%Das Integrierte \gls{led} kann auch angesteuert werden. verschiedene Modus sind möglich:
 %
 %\begin{itemize}
 %	\item \gls{led}-Ausgeschaltet
@@ -87,15 +89,15 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 %	\item Grün
 %	\item Gelb (Orange)-Rot blinkend
 %\end{itemize}
-%
-%\noindent Die wichtigsten technischen der Kinect sind:
+%Die wichtigsten technischen der Kinect in unserem Projekt sind:
 %\begin{itemize}
-%  \item \gls{vga}-Auflösung (640x480 Pixel), weshalb die Bildqualität vergleichsweise
-%  schwach ist.
-%  \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot \gls{tof}-Kamera und kodiert
-%  die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare
-%  Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
+%  \item Winkel der 3D-Neigesensor wird nach der Bodensteigung angepasst.
+%  \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot \gls{tof}-Kamera und kodiert die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
 %\end{itemize}
+
+
+%												Ende Hamza
+%---------------------------------------------------------
 
 Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}, \gls{opencv}, Matlab, etc.).
  Unsere Wahl war \gls{openni}, weil wir sie durch C++ Umgebung in das
@@ -195,18 +197,26 @@ Die Zeit wird in Sekunden, die Entfernungen und Bewegungen werden in Millimeter 
 Die Gestenerkennung wurde in einem zweiten Modul (\lstinline{GestureClassifier})
 umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 
-\todo[inline]{Hamza}
+%--------------------------------------------------------
+%											Hamza
 
 \subsection{Glättungsfilter zur Störungsunterdrückung (Average Filter)}
+\authorsection{\editorhamza}
 
 In diesem Abschnitt werden die Messwerte ( Positionen [X,Y,Z], Geschwindigkeit) von Störungen unterdrückt, sodass wir die  Ausreißern möglichst weglassen  können , die unsere Werte abweichen. Solche Filter werden meistens durch Auswertung von Nachbarschaftsverhältnissen realisiert. 
 Es gibt sehr viele Filter, die wir benutzen konnten Z.B (Mittelwertfilter, Binominialfilter, Medianfilter, Rangordnungsfilter). Die Entscheidung war für den Mittelwertfilter, weil er ein einfaches Glättungsfilter ist. Jeder Messwert wird durch Addition der U-Werte (in unserem Fall 5 Werte)  und anschließend Division durch die Anzahl der an der Mittelung beteiligten Messwerten $|U|$ berechnet.
 Die Messwerten , die von Kinect an den anderen Gruppen geliefert werden, müssen möglichst genau sein. Außerdem müssen die kleine Bewegungen und die extrem schnelle Geschwindigkeiten von der verfolgter Person vermeiden, damit der Roboter unter Kontrolle bleibt und die verfolgte Person nicht verloren geht.
 
 
+\subsection{ Koordinatentransformation}
+\authorsection{\editorhamza}
+
+Die Messdaten, die von Kinect erfasst sind und an den anderen Teilgruppen geliefert sind müssen nach den richtigen Koordinaten umgerechnet sein. Deshalb ist eine transformation von den Kinectkoordinaten, über den Roboterplattformkoordinaten, auf den Raumkoordinaten (Weltkoordinaten) notwendig. Meistens Sind die Koordinaten durch Rotation (Winkeln $\Xi$, $\zeta$, $\eta$),  Skalierung (verschiedne Einheitsfaktoren) und  Verschiebung ( X,Y,Z) transformiert. Damit konnten wir die Position von der getrackte Person in Weltkoordinaten erfassen.
 
 
-%Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
+Gesten können entweder  von Körperteilen, als auch vom gesamten Körper aufgebaut werden.
+Nehmen wir die Arme um verschieden Gesten zu definieren. Wir sollen  zwischen symmetrische  und nicht symmetrische sowohl gebeugte und gestreckte Arme unterscheiden.
+Damit merken wir die unzählige Gestenanzahl, die möglich bei dem Einsatz sind.
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
@@ -216,12 +226,17 @@ Die Messwerten , die von Kinect an den anderen Gruppen geliefert werden, müssen
 
 \subsubsection{Probleme}
 \authorsection{\editorhamza}
-\todo[inline]{Hamza}
-%Die gleichmäßige Farbgebung und geringe Texturierung der Menschlichen Hand machen eine Erkennung von inneren Kanten und somit die Segmentierung einzelner nicht ausgestreckter Finger schwierig. 
-%Die hohen Geschwindigkeiten für Translation (bis 5m/s) und Rotation ($300^\circ/s$) die für die globale Handbewegung erreicht werden können und die relativ niedrigen Kamerafrequenzen zwischen 30 und 60 Herz machen ein durchgehendes Tracking sehr schneller Bewegungen nahezu unmöglich.
-%Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
-In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet. 
+%\todo[inline]{Hamza}
 
+Die Erkennung von Gesten muss zuverlässig und Sicher sein. Deshalb sollten wir auf den folgenden Probleme beachten:
+\begin{itemize}
+\item Die getrackte Person geht verloren wenn sein Abstand in große geschwindigkeit  verändert wird.
+\item Gesten können nicht erkannt werden, wenn die getrackte Person seitlich steht oder die relevante Punkten (Spitzen, gelenke, Körpergrößen … ) zu nah voneinander sind.
+\end{itemize}
+Damit haben  wir für den  Armgesten  entschieden, die sicherer und einfacher beim Test sind.
+In unserem Fall brauchen wir maximal 4 Gesten.
+Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.
+Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet.
 
 \subsection{Gestenerkennung}
 \label{gestenerkennung_gestenerkennung_sec}
