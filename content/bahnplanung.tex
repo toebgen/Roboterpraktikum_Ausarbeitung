@@ -12,26 +12,36 @@
 \authorsection{\editoroier}
 
 
-Was die Aufgabestellung für betrifft, so soll der Roboter einen Menschen sicher und elegant, sprich ohne ruckartige Richtungswechseln, folgen können. Dabei soll es sicher durch die Innenräume fahren ohne mit Hindernissen zu kollidieren. Den abgefahrenen Pfad sollte dabei gespeichert werden, damit der Roboter später von alleine zur Startposition zurückkehren kann und danach vielleicht den gleichen Weg nochmal abfahren kann.
+Was die Aufgabestellung betrifft, so soll der Roboter einen Menschen sicher und elegant, also ohne ruckartige Richtungswechsel, folgen können.
+Dabei soll er sicher durch die Innenräume fahren, ohne mit Hindernissen zu kollidieren.
+Der abgefahrene Pfad sollte dabei gespeichert werden, damit der Roboter später von alleine zur Startposition zurückkehren kann und danach den gleichen Weg nochmal abfahren kann.
 
-
-Für die Bahnsteuerung und Bahnplanung ist eine Einteilung in Abstraktionsschichten sinnvoll, da es der zu lösende Aufgabe hilft.
+Für die Bahnsteuerung und Bahnplanung ist eine Einteilung in Abstraktionsschichten sinnvoll:
 \begin{itemize}
 	\item Motoransteuerung
-	\item inverse Kinematik und manuelle Steuerung
+	\item Inverse Kinematik und manuelle Steuerung
 	\item Bahnplanung	
 \end{itemize}
 Zusätzlich ist eine Simulation notwendig.
 
-Für die Motoransteuerung ist die plattformspezifische Ansteuerung und Simulation notwendig. Außerdem sollte man auch die Pose aus Odometriedaten bestimmen können.
+Für die Motoransteuerung ist eine plattformspezifische Ansteuerung und Simulation notwendig.
+Außerdem sollte man auch die Pose aus den Odometriedaten bestimmen können.
 
-Die inverse Kinematik dient dazu, die erforderliche Gelenkeinstellung und Motorbewegungen zu berechnen, um zu einer bestimmten gewünschte Roboterpose zu gelangen. Probleme gibt es wenn es Raumpunkte gibt die zu Singularitäten führen. Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden. Die Vorwärtskinematik hingegen berechnet die Roboterpose auf Basis der interne Gelenkeinstellungen und Sensoren. Bei mobilen Robotern wird das auch Odometrie genannt.
+Die inverse Kinematik dient dazu, die erforderlichen Gelenkeinstellungen und Motorbewegungen zu berechnen, um zu einer bestimmten gewünschten Roboterpose zu gelangen.
+Probleme gibt es, wenn es Raumpunkte gibt, die zu Singularitäten führen.
+Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden.
+Die Vorwärtskinematik hingegen berechnet die Roboterpose auf Basis der internen Gelenkeinstellungen und Sensoren.
+Bei mobilen Robotern wird das auch Odometrie genannt.
 
-Im Falle einer mobilen Plattform spricht man eher von Bahnplanung anstatt inverse Kinematik. Bei dieser Art von Robotern arbeitet die Regelung, um die geplante Bahn zu fahren, auf Basis der Odometrie in kartesische Koordinaten. Zu lösende Aufgaben im Bereich der inversen Kinematik sind: die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
+Im Falle einer mobilen Plattform spricht man eher von Bahnplanung anstatt von inverser Kinematik.
+Bei dieser Art von Robotern arbeitet die Regelung auf Basis der Odometrie in kartesischen Koordinaten, um die geplante Bahn zu fahren.
+Zu lösende Aufgaben im Bereich der inversen Kinematik sind:
+Die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
 
-Was die Bahnplanung betrifft, gibt es mehrere Aufgaben. Als erstes müssen die Daten der Kinect-Kamera verarbeitet werden. 
-Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, welches kollisionsfrei sein muss. Als letztes soll das 
-Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
+Was die Bahnplanung betrifft, gibt es mehrere Aufgaben.
+Als erstes müssen die Daten der Kinect-Kamera verarbeitet werden.
+Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, was kollisionsfrei sein muss.
+Zuletzt soll das Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
 
 
 
@@ -46,9 +56,11 @@ Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie
 
 Weil die gefundene Trajektorie normalerweise nicht glatt ist, werden für die Steuerung unterschiedliche Interpolationsarten verwendet.
 Die Bahnsteuerung kann im kartesischen Raum oder im Konfigurationsraum stattfinden.
-Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber normalerweise für jeden Punkt die inverse Kinematik berechnen. Eine Ausnahme wären Radkinematiken bei mobilen Robotern. Bei mobilen Plattformen sind auch alle geplante Trajektorien ausführbar, insbesondere wenn sie omnidirektional sind, was bei Roboterarmen nicht der Fall ist. 
+Im kartesischen Raum ist es näher an der zu lösenden Aufgabe, man muss dann aber normalerweise für jeden Punkt die inverse Kinematik berechnen.
+Eine Ausnahme wären Radkinematiken bei mobilen Robotern.
+Bei mobilen Plattformen sind auch alle geplanten Trajektorien ausführbar, insbesondere wenn sie omnidirektional sind, was bei Roboterarmen nicht der Fall ist.
 Die Steuerung im Konfigurationsraum hingegen liegt näher an den Gelenken, dafür ist die Formulierung der Trajektorie umständlicher.
-Vor und Nachteile beider Optionen kann man in der Tabelle \ref{fig:steurungProContra} sehen.
+Vor und Nachteile beider Optionen kann man Tab. \ref{fig:steurungProContra} entnehmen.
 
 
 \begin{table}[h]
@@ -67,31 +79,33 @@ Gelenke\\
 - Geplante Trajektorie nicht immer ausführbar (außer bei mobile Plattformen) & - Formulierung der Trajektorie umständlicher\\
 \hline
 		\end{tabular}
-		\caption{\label{fig:steurungProContra} Vor und Nachteile der Steuerung im Kartesischen und Konfigurationsraum \citep{rob1}}
+		\caption{\label{fig:steurungProContra} Vor- und Nachteile der Steuerung im Kartesischen und Konfigurationsraum \citep{rob1}}
 		\end{table}	
+
 Es gibt unterschiedliche Interpolationsarten:
 Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
-Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert, wie man auf der Abbildung \ref{fig:linearinterpolation} sehen kann.
+Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert, siehe Abb. \ref{fig:linearinterpolation}.
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.35]{graphics/linearinterpolation.png}
-	\caption{\label{fig:linearinterpolation} Beispiel der Linearinterpolation Quelle: \citep{rob1}}
+	\caption{\label{fig:linearinterpolation} Beispiel der Linearinterpolation \cite{rob1}}
 \end{figure}
+
 Die Zirkularinterpolation schafft hingegen kreisförmige Verfahrwege zwischen zwei Punkten.
-Wenn man allerdings segmentweise interpoliert, werden die Endbedingungen der Teiltrajektorie $i-1$ und die Anfangsbedingungen der Teiltrajektorie $i$ aneinander angepasst, so dass die Teiltrajektorien durch Splines beschrieben werden, wie man auf der Abbildung \ref{fig:segmentinterpolation} sehen kann.
+Wenn man allerdings segmentweise interpoliert, werden die Endbedingungen der Teiltrajektorie $i-1$ und die Anfangsbedingungen der Teiltrajektorie $i$ aneinander angepasst, sodass die Teiltrajektorien durch Splines beschrieben werden, siehe Abb. \ref{fig:segmentinterpolation}.
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.35]{graphics/segmentinterpolation.png}
-	\caption{\label{fig:segmentinterpolation} Beispiel der segmentweisen Bahninterpolation \citep{rob1}}
+	\caption{\label{fig:segmentinterpolation} Beispiel der segmentweisen Bahninterpolation \cite{rob1}}
 \end{figure}
  
 Bei der approximativen Bahnsteuerung werden anders als bei der Bahninterpolation nicht alle Kontrollpunkte der Trajektorie befahren, sondern die Kontrollpunkte beeinflussen den Bahnverlauf und werden approximiert.
-Neben Bernsteinpolynomen wird hier besonders Überschleifen benutzt, um sanft Kurven zu fahren wie man auf der Abbildung \ref{fig:ueberschleifeninterpolation} sieht.
+Neben Bernsteinpolynomen wird hier besonders Überschleifen benutzt, um sanft Kurven zu fahren, siehe Abb. \ref{fig:ueberschleifeninterpolation}.
 Letzteres wurde auch im Praktikum eingesetzt.
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.35]{graphics/ueberschleifeninterpolation.png}
-	\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierten Bahnsteuerung mit Überschleifen \citep{rob1}}
+	\caption{\label{fig:ueberschleifeninterpolation} Beispiel der approximierten Bahnsteuerung mit Überschleifen \cite{rob1}}
 \end{figure}
 
 \subsection{Bahnplanung}
@@ -99,48 +113,47 @@ Letzteres wurde auch im Praktikum eingesetzt.
 \authorsection{\editoroier}
 
 Bahnplanung befasst sich mit dem Problem, eine kollisionsfreie Bahn zu finden, die ein Robotersystem von der aktuellen Position in die Zielposition überführt.
-Damit gehört es zu einer der Basisprobleme der Robotik.
+Damit gehört es zu den Basisproblemen der Robotik.
 Die Verfahren kann man nach unterschiedlichen Gesichtspunkten klassifizieren \cite{rob1}.
 
 Nach Robotertyp:
 \begin{itemize}
-\item Bahnplanung für Manipulatoren (\zB Schweißen bei Industrierobotern)
-\item Bahnplanung für mobile Roboter
-\item Bahnplanung für Laufmaschinen und anthropomorphe Systeme
-\item Greif- und Montageplanung
+	\item Bahnplanung für Manipulatoren (\zB Schweißen bei Industrierobotern)
+	\item Bahnplanung für mobile Roboter
+	\item Bahnplanung für Laufmaschinen und anthropomorphe Systeme
+	\item Greif- und Montageplanung
 \end{itemize}
 
 Nach dem Zustandsraum wo die Planung stattfindet:
 \begin{itemize}
-\item Gelenkwinkelzustandsraum (Konfigurationsraum,\\ der alle möglichen
+	\item Gelenkwinkelzustandsraum (Konfigurationsraum, der alle möglichen
 Gelenkwinkelkonfigurationen des Roboters beinhaltet)
-\item Euklidischer Raum (Arbeitsraum, 3D / 6D)
-\item Sensorzustandsraum
-\item Objektzustandsraum
+	\item Euklidischer Raum (Arbeitsraum, 3D / 6D)
+	\item Sensorzustandsraum
+	\item Objektzustandsraum
 \end{itemize}
 
-Nach Vollständigkeit:
+Nach der Vollständigkeit:
 \begin{itemize}
-\item Vollständige Verfahren (liefern immer eine korrekte Lösung und können ermitteln, ob keine Lösung existiert)
-\item Probabilistisch vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden)
+	\item Vollständige Verfahren (liefern immer eine korrekte Lösung und können ermitteln, ob keine Lösung existiert)
+	\item Probabilistisch vollständige Verfahren (Falls eine Lösung existiert konvergiert die Wahrscheinlichkeit, dass eine Lösung gefunden wird, bei fortschreitender Zeit gegen 1. Existiert keine Lösung, kann dies nicht ermittelt werden)
 \end{itemize}
 
 Nach Navigationsart:
 \begin{itemize}
-\item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen, wenn dem Roboter eine Karte der Umgebung vorliegt und er sich dort lokalisieren kann.
-\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Kombination mit einem globalen Planer benutzt. 
+	\item Globale Pfadplanung bedeutet, eine Trajektorie zum Ziel zu planen, wenn dem Roboter eine Karte der Umgebung vorliegt und er sich dort lokalisieren kann.
+	\item Lokale Pfadplanung wird eingesetzt um Hindernisse zu umfahren und wird bei mobilen Robotern meist in Kombination mit einem globalen Planer benutzt. 
 \end{itemize}
 
 Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr als drei Freiheitsgraden sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
-\Dh, dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
+\Dh dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
 So wird der Konfigurationsraum während der Suche exploriert.
 
 Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell2003}.
 \begin{enumerate}
-\item Eine Roadmap oder einen Graph aufbauen mittels \gls{Voronoi},
- \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach
+	\item Aufbau einer Roadmap oder eines Graphen \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach
  Sampling-Strategie (\zB für \gls{PRM} Verfahren\cite{Thrun2005}).
-\item Im Graph einen Weg vom Startknoten zum Zielknoten finden mittels A*-Algorithmus oder anderer Suchalgorithmen.
+	\item Im Graph einen Weg vom Startknoten zum Zielknoten finden mittels A*-Algorithmus oder anderer Suchalgorithmen.
 \end{enumerate}
 
 \subsubsection{Lokale Planer}
@@ -150,8 +163,8 @@ In diesem Abschnitt werden einige gängige lokale Planer vorgestellt.
 
 \paragraph{A*-Algorithmus} 
 
-Der \textit{A*-Algorithmus}\citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zu der Klasse der informierten Graphensuchalgorithmen.
-Dies heißt, dass eine Schätzungsfunktion benutzt wird, um die Suche zu lenken.
+Der \textit{A*-Algorithmus} \citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zur Klasse der informierten Graphensuchalgorithmen.
+\Dh dass eine Schätzungsfunktion benutzt wird, um die Suche zu lenken.
 Die Grundidee ist, immer den Knoten zu untersuchen, der wahrscheinlich am schnellsten ins Ziel führt.
 Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannten Knoten mit einer $f(x)$ Funktion bewertet und vom kleinsten $f$-Wert zum größten sortiert.
 Der Knoten mit dem kleinsten $f$-Wert wird als nächstes untersucht. 
@@ -163,7 +176,8 @@ Um den vielversprechendsten Knoten zu ermitteln, wird die Formel
 benutzt.
 Dabei sind $g(x)$ die Pfadkosten, um $x$ vom Startknoten zu erreichen.
 $h(x)$ ist die Heuristik, sprich die Schätzung der Pfadkosten, das Ziel von $x$ aus zu erreichen.
-Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss, das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist.
+Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss.
+Das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist.
 Als Heuristik wird oft die \gls{Euklidische-Distanz} oder die \gls{Manhattan-Distanz} benutzt.
 In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit Angaben zum Ablauf dargestellt.
 
@@ -173,8 +187,10 @@ In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit An
 \caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}  \citep{innoKonz}}
 \end{figure}
 
-Der \textit{A*-Algorithmus}, obwohl er nicht mehr für bestimmte Anwendungszwecke als state-of-the-art gilt\citep{innoKonz}, ist als lokaler Planer, vor allem in 2D, sehr gut.
-Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter. Als globaler Planer kann man es auch anwenden, zum Beispiel bei Navigationsgeräten. Diese benutzen Erweiterungen vom Grundalgorithmus, weil die Zustandsräume sehr komplex sind. 
+Der \textit{A*-Algorithmus}, obwohl er nicht mehr für bestimmte Anwendungszwecke als state-of-the-art gilt \citep{innoKonz}, ist als lokaler Planer, vor allem im zweidimensionalen, sehr gut.
+Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter.
+Als globalen Planer kann man diesen auch anwenden, zum Beispiel bei Navigationsgeräten.
+Diese benutzen Erweiterungen vom Grundalgorithmus, weil die Zustandsräume sehr komplex sind.
 Außerdem kann man den Grundalgorithmus noch weiter optimieren.
 Zum Beispiel mit dem Hierarchischen \textit{A*}, damit er, wenn keine Hindernisse in der Nähe liegen, größere Schritte und sonst kleinere Schritte macht.
 Es gibt zusätzliche Erweiterungen für die bidirektionale Suche, die parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
@@ -199,8 +215,8 @@ Diese Summe ist in Abbildung \ref{fig:potentialfeld} dargestellt.
 \caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften \citep{innoKonz}}
 \end{figure}
 
-Die Vorteile des Verfahrens wären zum Beispiel der geringe Rechenaufwand für die Pfadplanung, dass die Bahnplanung und Steuerung in einer Funktion verbunden werden\citep{mobileRobotics}, was die allgemeine Steuerungsstruktur vereinfacht.
-Noch ein Vorteil ist, dass die Pfade schon glatt sind, sprich man muss sie nicht mehr glätten.
+Die Vorteile des Verfahrens wären zum Beispiel der geringe Rechenaufwand für die Pfadplanung, und dass die Bahnplanung und Steuerung in einer Funktion verbunden werden \citep{mobileRobotics}, was die allgemeine Steuerungsstruktur vereinfacht.
+Noch ein Vorteil ist, dass die Pfade schon glatt sind, man sie also nicht mehr glätten muss.
 Ein Nachteil hingegen ist, dass es im lokalen Minimum stecken bleiben kann.
 Dies ist einer der Gründe, warum es als lokaler Planer benutzt wird.
 Um dieses Problem zu beheben muss man Erweiterungen wie  \textit{random walk} oder \textit{backtracking} benutzen.
@@ -228,18 +244,18 @@ Was die Motoransteuerung angeht, so gab es schon das plattformunabhängige Modul
 \lstinline{Segway-}\lstinline{OmniHal} von der Odete.
 Unsere Aufgabe bestand darin, dieses Modul um die plattformspezifische Simulation \lstinline{Segway500RMPSimulation} zu ergänzen.
 Als Eingaben erhält es Geschwindigkeiten, und Ausgaben sind die plattformspezifischen Geschwindigkeiten.
-Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der Software und auf \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
+Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der Software und in Abb. \ref{fig:segwayHal} ist das Modul \lstinline{SegwayOmniHal} abgebildet.
 
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.5]{graphics/mca2architecture.png}
-	\caption{\label{fig:mca2architecture} Darstellung der Softwarearchitektur durch die vernetzten Gruppen.}
+	\caption{\label{fig:mca2architecture} Darstellung der Softwarearchitektur durch die vernetzten Gruppen}
 \end{figure}
 
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.5]{graphics/segwayHal.png}
-	\caption{\label{fig:segwayHal} Das Modul \lstinline{SegwayOmniHal}, welches für die Motoransteuerung zuständig ist.}
+	\caption{\label{fig:segwayHal} Das Modul \lstinline{SegwayOmniHal}, welches für die Motoransteuerung zuständig ist}
 \end{figure}
 % evtl. auch so ein Diagramm wie Abb. 4.4 von WS10/11?
 %		bzw. Abb. 2.3 von WS09/10
@@ -253,25 +269,26 @@ Auf der Abbildung \ref{fig:mca2architecture} sieht man die gesamte Struktur der 
 %\todo[inline]{Julian: Schreiben}
 In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die inverse Kinematik und die manuelle Steuerung des Roboters.
  Die Ausgaben der beiden Gruppen sind durch einen Multiplexer verbunden, die Selektion erfolgt durch die Berücksichtigung des Status der manuellen Steuerung.
- Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare umschalten auf die manuelle Steuerung und die Ausgabe der Gruppe
- \lstinline{SegwayOmniManualReflexes} wird verwendet. Ist der manuelle Betrieb
- nicht aktiv kommt die Ausgabe der Gruppe
- \lstinline{SegwayOmni-}\lstinline{AutoReflexes} zur Verwendung. So ist es
- möglich zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
+ Ist diese aktiviert erfolgt unabhängig vom Zustand des Roboters das unmittelbare Umschalten auf die manuelle Steuerung, die Ausgabe der Gruppe
+ \lstinline{SegwayOmniManualReflexes} wird dann verwendet. Ist der manuelle Betrieb
+ nicht aktiv, wird die Ausgabe der Gruppe
+ \lstinline{SegwayOmni-}\lstinline{AutoReflexes} verwendet. So ist es
+ möglich, zu jedem Zeitpunkt den Roboter zu stoppen und ihn manuell zu steuern.
 
 \begin{figure}[h]
 	\label{fig:bahnplanung_reflexes_gruppe}
 	\center
 	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniReflexes.png}
-	\caption[Reflexes-Gruppe]{Die Gruppe \lstinline{SegwayOmniReflexes}, zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
+	\caption[Reflexes-Gruppe]{Die Gruppe \lstinline{SegwayOmniReflexes}: Zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
 \end{figure}
 
 Die manuelle Steuerung ist mittels der zur Simulation erstellten \lstinline{MCAGUI} Oberfläche oder - beim Test am realen Roboter - mit einem Gamepad möglich.
 
-Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes} in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend; gehören allerdings einer bestimmten Bewegungsart an. Folgende Bewegungsarten sind bereitgestellt:
+Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes}, in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend, gehören allerdings einer bestimmten Bewegungsart an.
+Folgende Bewegungsarten sind bereitgestellt:
 
 \begin{description}
-	\item[Differentiell] Die Steuerung des Roboters erfolgt indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
+	\item[Differentiell] Die Steuerung des Roboters erfolgt, indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
 	\item[Omnidirektional] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen.
 \end{description}
 
@@ -284,24 +301,25 @@ Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{Se
 
 Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
 
-Zuletzt findet mit Hilfe des Virtual Protective Field (siehe \ref{lokalisierung_umsetzung_sec}) eine Kollisionsvermeidung statt.
+Zuletzt findet mit Hilfe des Virtual Protective Field (siehe Abs. \ref{lokalisierung_umsetzung_sec}) eine Kollisionsvermeidung statt.
 
 \begin{figure}[h]
 	\label{fig:bahnplanung_umsetzung_auto_refl}
 	\center
 	\includegraphics[scale=0.8]{graphics/BILD-SegwayOmniAutoReflexes.png}
-	\caption[Reflexes-Gruppe im Detail]{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail. Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert.}
+	\caption[Reflexes-Gruppe im Detail]{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail: Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert}
 \end{figure}
 
-Die Ausgabe von dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
+Die Ausgabe dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe Abs. \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
 
 \subsubsection{Vorhandene Software}
 \label{bahnplanung_inv_kinem_vorhandene_software_sec}
 
-Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe in der ein Großteil der nötigen Funktionalität implementiert war.
+Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe, in der ein Großteil der nötigen Funktionalität implementiert war.
  Insbesondere der zentrale Teil, die Module
  \lstinline{DriveAlong-}\lstinline{Path} bzw.
- \lstinline{OmniOrientedDriveAlongPath} welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt. Auch die Module zur Begrenzung der Beschleunigung waren vorhanden verursachten im laufenden Betrieb allerdings Probleme.
+ \lstinline{OmniOrientedDriveAlongPath}, welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt.
+ Auch die Module zur Begrenzung der Beschleunigung waren vorhanden, diese verursachten im laufenden Betrieb allerdings Probleme.
 
 \subsubsection{Erweiterungen}
 \label{bahnplanung_inv_kinem_erweiterung_sec}
@@ -310,8 +328,8 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 \begin{description}
 	\item[DriveAlongPath]
 	\begin{itemize}
-		\item Setzen der maximal Geschwindigkeit
-		\item Aktualisieren des Zählers zum Signalisieren das eine neue Trajektorie anliegt
+		\item Setzen der Maximalgeschwindigkeit
+		\item Aktualisieren des Zählers zum Signalisieren, dass eine neue Trajektorie anliegt
 		\item Aktivieren/Deaktivieren des Moduls
 	\end{itemize}
 	\item[SafetyModule] 
@@ -328,13 +346,18 @@ Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
 
-Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben. Das Virtual Protective Field bietet gleichermaßen, zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit, die Information ob eine Kollision bevorsteht. Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht. Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben. Zugleich ist es die letzte softwareseitige Barriere, um eine Kollision zu vermeiden. Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
+Das Modul \lstinline{ObstacleSafety} ist speziell für den Einsatz beim omnidirektionalen Fahren gedacht. In diesem Fahrmodus berechnet sich der tatsächliche Geschwindigkeitsvektor aus zwei orthogonalen Geschwindigkeitsvektoren, die jeweils die Vorwärtsgeschwindigkeit und die Lateralgeschwindigkeit beschreiben.
+Das Virtual Protective Field bietet gleichermaßen, zu jeder Geschwindigkeitskomponente sowie zur resultierenden Geschwindigkeit, die Information, ob eine Kollision bevorsteht.
+Dadurch kann für jede Geschwindigkeitskomponente individuell entschieden werden, ob es nötig ist, diese auf null zu setzen, also mit maximaler Bremsbeschleunigung zu bremsen, oder nicht.
+Durch dieses Vorgehen kann sich der Roboter an Ecken, die durch ungenaue Bahnplanung zu einer Kollision führen würden, vorbei schieben.
+Zugleich ist es die letzte softwareseitige Barriere, eine Kollision zu vermeiden.
+Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den resultierenden Geschwindigkeitsvektor ein Hindernis gemeldet wird.
 
 \begin{figure}
 	\label{fig:bahnplanung_umsetzung_vpf}
 	\centering
 	\includegraphics[scale=2]{graphics/SCHEMA-vpf.pdf}
-	\caption[Einsatz des Virtual Protective Fields]{Schematische Darstellung wie das Virtual Protective Field eingesetzt wird um Kollisionen zu vermeiden.}
+	\caption[Einsatz des Virtual Protective Fields]{Schematische Darstellung des Einsatzes des Virtual Protective Fields zur Kollisionsvermeidung}
 \end{figure}
 
 % -----------------------------------------------------------------------------
@@ -509,10 +532,10 @@ Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{integration_umsetzung_h
 Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
 Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand der \glsdisp{Euklidische-Distanz}{Euklidischen-Distanz} festgelegt:
 Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
-$d_{save}$ kann als Parameter in einer externen Konfigurationsdatei definiert werden.
 \begin{equation}
 	\| s_{act} - s_{last}\|_2 \quad > \quad d_{save}
 \end{equation}
+$d_{save}$ kann als Parameter in einer externen Konfigurationsdatei definiert werden.
 
 Innerhalb des \lstinline{dumpFile}s werden die $x$, $y$ bzw. $yaw$-Werte zeilenweise durch Doppelpunkte getrennt gespeichert:
 $x_i:y_i:yaw_i$
@@ -587,7 +610,7 @@ So wird sichergestellt, dass ungeprüfte Trajektorien nicht an die Motoransteuer
 In Abb. \ref{fig:behaviours} (S. \pageref{fig:behaviours}) ist das Modul innerhalb der \lstinline{Behaviours}-Gruppe sichtbar.
 
 Für die Hindernis-Überprüfung innerhalb des Moduls werden die Trajektorienpunkte, die alle in Weltkoordinaten vorliegen, in Bildkoordinaten transformiert.
-So werden $start$, $next$ und $following$ auf entsprechende Punkte der \lstinline{ObstacleMap} (s. Abs. \ref{hinderniskarte_subsec}, S: \pageref{hinderniskarte_subsec}) abgebildet.
+So werden $start$, $next$ und $following$ auf entsprechende Punkte der \lstinline{ObstacleMap} (s. Abs. \ref{hinderniskarte_subsec}, S. \pageref{hinderniskarte_subsec}) abgebildet.
 In einem weiteren Schritt werden alle Bildkoordinaten, die zwischen den drei Trajektorienpunkten liegen, berechnet und in eine Liste geschrieben.
 Die Punkte dieser Liste werden anschließend anhand der \lstinline{ObstacleMap} auf Hindernisse überprüft.
 
@@ -603,8 +626,8 @@ Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in Wel
 \subsubsection{Algorithmus}
 \authorsection{\editorjulian}
 %\todo[inline]{Julian: Schreiben}
-Um einen kollisionsfreien Pfad zu erstellen kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet.
-Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones\cite{jonesAstar} zurückgegriffen.
+Um einen kollisionsfreien Pfad zu erstellen, kommt eine Bahnplanungsmethode zum Einsatz, die den A*-Algorithmus verwendet.
+Um den zeitlichen Aufwand einer eigenen Implementierung zu vermeiden, wurde auf eine bereits existierende und frei verfügbare Implementierung von Justin Heyes-Jones\cite{jonesAstar} zurückgegriffen.
 Diese Implementierung kann einfach eingebunden und erweitert werden.
 Zum Einbinden des Algorithmus sind drei wesentliche Änderungen bzw.
 Erweiterungen notwendig:
@@ -614,13 +637,12 @@ Erweiterungen notwendig:
 	\item[Kostenfeld] Erweiterung um ein Feld, welches die Kosten zum Befahren eines bestimmten Punktes der Karte beschreibt.
 \end{description}
 
-Um beliebige Datencontainer als Hinderniskarte verwenden zu können wurde eine Interface-Klasse geschaffen.
-Bei der individuellen Implementierung muss eine Funktion erstellt werden, die für eine Koordinate auf der Hinderniskarte die Information liefert ob sich dort ein Hindernis befindet oder nicht bzw.
-wie \glqq teuer\grqq\ eine Fahrt dorthin ist.
+Um beliebige Datencontainer als Hinderniskarte verwenden zu können, wurde eine Interface-Klasse geschaffen.
+Bei der individuellen Implementierung muss eine Funktion erstellt werden, die für eine Koordinate auf der Hinderniskarte die Information liefert, ob sich dort ein Hindernis befindet oder nicht bzw. wie \glqq teuer\grqq\ eine Fahrt dorthin ist.
 Eine entsprechende Umsetzung wurde sowohl für ein \lstinline{CByteImage} als auch für ein \lstinline{IplImage} vorgenommen.
 
-In der ursprünglichen Implementierung des A*-Algorithmus kommt als Heuristik, für die Distanz zwischen zwei Punkten, die \gls{Manhattan-Distanz} zur Verwendung.
-Da sich der Roboter omnidirektional bewegen kann, ist es sinnvoll stattdessen die \gls{Euklidische-Distanz} zu verwenden.
+In der ursprünglichen Implementierung des A*-Algorithmus kommt als Heuristik für die Distanz zwischen zwei Punkten die \gls{Manhattan-Distanz} zur Verwendung.
+Da sich der Roboter omnidirektional bewegen kann, ist es sinnvoll, stattdessen die \gls{Euklidische-Distanz} zu verwenden.
 \begin{figure}[h]
 	\centering
 	\label{fig:bahnplanung_umsetzung_algorithm}
@@ -640,24 +662,29 @@ Dieses Verhalten führte bereits in der Simulation zu erheblichen Problemen, kan
 
 Um einen gewissen Abstand zu den Hindernissen einzuhalten sind zwei Lösungen denkbar.
 Die einfachste Variante ist es, die Hindernisse in der Hinderniskarte \glqq aufzublasen\grqq\ und so in der Realität für einen Mindestabstand zu sorgen.
-Alternativ gibt es die Möglichkeit ein Kostenfeld einzusetzen. 
+Alternativ gibt es die Möglichkeit, ein Kostenfeld einzusetzen. 
 
 An engen Passagen auf der Hinderniskarte, bei denen der Roboter wenig Platz zu beiden Seiten hat, kommt es durch das Aufblasen der Hindernisse zu einem Verschluss dieser Passagen.
 Das Finden eines Pfades ist dann unmöglich, da die ursprüngliche Passage nunmehr ein Hindernis ist.
 Dies kann beispielsweise bei Türen der Fall sein.
 Um diesem Problem zu begegnen kommt die zweite Lösungsmöglichkeit zur Verwendung.
 
-Unter einem Feld versteht man in der Physik die räumliche Verteilung einer physikalischen Größe und speziell bei einem Skalarfeld die Zuordnung eines Skalars zu jedem Raumpunkt \cite{allgFeld},\cite{skalarFeld}.
-Um das Finden eines Pfades zu verbessern, kann in einem solchen Feld zusätzliche Information über Hindernisse gespeichert werden.
-Eine Möglichkeit zur Verwendung eines solchen Feldes, um sichere und weiche Trajektorien zu erstellen, kommt in \cite{Garrido2007} zur Sprache. In dieser Arbeit wird in einem ersten Schritt jedem freien Punkt der Hinderniskarte die Information abgelegt wie weit der nächste Hindernispunkt entfernt ist. Interpretiert in Form des Brechungsindex für elektromagnetische Wellen, kann in einem zweiten Schritt für jeden Punkt die Berechnung der Geschwindigkeit einer im Startpunkt ausgesendeten Wellenfront erfolgen. Die Trajektorie ergibt sich aus dem (zeitlich) kürzesten Weg um auf Basis dieser Ausbreitungsgeschwindigkeit vom Startpunkt zum Ziel zu kommen.
+Unter einem Feld versteht man in der Physik die räumliche Verteilung einer physikalischen Größe und speziell bei einem Skalarfeld die Zuordnung eines Skalars zu jedem Raumpunkt \cite{allgFeld}, \cite{skalarFeld}.
+Um das Finden eines Pfades zu verbessern, können in einem solchen Feld zusätzliche Informationen über Hindernisse gespeichert werden.
+Eine Möglichkeit zur Verwendung eines solchen Feldes, um sichere und weiche Trajektorien zu erstellen, kommt in \cite{Garrido2007} zur Sprache. In dieser Arbeit wird in einem ersten Schritt jedem freien Punkt der Hinderniskarte die Information zugeordnet, wie weit der nächste Hindernispunkt entfernt ist.
+Interpretiert in Form des Brechungsindex für elektromagnetische Wellen kann in einem zweiten Schritt für jeden Punkt die Berechnung der Geschwindigkeit einer im Startpunkt ausgesendeten Wellenfront erfolgen.
+Die Trajektorie ergibt sich aus dem (zeitlich) kürzesten Weg um auf Basis dieser Ausbreitungsgeschwindigkeit vom Startpunkt zum Ziel zu kommen.
 
-Im Rahmen des Praktikums wurde ein einfacherer Ansatz gewählt. Es kommt ein Kostenfeld zur Verwendung.
-Der Begriff \glqq Kostenfeld \grqq\ bezieht sich auf die Tatsache, das der Wert den das Feld an einem bestimmten Punkt besitzt die Kosten repräsentiert die es benötigt auf auf diesen Punkt zu fahren.
+Im Rahmen des Praktikums wurde ein einfacherer Ansatz gewählt:
+Es kommt ein Kostenfeld zur Verwendung.
+Der Begriff \glqq Kostenfeld \grqq\ bezieht sich auf die Tatsache, das der Wert, den das Feld an einem bestimmten Punkt besitzt, die Kosten repräsentiert die es benötigt auf auf diesen Punkt zu fahren.
 In der Nähe von Hindernissen sind die Kosten hoch, in größerer Entfernung geringer.
 
-Die Generierung des Kostenfeldes erfolgt, in dem jedem frei befahrbaren Punkt auf der Hinderniskarte, der sich noch in einem bestimmten Abstand zu einem Hindernispunkt befindet, ein Wert zugeordnet wird.
-Dieser Wert verringert sich linear mit der Entfernung die dieser Punkt zum nächstgelegenen Hindernispunkt hat. So bietet jeder Punkt zusätzliche Informationen, die zur Pfadplanung verwendet werden können.
-Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, welche die Kosten repräsentieren die es benötigt um \glqq auf\grqq\ diesen Pixel zu fahren. Der Algorithmus versucht den günstigsten Weg zu finden und vermeidet das Fahren auf \glqq teuren\grqq\ Pixeln, die sich in der Nähe von Hindernissen befinden. Da es aber generell erlaubt ist auf diesen Pixeln zu fahren kann ein kollisionsfreier Pfad auch durch enge Passagen gefunden werden.
+Die Generierung des Kostenfeldes erfolgt, indem jedem frei befahrbaren Punkt auf der Hinderniskarte, der sich noch in einem bestimmten Abstand zu einem Hindernispunkt befindet, ein Wert zugeordnet wird.
+Dieser Wert verringert sich linear mit der Entfernung, die dieser Punkt zum nächstgelegenen Hindernispunkt hat.
+So bietet jeder Punkt zusätzliche Informationen, die zur Pfadplanung verwendet werden können.
+Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, welche die Kosten repräsentieren, die es benötigt, um \glqq auf\grqq\ diesen Pixel zu fahren.
+Der Algorithmus versucht den günstigsten Weg zu finden und vermeidet das Fahren auf \glqq teuren\grqq\ Pixeln, die sich in der Nähe von Hindernissen befinden. Da es aber generell erlaubt ist, auf diesen Pixeln zu fahren, kann ein kollisionsfreier Pfad auch durch enge Passagen gefunden werden.
 
 
 
@@ -670,7 +697,7 @@ Konkret erfolgt die Realisierung durch das Belegen der Pixel mit Grauwerten, wel
 Für die Simulation war schon eine Simulationsumgebung vorhanden.
 Aufgabe war es, eine grafische Oberfläche mit Mcagui zu erstellen.
 Die Simulation ist aus mehreren Gründen notwendig.
-In erster Linie konnte man am Anfang am realen Roboter nicht testen, weil der Roboter noch gebaut wurde oder zum Beispiel nicht alle von uns programmierten Komponenten (wie bspw. die Lokalisierung) funktionsfähig waren.
+In erster Linie konnte man am Anfang am realen Roboter nicht Testen, weil der Roboter noch gebaut wurde oder zum Beispiel nicht alle von uns programmierten Komponenten (wie bspw. die Lokalisierung) funktionsfähig waren.
 Dank der Simulation wurde das Testen von einzelnen Funktionalitäten und die Darstellung des Roboterzustands möglich, wie man in Abbildung \ref{fig:mcagui} sehen kann.
 \ZB wurde die Simulation sehr oft benutzt, um schnell Änderungen im Bahnplanungsalgorithmus zu testen.
 
