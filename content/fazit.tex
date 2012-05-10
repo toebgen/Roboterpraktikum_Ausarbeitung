@@ -7,29 +7,24 @@
 Im Rahmen des Praktikums wurden die in Kap. \ref{einleitung_aufgabenstellung_sec} definierten Anforderungen an das Robotersystem bearbeitet.
 Folgende Erfolge konnten dabei erzielt werden:
 
-\begin{itemize}
-  \item Bedienung von \gls{hollie} mittels Gesten
-	\begin{itemize}
-	\item Gestenerkennung durch Kinect
-	\end{itemize}
-  \item Lokalisierung des Roboters in gegebener Karte
-  \item Verfolgung des Menschen
-	\begin{itemize}
-	  \item Tracking des Menschen (Position und Geschwindigkeit)
-	  \item Bahnplanung von Roboter zu Mensch
-	  \item Speicherung des Pfads
-	\end{itemize}
-  \item Abfahren des gespeicherten Pfads
-	\begin{itemize}
-	  \item Rückkehr zum Startpunkt
-	  \item Erneutes Abfahren (vorwärts)
-	\end{itemize}
-  \item Hindernis-Umfahrung
-	\begin{itemize}
-	  \item Bahnplanung
-	  \item Protective-Field
-	\end{itemize}
-\end{itemize}
+\begin{description}
+  \item [Bedienung von \gls{hollie} mittels Gesten]
+  		Die Roboterplattform kann mittels einer Gestenerkennung durch die Kinect gesteuert werden.
+  \item [Lokalisierung des Roboters in gegebener Karte]
+  		Anhand einer gegebenen Karte kann sich \gls{hollie} mit Hilfe der Laserscanner- und Odometriedaten lokalisieren.
+  \item [Verfolgung des Menschen]
+			Durch die Kinect findet ein Tracking des Menschen statt.
+			Dabei wird sowohl die Position als auch die Geschwindigkeit des Menschen erfasst.
+			Darauf aufbauend wird eine Trajektorie vom Roboter zum Menschen geplant und abgefahren.
+			Der so abgefahrene Pfad wird in einer externen Datei abgespeichert. 
+  \item [Abfahren des gespeicherten Pfads]
+			\gls{hollie} ist in der Lage, einen zuvor abgespeicherten Pfad auch wieder abzufahren.
+			Dies ist sowohl rückwärts (also eine Rückkehr zum Startpunkt), als auch vorwärts (also ein erneutes Abfahren vom Startpunkt aus) möglich.
+  \item [Hindernis-Umfahrung]
+			Während sich die Roboterplattform bewegt, wird die geplante Bewegungs-Trajektorie auf Hindernisse überprüft.
+			Im Falle einer drohenden Kollision wird um das Hindernis geplant.
+			Durch den Einsatz des Protective-Fields ist eine zusätzliche Sicherheit eingebaut.
+\end{description}
 
 Im Gesamten bietet die derzeitige Implementierung der Robotersoftware noch Potenzial für Optimierungen.
 %Ursache hierfür waren fehlende fachliche Kompetenzen, inhomogene Gruppen, schlechte Absprachen untereinander und zeitliche Probleme.
