@@ -12,8 +12,8 @@ Die Aufgaben im Bereich der Integration lassen sich unter folgende Punkte einord
 \begin{description}
 \item[Code Zusammenführen]
 Um das Auseinanderdriften der einzelnen Teilprojekte zu vermeiden, ist ein regelmäßiges Zusammenführen 
-mittels Git notwendig. Zusätzlich ist die Integration von Code, der außerhalb des \lstinline{SegwayOmni}-Projektes 
-entsteht, wie etwa der Kinect-Teil, notwendig. Weiterhin muss die Kompatibilität der Schnittstellen 
+mittels Git notwendig. Zusätzlich ist die Integration von Code, der außerhalb des \lstinline{SegwayOmni}--Projektes 
+entsteht, wie etwa der Kinect--Teil, notwendig. Weiterhin muss die Kompatibilität der Schnittstellen 
 zwischen den Teilprojekten gepflegt werden.
 
 \item[Architektur]
@@ -49,8 +49,8 @@ eine zusätzliche Ebene hinzu, die es erlaubt, die einzelnen Verhalten zu aktivi
 Aufgabenbasis und aktiviert das für eine Aufgabe notwendige Verhalten.
 Eine Aufgabe ist beispielsweise: Zeige einem Menschen den gespeicherten Pfad. Auf der Verhaltensebene muss nun die entsprechende 
 Funktion aktiviert werden. Die
-\lstinline{SegwayOmniKinect}-Gruppe beispielsweise würde das Verhalten zum Beobachten
-eines Menschen ausführen und die \lstinline{SegwayOmniBehaviours}-Gruppe das
+\lstinline{SegwayOmniKinect}--Gruppe beispielsweise würde das Verhalten zum Beobachten
+eines Menschen ausführen und die \lstinline{SegwayOmniBehaviours}--Gruppe das
 Verhalten zum Abfahren eines gespeicherten Pfades.
 
 Die Funktionen des Roboters können auf oberster Ebene in einzelne, unabhängige Aufgaben getrennt werden. Zur Erfüllung dieser Aufgaben müssen wiederum bestimmte Verhalten ausgeführt werden.
@@ -96,33 +96,33 @@ Mit Hilfe dieser hierarchischen Architektur und durch das Arbeiten mit Zustände
 \label{integration_umsetzung_zusammenspiel_sec}
 
 Ein gängiges Konzept zur Steuerung von Robotern bildet 
-eine \textit{Sense-Plan-Act-Schleife}\footnote{Dt.: Beobachten-Planen-Handeln-Schleife}, bei der 
+eine \textit{Sense--Plan--Act--Schleife}\footnote{Dt.: Beobachten--Planen--Handeln--Schleife}, bei der 
 ständig die Umwelt sensorisch erfasst und entsprechend der Beobachtung und des aktuellen Zustandes 
 eine Handlung ausgeführt wird.
 \begin{figure}[h]
 	\label{fig:integration_sense_plan_act}
 	\centering
 	\includegraphics[scale=0.5]{graphics/SCHEMA-SensePlanAct.pdf}
-	\caption{Schematische Darstellung des Konzeptes der Sense-Plan-Act-Schleife.}
+	\caption{Schematische Darstellung des Konzeptes der Sense--Plan--Act--Schleife}
 \end{figure}
-Die globale Zustandsmaschine bildet in diesem Konzept das Plan-Modul. Sie erhält von den Gruppen auf 
+Die globale Zustandsmaschine bildet in diesem Konzept das Plan--Modul. Sie erhält von den Gruppen auf 
 der Verhaltensebene Informationen, auf Basis derer die Entscheidung für einen Zustandswechsel getroffen wird.
 Ändert sich der Zustand der globalen Zustandsmaschine, so kann (muss aber nicht) eine Handlung folgen.
 Eine Handlung wird ausgeführt, indem die globale Zustandsmaschine durch das 
 Setzen der entsprechenden Zustände auf Verhaltensebene ein bestimmtes Verhalten aktiviert oder auch ein momentan aktives Verhalten beendet.
 
-Die \lstinline{MCA2}-Architektur bietet durch die Trennung des Informationsflusses in 
-einen \lstinline{Control}- und in einen \lstinline{Sense}-Teil, eine passende Grundlage für das zuvor beschriebene Konzept.
+Die \lstinline{MCA2}--Architektur bietet durch die Trennung des Informationsflusses in 
+einen \lstinline{Control}-- und in einen \lstinline{Sense}--Teil, eine passende Grundlage für das zuvor beschriebene Konzept.
 Jede Zustandsmaschine ist in zwei Teile gespalten.
-Im \lstinline{Sense}-Teil erfolgt die Verarbeitung neuer Informationen, indem entsprechend dem vorherrschenden inneren Zustand und der beobachteten externen Variable ein Übergang zu einem neuen Zustand ausgeführt wird.
+Im \lstinline{Sense}--Teil erfolgt die Verarbeitung neuer Informationen, indem entsprechend dem vorherrschenden inneren Zustand und der beobachteten externen Variable ein Übergang zu einem neuen Zustand ausgeführt wird.
 Beispielsweise kommt die Ausführung der Aufgabe \textit{Verfolge einen Menschen} durch die Geste \textit{Stop} zu ihrem Ende.
-Im \lstinline{Control}-Teil werden hingegen Handlungen ausgeführt.
+Im \lstinline{Control}--Teil werden hingegen Handlungen ausgeführt.
 Hier erfolgt, entsprechend dem momentanen inneren Zustand, \zB das Setzen eines neuen Zustandes für in der Hierarchie tiefer liegende Zustandsmaschinen.
 Ein passendes Beispiel ist der Zustand \lstinline{stopFollowingPerson} der
 globalen Zustandsmaschine, welcher wiederum den Zustand \lstinline{stopFollowingPerson} im
 \lstinline{SegwayOmniBehavioursManager} setzt und so das Beenden des momentanen Verhaltens initiiert.
 Erst wenn die aufgezeichnete Trajektorie gespeichert und der Roboter gestoppt ist, erfolgt die Rückmeldung, indem die Zustandsmaschine in den Zustand \lstinline{idle} wechselt.
-Dieser neue Zustand wird im \lstinline{Sense}-Teil der globalen Zustandsmaschine verarbeitet und falls alle weiteren Bedingungen erfüllt sind, wird die Aufgabe durch einen letzten Zustandswechsel ebenfalls in den Zustand \lstinline{idle} beendet (siehe Abb. \ref{fig:integration_statemachine}).
+Dieser neue Zustand wird im \lstinline{Sense}--Teil der globalen Zustandsmaschine verarbeitet und falls alle weiteren Bedingungen erfüllt sind, wird die Aufgabe durch einen letzten Zustandswechsel ebenfalls in den Zustand \lstinline{idle} beendet (siehe Abb. \ref{fig:integration_statemachine}).
 
 
 \subsection{Benutzerschnittstelle}
@@ -133,7 +133,7 @@ Die Erkennung der Gesten geschieht in der Gruppe \lstinline{SegwayOmniKinect}, d
 Entsprechend der in Abschnitt \ref{integration_umsetzung_zusammenspiel_sec} erläuterten Systematik entscheidet die globale Zustandsmaschine in jedem Zustand individuell, welche Handlung nach der Beobachtung einer bestimmten Geste folgt.
 Beim ersten Test der Gestensteuerung hat sich gezeigt, dass eine zuverlässige Steuerung nur durch das Erkennen einer Abfolge mehrerer Gesten möglich ist.
 
-Es trat das Problem auf, dass während des Einnehmens einer bestimmten Haltung, die entsprechend der Definition der Kinect-Gruppe einer Geste entsprach, regelmäßig eine nicht gewünschte Geste erkannt wurde.
+Es trat das Problem auf, dass während des Einnehmens einer bestimmten Haltung, die entsprechend der Definition der Kinect--Gruppe einer Geste entsprach, regelmäßig eine nicht gewünschte Geste erkannt wurde.
 Um dieses Problem zu lösen, kommt eine Steuerung zum Einsatz, bei der nur durch eine Folge von Körperhaltungen eine Geste erkannt wird und so eine Funktion auslöst.
 Bereits bei der Initialisierung einer Person ist es notwendig eine korrekte Folge von Haltungen einzunehmen die signalisieren dass man auch wirklich den Roboter steuern möchte.
 Auch beim Ausführen einer Geste, um eine bestimmte Funktion des Roboters (etwa das Abfahren eines Pfades) zu aktivieren, ist es notwendig, zuerst eine Anrückhaltung einzunehmen und von dieser zu einer Haltung überzugehen, die letztlich die Funktion aktiviert.
