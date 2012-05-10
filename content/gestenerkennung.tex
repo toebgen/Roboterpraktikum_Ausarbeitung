@@ -256,26 +256,6 @@ Aufgrund der groben Auflösung und der stark verrauschten Messwerte der Kinect m
 \vspace{0.3cm}
 
 \noindent Eingesetzte Geste und ihre Bedeutungen:
-\begin{description}
-  \item[Undefined gesture] (normal posture: any other cases except the ones
-  listed below)
-  \item[Start follow me] 
-  $[if: (angle\_alpha > 45^\circ$ $\&\&$ $angle\_beta >
-  45^\circ)$\\
-  $\&\&$ $(angle\_gamma > 135^\circ$ $\&\&$ $angle\_delta >
-  135^\circ)$\\
-  $\&\&$ $((left\_hand\_z - right\_hand\_z) > 300 mm)]$
-  \item[Stop follow me] $[if: (angle\_alpha > 45^\circ$ $\&\&$ $angle\_beta >
-  45^\circ)$\\
-  $\&\&$ $(angle\_gamma > 135^\circ$ $\&\&$ $angle\_delta > 135^\circ)$\\
-  $\&\&$ $((right\_hand\_z - left\_hand\_z) > 300 mm)]$
-  \item[Stop] $[if: (angle\_alpha > 45^\circ$ $\&\&$ $angle\_beta > 45^\circ)$\\
-  $\&\&$ $(angle\_gamma > 135^\circ \&\& angle\_delta > 135^\circ)$\\
-  $\&\&$ $(|right\_hand\_z - left\_hand\_z| < 300 mm)]$
-  \item[Repeat track] $[if: (angle\_alpha > 45^\circ$ $\&\&$ $angle\_beta >
-  45^\circ)$\\
-  $\&\&$ $(angle\_gamma < 135^\circ || angle\_delta < 135^\circ)]$
-\end{description}
 
 \begin{table}[h]
 \centering
@@ -310,8 +290,6 @@ Aufgrund der groben Auflösung und der stark verrauschten Messwerte der Kinect m
 \caption{Eingesetzte Geste und ihre Bedeutungen}
 \label{tab:Gesten}
 \end{table}
-
-\todo[inline]{Auswählen ob Tabelle oder Description verwendet werden soll}
 
 \begin{figure}[h]
 	\center

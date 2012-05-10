@@ -1,4 +1,4 @@
-\documentclass{UVKABoA4}
+\documentclass{UVKABoA4} %[draft]
 
 \usepackage{graphicx} % Standardpaket zur Grafikeinbindung
 \usepackage{wrapfig}  % Textumflossene Bilder
@@ -40,6 +40,7 @@
 % \usepackage[english]{babel}	% Englische Rechtschreibung und Silbentrennung.
 \usepackage[ngerman]{babel}		% Neue deutsche Rechtschreibung und Silbentrennung.
 
+\usepackage[hyphens]{url}
 \usepackage[raiselinks=true,
             bookmarks=true,
             bookmarksopenlevel=1,
@@ -111,10 +112,8 @@
 % A graphic best describing your thesis
 \newcommand{\titlefig}{\includegraphics[width=0.4\textwidth]{graphics/FZI-Logo}}
 
-\usepackage[outermarks]{titlesec}
-\titleformat{\paragraph}
-  {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}    {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+% Verwendung von Paragraph ermöglichen
+\addtokomafont{paragraph}{\fontfamily{phv}\normalsize\mdseries}
 
 
 % Abkürzungen etc.
