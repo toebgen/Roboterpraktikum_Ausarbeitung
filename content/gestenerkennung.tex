@@ -4,21 +4,21 @@
 \label{kinect_aufgabenstellung_sec}
 \authorsection{\editormarton}
 
-Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
+Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video-- und
  Tiefenbildes eine Person zu verfolgen und ihre speziellen
  Körperhaltungen/Gesten/Bewegungen als Kommandos zu interpretieren.
  Um die Bedürfnisse der anderen Gruppen zu erfüllen, mussten wir den Geschwindigkeitsvektor des verfolgten Menschen und die
- erkannte Geste als Ausgabewerte unseres Moduls weitergeben. Der Videostrom wurde von einem Kinect-Sensor akquiriert.
+ erkannte Geste als Ausgabewerte unseres Moduls weitergeben. Der Videostrom wurde von einem Kinect--Sensor akquiriert.
 \vspace{0.3cm}
 
-\noindent Output-Daten mit Nummerierung (\lstinline{openni_source_test SO}):
+\noindent Output--Daten mit Nummerierung (\lstinline{openni_source_test SO}):
 \begin{enumerate}[start=0]
-  \item X-Position des Benutzers
-  \item Y-Position des Benutzers
+  \item X--Position des Benutzers
+  \item Y--Position des Benutzers
   \item Betrag der Benutzers Geschwindigkeit
   \item Richtung der Benutzers Geschwindigkeit
-  \item X-Komponente des Geschwindigkeitsvektors
-  \item Y-Komponente des Geschwindigkeitsvektors
+  \item X--Komponente des Geschwindigkeitsvektors
+  \item Y--Komponente des Geschwindigkeitsvektors
   \item Erkannte Geste
   \item Benutzer anwesend
 \end{enumerate}
@@ -28,13 +28,13 @@ Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
 \authorsection{\editormarton}
 
 Sowohl die Bildqualität von Sensoren, als auch die Verarbeitungsalgorithmen zeigten eine erhebliche Entwicklung in den letzten Jahren.
- Heutzutage sind 3D-Entfernungskameras durch rapide Entwicklung des
+ Heutzutage sind 3D--Entfernungskameras durch rapide Entwicklung des
  Entfernungsbildaufnahmeverfahren für breite Anwenderkreise erschwinglich
  (unter anderem Microsoft Kinect oder Asus Xtion PRO LIVE).
- Darum können neben 2D Farbbildern immer häufiger 3D-Bilder in Anspruch genommen
+ Darum können neben 2D Farbbildern immer häufiger 3D--Bilder in Anspruch genommen
  werden. Bewährte Tatsache ist, dass Tiefenkarten eine viel robustere Darstellung geben, als herkömmliche Intensitätsbilder.
  
-Im \gls{fzi}-Labor steht eine Kinect Kamera für die Datenakquirierung zur
+Im \gls{fzi}--Labor steht eine Kinect Kamera für die Datenakquirierung zur
  Verfügung, die ursprünglich als Zubehör der Microsoft XBOX 360 Spielkonsole
  entwickelt wurde. Der größte Vorteil dieses Sensors liegt in seinem Preis. Eine
  solche Kamera ist bereits für ca 100 Euro erhältlich und wird aufgrund dessen
@@ -57,42 +57,41 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 %
 %\begin{itemize}
 %	\item Auflösung: 640x480 Pixels
-%	\item Tiefenbereich: 0.5m - 10m, Ideal 2m-2.5m
-%	\item Tiefengenauigkeit: 1mm bei einer Entfernung von 0.5m. Dieser Wert wird größer bei größeren Abständen.  
-%%% Quelle: http://ntuzhchen.blogspot.de/2010/12/how-kinect-works-prime-sense.html
+%	\item Tiefenbereich: 0.5m -- 10m, Ideal 2m--2.5m
+%	\item Tiefengenauigkeit: 1cm
 %\end{itemize}
 %
-%Jedes Pixel aus den 640x480 Pixeln enthält eine Tiefeninformation proPixel. Diese Tiefeninformation bewegt sich zwischen 0.5m und 10m mit einer Auflösung von 1cm. der Kinect-Sensor liefert  Pro Sekunde 30 Tiefenbilder.
+%Ein Tiefenbild besteht somit aus 640x480 Pixeln mit je einer Tiefeninformation proPixel. Diese Tiefeninformation bewegt sich in einem Bereich von 50cm bis 1000cm mit einer Auflösung von 1cm. Pro Sekunde liefert der Kinect--Sensor 30 Tiefenbilder.
 %
 %\subsubsection{Kamerasensor}
 %
-%Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}-Kamera. Diese hat genauso 640x480 Pixeln.
+%Neben dem Tiefensensor besitzt die Kinect eine normale \gls{rgb}--Kamera. Diese löst mit 640x480 Pixeln auf.
 %
 %\subsubsection{Audio}
 %
-%Der Kinect-Sensor hat 4 Mikrofonen,die eine 3D Lokalisierung ermöglicht.
+%Der Kinect--Sensor ist mit 4 Mikrofonen ausgestattet. Mit diesen ist eine 3D Lokalisierung möglich. Der Zugriff auf die Audio--Daten ist jedoch noch mit keinem Framework möglich und es sind auch keine weiteren Informationen bekannt.
 %
 %\subsubsection{Neigesteuerung}
 %
-%Der 3D-Neigesensor hat die  Aufgabe den Kinect-Sensor durch einen Motor auf der richtige Neigungswinkel zu halten. Der Neigungswinkel liegt zwischen $-31^\circ$und $+30^\circ$ relativ zum Standfuss.
+%Der Kinect--Sensor beinhaltet einen 3D--Neigesensor und einen Motor mit welchem der Neigungswinkel gegen vorne angepasst werden kann. Der Neigungswinkel beträgt zwischen $-31^\circ$und $+30^\circ$ relativ zum Standfuss.
 %
-%\subsubsection{LED-Steuerung}
+%\subsubsection{LED--Steuerung}
 %
 %Das Integrierte \gls{led} kann auch angesteuert werden. verschiedene Modus sind möglich:
 %
 %\begin{itemize}
-%	\item \gls{led}-Ausgeschaltet
+%	\item \gls{led}--Ausgeschaltet
 %	\item Grün
 %	\item Rot
 %	\item Gelb (Orange)
 %	\item Gelb (Orange) blinkend
 %	\item Grün
-%	\item Gelb (Orange)-Rot blinkend
+%	\item Gelb (Orange)--Rot blinkend
 %\end{itemize}
 %Die wichtigsten technischen der Kinect in unserem Projekt sind:
 %\begin{itemize}
-%  \item Winkel der 3D-Neigesensor wird nach der Bodensteigung angepasst.
-%  \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot \gls{tof}-Kamera und kodiert die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
+%  \item Winkel der 3D--Neigesensor wird nach der Bodensteigung angepasst.
+%  \item Zur Entfernungsmessung verwendet die Kinect eine Infrarot \gls{tof}--Kamera und kodiert die Tiefenbilder durch 11 Binärzeichen (verteilt die maximale messbare Entfernung auf 2048 Teile). In dieser Auflösung liefert die Kinect 30 \gls{fps}.
 %\end{itemize}
 
 
@@ -101,19 +100,19 @@ Da die Kinect gleichzeitig sowohl 2D Farbbilder als auch 2.5D Entfernungsbilder 
 
 Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}, \gls{opencv}, Matlab, etc.).
  Unsere Wahl war \gls{openni}, weil wir sie durch C++ Umgebung in das
- \lstinline{MCA2}-Rahmenwerk einbinden konnten.
+ \lstinline{MCA2}--Rahmenwerk einbinden konnten.
 
 %\subsection{\glstext{openni}}
 %\authorsection{\editorhamza}
 %\todo[inline]{Hamza}
-%Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
+%Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}--Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton--Algorithmus NITE 1 von PrimeSense.
 %\begin{figure}
 %\label{fig:gesten_openni}
 %\centering
 %\includegraphics[scale=0.7]{graphics/BILD-OpenNI.png}
 %\end{figure}
-%Das \gls{openni}-Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C-Sharp.
-%Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}-Frameworks im Vordergrund:
+%Das \gls{openni}--Framework ist in C++ geschrieben und steht für alle gängigen Plattformen (Windows, Linux/Ubuntu, OSX) zur Verfügung. Für Windows besteht zusätzlich ein Wrapper in C--Sharp.
+%Für den Softwareentwickler stehen die folgenden Komponenten des \gls{openni}--Frameworks im Vordergrund:
 %
 %\begin{itemize}
 %	\item Context:  Definiert des Umfeld des Sensors. Dies Beinhaltet z.b. die Auflösung der Sensoren bzw. die Sicht auf die ganze Szene als solches.
@@ -121,7 +120,7 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
 %	\item UserGenerator: Liefert Informationen zu aktuell erkannten Benutzern
 %\end{itemize}
 %
-%Mit NITE  sind in \gls{openni}  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
+%Mit NITE  sind in \gls{openni}  User--Detection und --Tracking bereits einhalten. Auch einfache Gesten werden von der NITE--Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE--Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
 
 %Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
 
@@ -133,7 +132,7 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
  der Sensordaten (Farbbild, Tiefenbild, Audiosignale) anbietet. Bei natürlicher Interaktion (NI steht für „natural interaction“) wird der Input,
  wie Handbewegungen, bestimmte Körperhaltungen, als Steuerungssignale für die Anwendung interpretiert. Die Systemstruktur OpenNIs ist modular.
  Mit dem entsprechenden (sensorspezifischen) Interface muss immer die generelle, wiederverwendbare Struktur ergänzt werden.
- Ein solches Interface und Treibersoftware für den Kinect-Sensor ist von Prime
+ Ein solches Interface und Treibersoftware für den Kinect--Sensor ist von Prime
  Sense erhältlich. 
 
 \gls{openni} liefert eine eingebaute Segmentierung, die nach unserer Erfahrungen robust funktioniert.
@@ -155,22 +154,22 @@ Wie im vorigen Absatz erläutert werden Personen kontinuierlich segmentiert. Das
  Poseninformationen in der weiteren Verarbeitung. Alleinig die Handgelenke/Handflächen bildeten eine Ausnahme,
  da deren Orientierungen (aus unbekanntem Anlass) stets schlechte Konfidenzwerte lieferten. Die relevnten Positionsmessungen der Hände waren jedoch gut.
 
-Aus dem \gls{openni}-Modul importierten wir nur Tiefenbilder, um diese im
+Aus dem \gls{openni}--Modul importierten wir nur Tiefenbilder, um diese im
 \lstinline{MCABrowser} anzuzeigen. Dazu wurde ein spezieller Datentyp,
-„Blackboard“, verwendet (normalerweise können an den Kanten nur Double-Werte zwischen den Modulen weitergegeben werden).
+„Blackboard“, verwendet (normalerweise können an den Kanten nur Double--Werte zwischen den Modulen weitergegeben werden).
 
-Alle anderen Verarbeitungsprozesse wurden in die \lstinline{MCA2}-Umgebung,
+Alle anderen Verarbeitungsprozesse wurden in die \lstinline{MCA2}--Umgebung,
 durch die Verwendung von früher implementierten Modulen und Funktionen, integriert.
 
 \begin{figure}[h]
 	\center
 	\includegraphics[scale=0.5]{graphics/OpenNISourceTest.jpg}
-	\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}-Grundstruktur unseres Moduls in \lstinline{MCABrowser}}
+	\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}--Grundstruktur unseres Moduls in \lstinline{MCABrowser}}
 \end{figure}
 
 Zur Geschwindigkeitsschätzung wird der Torso (Rumpfmittelpunkt) auf den Boden projiziert
- (die Z-Koordinate – im Welt-Koordinatensystem - wird auf 0 gesetzt). Da die
- Positionsinformation wegen der hohen \gls{fps}-Rate mit viel Rauschen belastet wird
+ (die Z--Koordinate --– im Welt--Koordinatensystem --- wird auf 0 gesetzt). Da die
+ Positionsinformation wegen der hohen \gls{fps}--Rate mit viel Rauschen belastet wird
  (man bewegt sich langsam, die geringe Auflösung der Kinect aber interpretiert
  dies jedoch als geringfügige Posenänderungen im Ruhezustand.), muss die Positionveränderungen
  in größeren Zeitschritten ausgewertet werden. Dazu verwenden wir einen Glättungsfilter über
@@ -178,21 +177,21 @@ Zur Geschwindigkeitsschätzung wird der Torso (Rumpfmittelpunkt) auf den Boden p
  
 Bevor die Geschwindigkeit für eine Abtastperiode aus der Differenz von den
 aktuellen und vorherigen Werten kalkuliert wird (\lstinline{Speed Estimator}),
-müssen die Koordinaten aus dem Kinect-Koordinatensystem in Roboterkoordinaten transformiert werden
+müssen die Koordinaten aus dem Kinect--Koordinatensystem in Roboterkoordinaten transformiert werden
  (\lstinline{CamToWorld}). Dieser Schritt benötigt die Kamerakalibration des
- Kinect-Sensors. Dies muss nur einmal gemacht werden, und kann mit \gls{opencv} oder
+ Kinect--Sensors. Dies muss nur einmal gemacht werden, und kann mit \gls{opencv} oder
  in MATLAB (Camera Calibration Toolbox) durchgeführt werden. Die Ergebnisse (die extrinsischen Parameter)
- sollen durch ein ``Init-File'' (``calibration\_data.txt'' genannt) für das
+ sollen durch ein ``Init--File'' (``calibration\_data.txt'' genannt) für das
  Programm zur Verfügung stehen.
  Anhand dieser Datei stellt die Anwendung die ``Kamera zu Roboter'' Transformationswerte automatisch ein.
  
-Noch eine wichtige Bemerkung zur Geschwindigkeitsberechnung: da die \gls{fps}-Rate
- sich kontinuierlich ändert, muss stets der aktuelle \gls{fps}-Wert eingeholt werden.
+Noch eine wichtige Bemerkung zur Geschwindigkeitsberechnung: da die \gls{fps}--Rate
+ sich kontinuierlich ändert, muss stets der aktuelle \gls{fps}--Wert eingeholt werden.
  Dazu wird eine Zeitmessung zwischen zwei Abtastwerten eingeholt.
 
 Die Zeit wird in Sekunden, die Entfernungen und Bewegungen werden in Millimeter gemessen.
  Die verwendeten Einheiten sind mm (Position, Positionsveränderung), mm/sec
- (Geschwindigkeit), frame/sec (Frame-Rate) und rad (Winkel).
+ (Geschwindigkeit), frame/sec (Frame--Rate) und rad (Winkel).
 
 Die Gestenerkennung wurde in einem zweiten Modul (\lstinline{GestureClassifier})
 umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
@@ -204,7 +203,7 @@ umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 \authorsection{\editorhamza}
 
 In diesem Abschnitt werden die Messwerte ( Positionen [X,Y,Z], Geschwindigkeit) von Störungen unterdrückt, sodass wir die  Ausreißern möglichst weglassen  können , die unsere Werte abweichen. Solche Filter werden meistens durch Auswertung von Nachbarschaftsverhältnissen realisiert. 
-Es gibt sehr viele Filter, die wir benutzen konnten Z.B (Mittelwertfilter, Binominialfilter, Medianfilter, Rangordnungsfilter). Die Entscheidung war für den Mittelwertfilter, weil er ein einfaches Glättungsfilter ist. Jeder Messwert wird durch Addition der U-Werte (in unserem Fall 5 Werte)  und anschließend Division durch die Anzahl der an der Mittelung beteiligten Messwerten $|U|$ berechnet.
+Es gibt sehr viele Filter, die wir benutzen konnten Z.B (Mittelwertfilter, Binominialfilter, Medianfilter, Rangordnungsfilter). Die Entscheidung war für den Mittelwertfilter, weil er ein einfaches Glättungsfilter ist. Jeder Messwert wird durch Addition der U--Werte (in unserem Fall 5 Werte)  und anschließend Division durch die Anzahl der an der Mittelung beteiligten Messwerten $|U|$ berechnet.
 Die Messwerten , die von Kinect an den anderen Gruppen geliefert werden, müssen möglichst genau sein. Außerdem müssen die kleine Bewegungen und die extrem schnelle Geschwindigkeiten von der verfolgter Person vermeiden, damit der Roboter unter Kontrolle bleibt und die verfolgte Person nicht verloren geht.
 
 
@@ -226,7 +225,6 @@ Damit merken wir die unzählige Gestenanzahl, die möglich bei dem Einsatz sind.
 
 \subsubsection{Probleme}
 \authorsection{\editorhamza}
-%\todo[inline]{Hamza}
 
 Die Erkennung von Gesten muss zuverlässig und Sicher sein. Deshalb sollten wir auf den folgenden Probleme beachten:
 \begin{itemize}
@@ -244,7 +242,7 @@ Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wen
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
  Diesem Ansatz liegt ein binärer Entscheidungsbaum zu Grunde, dem den einzelnen
- Output-Mög"-lich"-kei"-ten (den Blätter des Baums, also den eigentlichen
+ Output--Möglichkeiten (den Blätter des Baums, also den eigentlichen
  Gesten) Identifikationsnummern zugeordnet werden.
 
 Diese Struktur bietet programmierungstechnisch eine generische Lösung. Sie funktioniert anatomisch universal,

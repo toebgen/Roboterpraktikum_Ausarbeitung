@@ -29,7 +29,7 @@ Außerdem sollte man auch die Pose aus den Odometriedaten bestimmen können.
 
 Die inverse Kinematik dient dazu, die erforderlichen Gelenkeinstellungen und Motorbewegungen zu berechnen, um zu einer bestimmten gewünschten Roboterpose zu gelangen.
 Probleme gibt es, wenn es Raumpunkte gibt, die zu Singularitäten führen.
-Das heißt, dass zum Beispiel bei einem 6-achsigen Roboter zwei Achsen kollinear werden.
+Das heißt, dass zum Beispiel bei einem 6--achsigen Roboter zwei Achsen kollinear werden.
 Die Vorwärtskinematik hingegen berechnet die Roboterpose auf Basis der internen Gelenkeinstellungen und Sensoren.
 Bei mobilen Robotern wird das auch Odometrie genannt.
 
@@ -39,7 +39,7 @@ Zu lösende Aufgaben im Bereich der inversen Kinematik sind:
 Die Umrechnung der Trajektorie in Geschwindigkeiten, die Limitierung der Beschleunigung des Roboters und das Limitieren der Geschwindigkeiten unter Beachtung des Protective Fields \ref{sec:vpf}.
 
 Was die Bahnplanung betrifft, gibt es mehrere Aufgaben.
-Als erstes müssen die Daten der Kinect-Kamera verarbeitet werden.
+Als erstes müssen die Daten der Kinect--Kamera verarbeitet werden.
 Danach soll die Trajektorie, auf welcher der Roboter fahren soll, bestimmt werden, was kollisionsfrei sein muss.
 Zuletzt soll das Speichern der abgefahrenen Trajektorie und das Laden der abgefahrene Trajektorie implementiert werden.
 
@@ -79,11 +79,11 @@ Gelenke\\
 - Geplante Trajektorie nicht immer ausführbar (außer bei mobile Plattformen) & - Formulierung der Trajektorie umständlicher\\
 \hline
 		\end{tabular}
-		\caption{\label{fig:steurungProContra} Vor- und Nachteile der Steuerung im Kartesischen und Konfigurationsraum \citep{rob1}}
+		\caption{\label{fig:steurungProContra} Vor-- und Nachteile der Steuerung im Kartesischen und Konfigurationsraum \citep{rob1}}
 		\end{table}	
 
 Es gibt unterschiedliche Interpolationsarten:
-Zirkular, Linear und Spline-Bahn oder auch approximative Bahnsteuerung.
+Zirkular, Linear und Spline--Bahn oder auch approximative Bahnsteuerung.
 Bei der Linearinterpolation wird einfach zwischen zwei Teiltrajektorien interpoliert, siehe Abb. \ref{fig:linearinterpolation}.
 \begin{figure}[h]
 	\center
@@ -121,7 +121,7 @@ Nach Robotertyp:
 	\item Bahnplanung für Manipulatoren (\zB Schweißen bei Industrierobotern)
 	\item Bahnplanung für mobile Roboter
 	\item Bahnplanung für Laufmaschinen und anthropomorphe Systeme
-	\item Greif- und Montageplanung
+	\item Greif-- und Montageplanung
 \end{itemize}
 
 Nach dem Zustandsraum wo die Planung stattfindet:
@@ -152,7 +152,7 @@ So wird der Konfigurationsraum während der Suche exploriert.
 Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell2003}.
 \begin{enumerate}
 	\item Aufbau einer Roadmap oder eines Graphen \gls{Voronoi}, \gls{Sichtgraphen}, \gls{Zellenzerlegung} oder zufällige Knoten je nach
- Sampling-Strategie (\zB für \gls{PRM} Verfahren\cite{Thrun2005}).
+ Sampling--Strategie (\zB für \gls{PRM} Verfahren\cite{Thrun2005}).
 	\item Im Graph einen Weg vom Startknoten zum Zielknoten finden mittels A*-Algorithmus oder anderer Suchalgorithmen.
 \end{enumerate}
 
@@ -161,13 +161,13 @@ Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell200
 
 In diesem Abschnitt werden einige gängige lokale Planer vorgestellt.
 
-\paragraph{A*-Algorithmus} 
+\paragraph{A*--Algorithmus} 
 
-Der \textit{A*-Algorithmus} \citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zur Klasse der informierten Graphensuchalgorithmen.
+Der \textit{A*--Algorithmus} \citep{Russell2003} ist eine Erweiterung des \textit{Dijkstra Algorithmus} und gehört zur Klasse der informierten Graphensuchalgorithmen.
 \Dh dass eine Schätzungsfunktion benutzt wird, um die Suche zu lenken.
 Die Grundidee ist, immer den Knoten zu untersuchen, der wahrscheinlich am schnellsten ins Ziel führt.
-Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannten Knoten mit einer $f(x)$ Funktion bewertet und vom kleinsten $f$-Wert zum größten sortiert.
-Der Knoten mit dem kleinsten $f$-Wert wird als nächstes untersucht. 
+Um den vielversprechendsten Knoten zu ermitteln, werden alle bekannten Knoten mit einer $f(x)$ Funktion bewertet und vom kleinsten $f$--Wert zum größten sortiert.
+Der Knoten mit dem kleinsten $f$--Wert wird als nächstes untersucht. 
 
 Um den vielversprechendsten Knoten zu ermitteln, wird die Formel
 \begin{equation}
@@ -179,7 +179,7 @@ $h(x)$ ist die Heuristik, sprich die Schätzung der Pfadkosten, das Ziel von $x$
 Wichtig dabei ist, dass die Heuristik immer optimistisch sein muss.
 Das heißt, dass die Schätzung kleiner oder gleich sein muss als die wirklichen Pfadkosten, weil sonst der Algorithmus nicht mehr optimal ist.
 Als Heuristik wird oft die \gls{Euklidische-Distanz} oder die \gls{Manhattan-Distanz} benutzt.
-In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit Angaben zum Ablauf dargestellt.
+In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}--Suche mit Angaben zum Ablauf dargestellt.
 
 \begin{figure}[h]
 \center
@@ -187,13 +187,13 @@ In Abbildung \ref{fig:a*} ist eine erfolgreich beendete \textit{A*}-Suche mit An
 \caption{\label{fig:a*} Erfolgreich beendeter Ablauf eines \textit{A*}  \citep{innoKonz}}
 \end{figure}
 
-Der \textit{A*-Algorithmus}, obwohl er nicht mehr für bestimmte Anwendungszwecke als state-of-the-art gilt \citep{innoKonz}, ist als lokaler Planer, vor allem im zweidimensionalen, sehr gut.
+Der \textit{A*--Algorithmus}, obwohl er nicht mehr für bestimmte Anwendungszwecke als state--of--the--art gilt \citep{innoKonz}, ist als lokaler Planer, vor allem im zweidimensionalen, sehr gut.
 Mit mehr Dimensionen oder Freiheitsgraden arbeitet er viel schlechter.
 Als globalen Planer kann man diesen auch anwenden, zum Beispiel bei Navigationsgeräten.
 Diese benutzen Erweiterungen vom Grundalgorithmus, weil die Zustandsräume sehr komplex sind.
 Außerdem kann man den Grundalgorithmus noch weiter optimieren.
 Zum Beispiel mit dem Hierarchischen \textit{A*}, damit er, wenn keine Hindernisse in der Nähe liegen, größere Schritte und sonst kleinere Schritte macht.
-Es gibt zusätzliche Erweiterungen für die bidirektionale Suche, die parallele \textit{A*}-Suche und dynamische Auswahl von Start und Zielknoten.
+Es gibt zusätzliche Erweiterungen für die bidirektionale Suche, die parallele \textit{A*}--Suche und dynamische Auswahl von Start und Zielknoten.
 Man könnte auch den Algorithmus stoppen, sobald man einen Weg gefunden hat, dann ist der Algorithmus natürlich nicht mehr optimal.
 Diese Erweiterungen sind von der zu lösenden Aufgabe abhängig, mehrere Start und Zielknoten machen zum Beispiel bei mobilen Robotern nicht viel Sinn, dafür könnte es beim Schweißen nützlich sein.
 
@@ -206,13 +206,13 @@ Der negative Gradient der resultierenden Potentialkraft bestimmt die künstliche
 \begin{equation}
 F(q) = - \nabla U(q)
 \end{equation}
-wobei $U(q)$ die Summe der Abstoßungs- und Anziehungspotentiale ist.
+wobei $U(q)$ die Summe der Abstoßungs-- und Anziehungspotentiale ist.
 Diese Summe ist in Abbildung \ref{fig:potentialfeld} dargestellt.
 
 \begin{figure}[h]
 \center
 \includegraphics[scale=0.4]{graphics/potentialfeld.png}
-\caption{\label{fig:potentialfeld} Summe der Abstoßungs- und Anziehungskräften \citep{innoKonz}}
+\caption{\label{fig:potentialfeld} Summe der Abstoßungs-- und Anziehungskräften \citep{innoKonz}}
 \end{figure}
 
 Die Vorteile des Verfahrens wären zum Beispiel der geringe Rechenaufwand für die Pfadplanung, und dass die Bahnplanung und Steuerung in einer Funktion verbunden werden \citep{mobileRobotics}, was die allgemeine Steuerungsstruktur vereinfacht.
@@ -279,24 +279,24 @@ In der Gruppe \lstinline{SegwayOmniReflexes} befinden sich die Gruppen für die 
 	\label{fig:bahnplanung_reflexes_gruppe}
 	\center
 	\includegraphics[scale=0.7]{graphics/BILD-SegwayOmniReflexes.png}
-	\caption[Reflexes-Gruppe]{Die Gruppe \lstinline{SegwayOmniReflexes}: Zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
+	\caption[Reflexes--Gruppe]{Die Gruppe \lstinline{SegwayOmniReflexes}: Zu sehen sind die Gruppen für den manuellen bzw. automatischen Betrieb, \lstinline{SegwayOmniManualReflexes} und \lstinline{SegwayOmniAutoReflexes}.}
 \end{figure}
 
-Die manuelle Steuerung ist mittels der zur Simulation erstellten \lstinline{MCAGUI} Oberfläche oder - beim Test am realen Roboter - mit einem Gamepad möglich.
+Die manuelle Steuerung ist mittels der zur Simulation erstellten \lstinline{MCAGUI} Oberfläche oder ---beim Test am realen Roboter--- mit einem Gamepad möglich.
 
-Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{SegwayOmniAutoReflexes}, in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend, gehören allerdings einer bestimmten Bewegungsart an.
+Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}--Gruppe \lstinline{SegwayOmniAutoReflexes}, in der die Umrechnung von einer Trajektorie, bestehend aus drei Koordinaten, in Geschwindigkeiten stattfindet. Die in dieser Gruppe berechneten Geschwindigkeiten sind plattformübergreifend, gehören allerdings einer bestimmten Bewegungsart an.
 Folgende Bewegungsarten sind bereitgestellt:
 
 \begin{description}
 	\item[Differentiell] Die Steuerung des Roboters erfolgt, indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://rossum.sourceforge.net/papers/DiffSteer/DiffSteer.html}}.
-	\item[Omnidirektional] Durch den Einsatz von Mekanum-Rädern kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen\cite{Angeles1997}.
+	\item[Omnidirektional] Durch den Einsatz von Mekanum--Rädern kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen \cite{Angeles1997}.
 \end{description}
 
 \begin{figure}[h]
 \label{fig:bahnpl_umsetz_schema_inv_kinem}
 \centering
 \includegraphics[width=\textwidth]{graphics/SCHEMA-invKinem.pdf}
-\caption[In- und Output der \lstinline{SegwayOmniAutoReflexes}-Gruppe]{Schematische Darstellung des In- und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe}
+\caption[In-- und Output der \lstinline{SegwayOmniAutoReflexes}--Gruppe]{Schematische Darstellung des In-- und Outputs der \lstinline{SegwayOmniAutoReflexes}--Gruppe}
 \end{figure}
 
 Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
@@ -307,7 +307,7 @@ Zuletzt findet mit Hilfe des Virtual Protective Field (siehe Abs. \ref{sec:vpf})
 	\label{fig:bahnplanung_umsetzung_auto_refl}
 	\center
 	\includegraphics[scale=0.8]{graphics/BILD-SegwayOmniAutoReflexes.png}
-	\caption[Reflexes-Gruppe im Detail]{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail: Auf oberster Ebene befindet sich das Manager-Modul, welches die einzelnen Module kontrolliert}
+	\caption[Reflexes--Gruppe im Detail]{Die Gruppe \lstinline{SegwayOmniAutoReflexes} im Detail: Auf oberster Ebene befindet sich das Manager--Modul, welches die einzelnen Module kontrolliert}
 \end{figure}
 
 Die Ausgabe dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, werden an die Gruppe für die Motoransteuerung (siehe Abs. \ref{bahnplanung_motoansteuerung_subsec}) weitergereicht, um plattformspezifische Geschwindigkeiten zu berechnen.
@@ -315,7 +315,7 @@ Die Ausgabe dieser Gruppe, also die bewegungsartspezifischen Geschwindigkeiten, 
 \subsubsection{Vorhandene Software}
 \label{bahnplanung_inv_kinem_vorhandene_software_sec}
 
-Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}-Gruppe, in der ein Großteil der nötigen Funktionalität implementiert war.
+Im Projekt \lstinline{SegwayOmni} bzw. \lstinline{Odete} gab es bereits eine \lstinline{Reflexes}--Gruppe, in der ein Großteil der nötigen Funktionalität implementiert war.
  Insbesondere der zentrale Teil, die Module
  \lstinline{DriveAlong-}\lstinline{Path} bzw.
  \lstinline{OmniOrientedDriveAlongPath}, welche für die inverse Kinematik zuständig sind, wurden zur Verfügung gestellt.
@@ -341,7 +341,7 @@ Um eine einfache Steuerung der Gruppe zu gewährleisten steht an oberster Stelle
 	\item Aktivieren/Deaktivieren des Moduls	
 	\end{itemize}
 \end{description}
-Weiterhin fließt in der \lstinline{AutoReflexes}-Gruppe die Information aus dem Virtual Protective Field mit ein, um kollisionsfreies Fahren zu ermöglichen.
+Weiterhin fließt in der \lstinline{AutoReflexes}--Gruppe die Information aus dem Virtual Protective Field mit ein, um kollisionsfreies Fahren zu ermöglichen.
 
 \subsubsection{Virtual Protective Field}
 \label{bahnplanung_virtual_protective_field_sec}
@@ -372,7 +372,7 @@ Dies tritt dann ein, wenn für jede Geschwindigkeitskomponente, sowie für den r
 % 	\begin{itemize}
 % 		\item Berechnung von Trajektorien-Punkten auf Basis der Mensch-Position und Geschwindigkeit (Kinect)
 % 		\item Schätzung der zukünftigen Position des Menschen
-% 		\item Transformation von Welt- in Roboter- bzw. Bildkoordinaten und zurück\todoprivate{evtl. auch weg lassen}
+% 		\item Transformation von Welt-- in Roboter-- bzw. Bildkoordinaten und zurück\todoprivate{evtl. auch weg lassen}
 % 		\item Abspeichern von Pfaden
 % 		\item Abfahren von Pfaden
 % 	\end{itemize}
@@ -452,7 +452,7 @@ mit
 	\label{fig:roll_pitch_yaw}
 %\end{wrapfigure}
 \end{figure}
-Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate.
+Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$-- bzw. $y$-Koordinate.
 $following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
 Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten von \lstinline{HumanPosition} vorliegen.
 Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
@@ -468,7 +468,7 @@ In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 	\label{fig:trajektorie}
 \end{figure}
 
-Der $yaw$-Wert wird so berechnet, dass der Roboter sich immer in Richtung des Menschen ausrichtet.
+Der $yaw$--Wert wird so berechnet, dass der Roboter sich immer in Richtung des Menschen ausrichtet.
 So kann gewährleistet werden, dass die Kinect den Menschen weiterhin im Fokus hat.
 
 
@@ -489,7 +489,7 @@ So kann gewährleistet werden, dass die Kinect den Menschen weiterhin im Fokus h
 % 	  \item erfolgt alles in absoluten Weltkoordinaten
 %   \end{itemize}
 %   \item Parameter $d$ für den Abstand des Roboters zum Menschen, default: $1,75m$
-%   \item Berechnung des yaw-Wertes: \todoprivate{Formel dazu}
+%   \item Berechnung des yaw--Wertes: \todoprivate{Formel dazu}
 
 % 	\item MUX für Trajektorie
 % 	\begin{itemize}
@@ -529,7 +529,7 @@ Zur Pfadspeicherung bzw. zum Laden eines abgespeicherten Pfades werden zwei Modu
 
 Im globalen Modus \lstinline{followPerson} (s. Abs. \ref{integration_umsetzung_hierarchie_sec}), also während dem Einlernen eines neuen Pfades,
  schreibt das Modul \lstinline{StoreRoboterPositionsToFile} in regelmäßigen Abständen $d_{save}$ Roboterposen in eine externe Datei (sog. \lstinline{dumpFile}).
-Für die Posen werden dabei sowohl die $x$- und $y$-Koordinaten, als auch die $yaw$-Werte abgespeichert.
+Für die Posen werden dabei sowohl die $x$-- und $y$-Koordinaten, als auch die $yaw$--Werte abgespeichert.
 Der Zeitpunkt für die Abspeicherung der nächsten Pose wird anhand der \glsdisp{Euklidische-Distanz}{Euklidischen-Distanz} festgelegt:
 Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer als der Speicherabstand $d_{save}$ ist, wird die aktuelle Pose abgespeichert.
 \begin{equation}
@@ -537,7 +537,7 @@ Sobald der Abstand der aktuellen Roboterpose zur letzten Speicherpose größer a
 \end{equation}
 $d_{save}$ kann als Parameter in einer externen Konfigurationsdatei definiert werden.
 
-Innerhalb des \lstinline{dumpFile}s werden die $x$, $y$ bzw. $yaw$-Werte zeilenweise durch Doppelpunkte getrennt gespeichert:
+Innerhalb des \lstinline{dumpFile}s werden die $x$, $y$ bzw. $yaw$--Werte zeilenweise durch Doppelpunkte getrennt gespeichert:
 $x_i:y_i:yaw_i$
 .
 
@@ -549,10 +549,10 @@ Dies geschieht, sobald der Abstand des Roboters zu $following$ kleiner ist als d
 \end{equation}
 Im Modus \lstinline{returnHome} werden die Punkte in umgekehrter Reihenfolge ausgegeben.
 
-In der aktuellen Implementierung werden die aus dem \lstinline{dumpFile} gelesenen $yaw$-Werte \emph{nicht} für die Trajektorie verwendet.
+In der aktuellen Implementierung werden die aus dem \lstinline{dumpFile} gelesenen $yaw$--Werte \emph{nicht} für die Trajektorie verwendet.
 Grund hierfür ist die Entscheidung, dass der Roboter (bzw. die darauf installierte Kinect) immer den Menschen im Fokus behalten soll, um evtl. kurzfristige Stop-Kommandos empfangen und umsetzen zu können.
-Die $yaw$-Werte, die während des Pfad-Einlernens abgespeichert wurden, beziehen sich auf die Standpunkte des Menschen zum dortigen Zeitpunkt, und nicht auf die aktuell relevanten Mensch-Positionen. 
-Aus diesem Grund werden die $yaw$-Werte innerhalb des \lstinline{LoadRoboterPositionsFromFile}-Moduls auf Basis der aktuellen Mensch-Position gesondert berechnet.
+Die $yaw$--Werte, die während des Pfad-Einlernens abgespeichert wurden, beziehen sich auf die Standpunkte des Menschen zum dortigen Zeitpunkt, und nicht auf die aktuell relevanten Mensch-Positionen. 
+Aus diesem Grund werden die $yaw$--Werte innerhalb des \lstinline{LoadRoboterPositionsFromFile}-Moduls auf Basis der aktuellen Mensch-Position gesondert berechnet.
 
 Für die Aufgaben des Datei-Handlings wurde eine eigene Klasse implementiert, die Operationen wie Datei anlegen, öffnen, schließen, in die Datei schreiben, aus der Datei lesen etc. kapselt.
 Hier werden die Daten aus der Datei gepuffert, sodass beispielsweise im Fall des Pfad-Lesens nur ein einmaliger Dateizugriff auf Betriebssystem-Ebene erfolgt.
@@ -588,7 +588,7 @@ Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 %   \end{itemize}
 %   \item Innerhalb des Moduls wird jede Trajektorie auf Hindernisse überprüft
 % 	\begin{itemize}
-% 	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt- in Bildkoordinaten)
+% 	  \item die (Bild-)Punkte zwischen start, next und following werden berechnet (Transformation der Welt-- in Bildkoordinaten)
 % 	  \item Überprüfung für jeden einzelnen Punkt, ob er innerhalb eines Hindernisses liegt
 % 	  \item Verwendung der \lstinline{ObstacleMap} \todoprivate{ref zu Lokalisierung}
 % 	\end{itemize}
@@ -596,7 +596,7 @@ Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 %   \item Wenn Hindernis erkannt, dann wird eine neue Trajektorie ermittelt
 %   \begin{itemize}
 %     \item Verwendung des A*-Algorithmus
-%     \item Ermittlung des Start- und Endpunktes für A*
+%     \item Ermittlung des Start-- und Endpunktes für A*
 %     \item ggf. gesonderte Behandlung für Endpunkt (\lstinline{choosePointAfterObstacle})
 %     \item Aufruf A*
 %     \item Transformation der nuen Trajektorie IK $\rightarrow$ WK
@@ -618,7 +618,7 @@ Falls für keinen der Punkte ein Hindernis festgestellt werden konnte, wird die 
 
 Liegt jedoch mindestens einer der Punkte innerhalb eines Hindernisses, so wird eine neue Trajektorie ermittelt, die um das Hindernis plant.
 Hierfür wird der A*-Algorithmus verwendet.
-Dieser benötigt einen Start- und einen Endpunkt, welche nicht innerhalb eines Hindernisses und auch nicht außerhalb des Bildes (\lstinline{ObstacleMap}) liegen dürfen.
+Dieser benötigt einen Start-- und einen Endpunkt, welche nicht innerhalb eines Hindernisses und auch nicht außerhalb des Bildes (\lstinline{ObstacleMap}) liegen dürfen.
 Die Implementierung dieses Algorithmus wird im nächsten Abschnitt beschrieben.
 
 Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in Weltkoordinaten umgerechnet, und an die Gruppe \lstinline{SegwayOmniReflexes} weiter gegeben.

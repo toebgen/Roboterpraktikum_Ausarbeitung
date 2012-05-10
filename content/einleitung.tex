@@ -4,9 +4,9 @@
 \authorsection{\editorabel}
 
 Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Servicerobotik ist Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel statt eines reinen Staubsaugroboters einen Haushaltsroboter zu verwenden.
-Im Fokus steht außerdem, wie auch in der Informationstechnologie, eine kostengünstige Verbesserung des Mensch-Maschine-Interface\cite{kinect_1}.
+Im Fokus steht außerdem, wie auch in der Informationstechnologie, eine kostengünstige Verbesserung des Mensch--Maschine--Interface\cite{kinect_1}.
 
-Die Forschungsfelder in Industrie- und Servicerobotik nähern sich dabei im Laufe der Jahre immer weiter an.
+Die Forschungsfelder in Industrie-- und Servicerobotik nähern sich dabei im Laufe der Jahre immer weiter an.
 So müssen Industrieroboter in Zusammenarbeit mit dem Menschen ihre Aufgaben verrichten und Serviceroboter in Zukunft auch komplexe Handhabungsaufgaben lösen.
 Die Entwicklung findet daher besonders im Bereich der Informationstechnologie und der Sensorik statt  \cite{kinect_2}.
 
@@ -21,7 +21,7 @@ Besonders anspruchsvoll sind dabei Perzeption und Verarbeitung von Signalen.
 % \section{Motivation und Aufgabenstellung}
 % \label{motivation_sec}
 %\todo[inline]{Author hinzufügen}
-%\authorsection{Kinect-Gruppe}
+%\authorsection{Kinect--Gruppe}
 
 \section{Motivation}
 \label{motivation_real_sec}
@@ -44,18 +44,18 @@ Der Roboter lernt vom Menschen und Besucher können wiederum vom Roboter lernen.
  
 % Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
 % Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
-% zu 3D-Tiefenbildern erweitert werden. 
+% zu 3D--Tiefenbildern erweitert werden. 
 %
-%Das Identifizieren und Verfolgen geometrischer Objekte in (Tiefen-) Bildern ist ein weit entwickeltes Feld mit hoher Reife und etablierten Methoden.
+%Das Identifizieren und Verfolgen geometrischer Objekte in (Tiefen--) Bildern ist ein weit entwickeltes Feld mit hoher Reife und etablierten Methoden.
 % Die große Herausforderung ist die semantische Interpretation dieser Daten. Besonders das zuverlässige Gewinnen funktionsrelevanter Informationen,
-% wie zum Beispiel interaktiver Charakteristika, kinematischer, werkstofftechnischer und  Oberflächen-Beschaffenheit aus (Tiefen-) Bildern stellt sich
+% wie zum Beispiel interaktiver Charakteristika, kinematischer, werkstofftechnischer und  Oberflächen--Beschaffenheit aus (Tiefen--) Bildern stellt sich
 % als problematisch dar. In unstrukturierten Umgebungen jedoch versagen andere Sensorentypen oder deren Anwendung ist bisher aufgrund des Preises sinnlos.
 % 
 %Aktuell werden verschiedene Ansätze verfolgt: Zum einen generiert und erfasst man weitere Sensorinformationen durch Interaktion eines Roboters mit der Umgebung,
 % zum anderen werden dem Roboter weitreichende erwartete Zusammenhänge von Informationen bereitgestellt. Entwickler können bei diesen Aufgaben auf weit entwickelte Roboterplattformen
 % zurückgreifen, wie den PR2 der Firma willow garage und wie in diesem Praktikum
 % \gls{hollie} des \gls{fzi} Karlsruhe. Willow garage stellt auch umfangreiche
-% Software zur (Tiefen-) Bildverarbeitung und Robotersteuerung zur Verfügung,
+% Software zur (Tiefen--) Bildverarbeitung und Robotersteuerung zur Verfügung,
 % wie \gls{opencv}, \gls{pcl} und \gls{ros}.
 
 \section{Aufgabenstellung}
@@ -88,10 +88,10 @@ Zusammenfassend muss der Roboter folgende Aufgaben bewältigen können:
 	  \item Rückkehr zum Startpunkt
 	  \item Erneutes Abfahren (vorwärts)
 	\end{itemize}
-  \item Hindernis-Umfahrung
+  \item Hindernis--Umfahrung
 	\begin{itemize}
 	  \item Bahnplanung
-	  \item Protective-Field
+	  \item Protective--Field
 	\end{itemize}
 \end{itemize}
 
@@ -103,25 +103,25 @@ Zusammenfassend muss der Roboter folgende Aufgaben bewältigen können:
 
 \subsubsection{3D Kameras (am Beispiel Microsoft Kinect)}
 Die Abbildung \ref{fig:Kinect} zeigt ein Bild der Kinect.
-Sie ist mit einem laser-basierten \gls{ir}-Projektor und einem monochromen \gls{cmos}-Sensor ausgestattet.
-Der \gls{ir}-Projektor projiziert ein Muster auf die beobachtete Szenerie, während der  Sensor die Verformungen des Musters detektiert und gegen ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
-Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen und einer \gls{rgb}-Kamera ausgestattet.
+Sie ist mit einem laser--basierten \gls{ir}--Projektor und einem monochromen \gls{cmos}--Sensor ausgestattet.
+Der \gls{ir}--Projektor projiziert ein Muster auf die beobachtete Szenerie, während der  Sensor die Verformungen des Musters detektiert und gegen ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
+Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen und einer \gls{rgb}--Kamera ausgestattet.
 Horizontal hat die Kamera einen Öffnungswinkel von $57^\circ$ und vertikal $43^\circ$.
 Die Arbeitsentfernung der Kinect liegt zwischen \unit[0,8]{m} und \unit[3,5]{m}.
-Die Auflösung der Tiefenkamera beträgt \unit[3]{mm} in der X/Y Ebene und \unit[10]{mm} in Z-Richtung bei einem Abstand von \unit[2]{m}.
+Die Auflösung der Tiefenkamera beträgt \unit[3]{mm} in der X/Y Ebene und \unit[10]{mm} in Z--Richtung bei einem Abstand von \unit[2]{m}.
 Die Auflösung ist $640 \times 480$ Bildpunkte bei einer Bildfrequenz von \unit[30]{Hz}.
 Das Tiefenbild hat eine \unit[11]{bit} Auflösung mit Werten zwischen 0 und 2047.
 
 % Die Abbildung \ref{fig:Kinect} zeigt ein Bild der Kinect. Sie ist mit
-%  laser-basiertem \gls{ir} Projektor und einem monochromen \gls{cmos} Sensor ausgestattet.
-%  Der \gls{ir}-Projektor projiziert ein Muster auf die beobachtete Szenerie,
+%  laser--basiertem \gls{ir} Projektor und einem monochromen \gls{cmos} Sensor ausgestattet.
+%  Der \gls{ir}--Projektor projiziert ein Muster auf die beobachtete Szenerie,
 %  während der \gls{cmos} Sensor die Verformungen des Musters detektiert und gegen
 %  ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
 %  Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen
-%  und einer \gls{rgb}-Kamera ausgestattet. Horizontal hat die Kamera einen Öffnungswinkel
+%  und einer \gls{rgb}--Kamera ausgestattet. Horizontal hat die Kamera einen Öffnungswinkel
 %  von $57^\circ$ und vertikal $43^\circ$. Die Arbeitsentfernung der Kinect liegt
 %  zwischen $0,8$ und $3,5m$. Die Auflösung der Tiefenkamera beträgt $3mm$ in
-%  der X/Y Ebene und $10mm$ in Z-Richtung bei einem Abstand von $2$ Metern. Die
+%  der X/Y Ebene und $10mm$ in Z--Richtung bei einem Abstand von $2$ Metern. Die
 %  Auflösung ist $640 \times 480$ Bildpunkte bei einer Bildfrequenz von $30Hz$. Das
 %  Tiefenbild hat eine $11bit$ Auflösung mit Werten zwischen $0$ und $2047$.
 
@@ -178,12 +178,12 @@ Der PR2 ist mit folgenden Sensoren ausgestattet bzw. ausstattbar:
   \item Mikrofonarray
   \item Beschleunigungssensorik in den Armen
   \item Kraftsensorik in den Greifern
-  \item Kalibrierungs-\glspl{led}
+  \item Kalibrierungs--\glspl{led}
 \end{itemize}
 
 Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt (\ua TU München, Stanford University und \gls{mit}) und es existieren Arbeiten in verschiedensten Bereichen, wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz in Dienstleistungsbetrieben.
 
-Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Software-Framework \gls{ros} aufbaut und es Wissenschaftlern ermöglicht, in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragen.
+Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Software--Framework \gls{ros} aufbaut und es Wissenschaftlern ermöglicht, in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragen.
 
 
 
@@ -191,25 +191,25 @@ Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders infor
 
 \subsubsection{OpenNI}
 
-\gls{openni} dient zur Entwicklung von Applikationen der Mensch-Maschine-Interaktion.
+\gls{openni} dient zur Entwicklung von Applikationen der Mensch--Maschine--Interaktion.
 Dazu stehen der \gls{api} viele Schnittstellen zur Verfügung.
 Folgende Eigenschaften stellt die \gls{api} zur Verfügung \cite{kinect_6}:
 
 \begin{itemize}
-  \item Kommunikation mit Video- und Audiosensoren
-  \item Middleware zur Video- und Audiodatenverarbeitung
+  \item Kommunikation mit Video-- und Audiosensoren
+  \item Middleware zur Video-- und Audiodatenverarbeitung
 \end{itemize}
 
 Dem Entwickler stehen zur Entwicklung entsprechender Appliaktionen mit \gls{openni} eine Reihe von Werkzeugen zur Verfügung.
 Grundlegend ist dabei, dass ein gemeinsames Interface in Form von Middleware verwendet wird.
-Dies ermöglicht die Entkopplung von Hardware- und Softwareherstellern, die nur die spezifizierten Datensignale liefern, bzw. darauf aufbauen müssen.
+Dies ermöglicht die Entkopplung von Hardware-- und Softwareherstellern, die nur die spezifizierten Datensignale liefern, bzw. darauf aufbauen müssen.
 \gls{openni} steht zum kostenlosen Download zur Verfügung.
 Die Struktur ist in unten stehender Abbildung dargestellt: 
 
 \begin{description}
- \item[Oben:] Software-Applikationen, die mit \gls{openni} kommunizieren
- \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu Hardware- als auch zu Softwarekomponenten zur Verfügung stellt
- \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
+ \item[Oben:] Software--Applikationen, die mit \gls{openni} kommunizieren
+ \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu Hardware-- als auch zu Softwarekomponenten zur Verfügung stellt
+ \item[Unten:] Hardwarekomponenten, die Video-- und Audiosignale aufnehmen
 \end{description}
 
 \begin{figure}[h]
@@ -228,16 +228,16 @@ Die Struktur ist in unten stehender Abbildung dargestellt:
 
 \paragraph{Modularität}
 Modularität bezieht sich in diesem Zusammenhang auf alle Aspekte \glspl{openni}.
-Zum einen Hardware-Modularität;
+Zum einen Hardware--Modularität;
 Theoretisch werden alle Sensoren, die die spezifizierten Signale liefern, unterstützt.
-Auch die Software ist modular einsetzbar mit Komponenten zur Hand-, Körper-, Gesten- und Szenendetektion.
+Auch die Software ist modular einsetzbar mit Komponenten zur Hand--, Körper--, Gesten-- und Szenendetektion.
 Mit den aufgezählten Modulen lassen sich relevante Informationen wie Gelenkposen, erkannte Gesten und die Segementierung der Szene gewinnen \cite{kinect_6}.
 
 \paragraph{Produktionsknoten}
 Produktionsknoten dienen in \gls{openni} zur Generierung von Daten.
 Diese Daten stellen sie anderen Anwendungen zur Verfügung.
 Da Produktionsknoten in einer Hierarchie zueinander stehen, können Produktionsknoten einer niedrigeren Hierarchieebene von solchen einer höheren Ebene genutzt werden.
-Somit lassen sich von manchen Knoten low-level-Informationen wie Tiefenbilder, von anderen high-level-Informationen wie Gelenkposen generieren \cite{kinect_6}.
+Somit lassen sich von manchen Knoten low--level--Informationen wie Tiefenbilder, von anderen high--level--Informationen wie Gelenkposen generieren \cite{kinect_6}.
 
 \paragraph{Produktionsketten}
 Produktionskette ist der formalisierte Begriff für die Verarbeitungskaskade in einer Produktionsknotenhierarchie.
@@ -252,8 +252,8 @@ Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Bei
 Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \cite{kinect_4}.
 Die Eigenschaften des Microsoft \gls{sdk} sind denen von \gls{openni} ähnlich, Microsoft \gls{sdk} bietet jedoch kein eigenes Gestenerkennungsmodul, wie es in \gls{openni} verfügbar ist.
 In Vergleichstests von \gls{openni} und Microsoft \gls{sdk} schneidet \gls{openni} bisher besser ab, jedoch liefert Microsoft \gls{sdk} höhere Genauigkeit und Robustheit beim Skeletttracking.
-Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung, wie zum Beispiel bei Microsofts Internetsuchmaschine bing.
-Eine neu entwickelte Körperscan-Software erlaubt es, Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu verwenden, siehe Abbildung \ref{fig:skelettracking} \cite{kinect_5}.
+Die Sprach-- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung, wie zum Beispiel bei Microsofts Internetsuchmaschine bing.
+Eine neu entwickelte Körperscan--Software erlaubt es, Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu verwenden, siehe Abbildung \ref{fig:skelettracking} \cite{kinect_5}.
 
 \begin{figure}[h]
 	\center
@@ -263,23 +263,23 @@ Eine neu entwickelte Körperscan-Software erlaubt es, Bilder aufzunehmen und die
 
 
 %\gls{openni} ist ein plattformübergreifendes Framework zur Entwicklung von
-%Applikationen, die auf natürlicher Mensch-Maschine-Interaktion aufbauen.
-% Die \gls{openni}-\gls{api} stellt eine Vielzahl an Schnittstellen bereit, um
+%Applikationen, die auf natürlicher Mensch--Maschine--Interaktion aufbauen.
+% Die \gls{openni}--\gls{api} stellt eine Vielzahl an Schnittstellen bereit, um
 % entsprechende Applikationen zu programmieren. Der Hauptzweck von \gls{openni}
-%  ist eine Standard-\gls{api} bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
+%  ist eine Standard--\gls{api} bereitzustellen, die folgende Eigenschaften vereint \citep{openNI2012}:
 %
 %\begin{itemize}
 %  \item Kommunikation mit Video und Audiosensoren
-%  \item Bereitstellung von Middleware zur Video- und Audiodatenverarbeitung,\\
+%  \item Bereitstellung von Middleware zur Video-- und Audiodatenverarbeitung,\\
 %  wie die Unterstützung bei der Objektdetektion in Bildern
 %\end{itemize}
 %
-%Dabei stellt \gls{openni} eine Reihe von \glspl{api} bereit, die sowohl von  (3D-Kamera-)
+%Dabei stellt \gls{openni} eine Reihe von \glspl{api} bereit, die sowohl von  (3D--Kamera--)
 % Sensoren als auch Middleware Komponenten implementiert werden können.
 % Durch das Entkoppeln von Sensor und Middleware können mit \gls{openni} angefertigte Softwareprodukte
 % ohne zusätzliche Arbeit auf verschiedener Middleware aufbauen (\glqq write once, deploy everywhere\grqq).
-% Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild-) Formaten aufbauen,
-% unabhängig von der Sensorik-Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite
+% Middleware Entwickler können somit Algorithmen, die auf standardisierten (Bild--) Formaten aufbauen,
+% unabhängig von der Sensorik--Hardware entwickeln. Hardware Hersteller müssen auf der anderen Seite
 % Sensoren zur Verfügung stellen, die diese Bildformate generieren können. \gls{openni} steht kostenlos
 % als open source Quelle zur Verfügung. In Abbildung \ref{fig:openNI} ist das
 % Konzept von \gls{openni} in 3 Schichten dargestellt:
@@ -288,8 +288,8 @@ Eine neu entwickelte Körperscan-Software erlaubt es, Bilder aufzunehmen und die
 %  \item[Oben:] Software, die Natürliche Interaktion auf \gls{openni} aufbauend
 %  verwendet
 %  \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu
-%  Hardware- als auch zu\\ Softwarekomponenten zur Verfügung stellt
-%  \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
+%  Hardware-- als auch zu\\ Softwarekomponenten zur Verfügung stellt
+%  \item[Unten:] Hardwarekomponenten, die Video-- und Audiosignale aufnehmen
 %\end{description}
 %
 %\begin{figure}[h]
@@ -357,7 +357,7 @@ Eine neu entwickelte Körperscan-Software erlaubt es, Bilder aufzunehmen und die
 %\end{description}
 %
 %Wie bereits dargestellt können mehrere Module gleichzeitig an der selben \gls{openni} Distribution angemeldet sein.
-% Diese Topologie erlaubt Anwendungen flexibel auf Aufnahme- und Verarbeitungsmodule zuzugreifen.
+% Diese Topologie erlaubt Anwendungen flexibel auf Aufnahme-- und Verarbeitungsmodule zuzugreifen.
 % Als Produktionsketten werden die bereits angesprochenen hierarchischen Verarbeitungsketten der Produktionsknoten verstanden.
 % Der erwähnte User Generator verwendet einen Tiefengenerator, der wiederum seine Daten von einem Tiefensensor bezieht.
 % Diese Abhängigkeit bzw. sequenzielle Herunterbrechen der Aufgabe der Produktionsknoten wird als Produktionskette verstanden.
@@ -373,7 +373,7 @@ Eine neu entwickelte Körperscan-Software erlaubt es, Bilder aufzunehmen und die
 % Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
 % Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \citep{kinectDevKfW2012}.
 %
-%Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
+%Die Sprach-- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung,
 % wie zum Beispiel bei Microsofts Internetsuchmaschine bing\footnote{\url{www.bing.com/}}. Eine neu entwickelte Körperscan Software erlaubt es,
 % Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu
 % verwenden, siehe Abbildung \ref{fig:skelettracking} \citep{noGameKinect2012}.
