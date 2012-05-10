@@ -2,7 +2,7 @@
 
 \section{Aufgabenstellung}
 \label{kinect_aufgabenstellung_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
  Tiefenbildes eine Person zu verfolgen und ihre speziellen
@@ -25,7 +25,7 @@ Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
 
 \section{Grundlagen Kinect}
 \label{kinect_grundlagen_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 Sowohl die Bildqualität von Sensoren, als auch die Verarbeitungsalgorithmen zeigten eine erhebliche Entwicklung in den letzten Jahren.
  Heutzutage sind 3D-Entfernungskameras durch rapide Entwicklung des
@@ -125,7 +125,7 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
 
 \section{Umsetzung}
 \label{kinect_umsetzung_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 \gls{openni} ist eine Klassenbibliothek, die für die Programmierer einen einheitlichen Zugriff und Verarbeitungsmöglichkeiten
  der Sensordaten (Farbbild, Tiefenbild, Audiosignale) anbietet. Bei natürlicher Interaktion (NI steht für „natural interaction“) wird der Input,
@@ -161,10 +161,9 @@ Alle anderen Verarbeitungsprozesse wurden in die \lstinline{MCA2}-Umgebung,
 durch die Verwendung von früher implementierten Modulen und Funktionen, integriert.
 
 \begin{figure}[h]
-\center
-\includegraphics[scale=0.5]{graphics/OpenNISourceTest.jpg}
-\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}-Grundstruktur
-unseres Moduls in \lstinline{MCABrowser}}
+	\center
+	\includegraphics[scale=0.5]{graphics/OpenNISourceTest.jpg}
+	\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}-Grundstruktur unseres Moduls in \lstinline{MCABrowser}}
 \end{figure}
 
 Zur Geschwindigkeitsschätzung wird der Torso (Rumpfmittelpunkt) auf den Boden projiziert
@@ -209,10 +208,10 @@ Die Messwerten , die von Kinect an den anderen Gruppen geliefert werden, müssen
 
 %Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
 \begin{figure}[h]
-\label{fig:gesten_skelett}
-\centering
-\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
-\caption{Dreidimensionales Körpermodell\cite{Hwang2006}.}
+	\centering
+	\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
+	\caption{Dreidimensionales Körpermodell\cite{Hwang2006}.}
+	\label{fig:gesten_skelett}
 \end{figure}
 
 \subsubsection{Probleme}
@@ -223,9 +222,10 @@ Die Messwerten , die von Kinect an den anderen Gruppen geliefert werden, müssen
 %Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
 In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet. 
 
+
 \subsection{Gestenerkennung}
 \label{gestenerkennung_gestenerkennung_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
  Diesem Ansatz liegt ein binärer Entscheidungsbaum zu Grunde, dem den einzelnen
@@ -299,9 +299,9 @@ Aufgrund der groben Auflösung und der stark verrauschten Messwerte der Kinect m
 \todo[inline]{Auswählen ob Tabelle oder Description verwendet werden soll}
 
 \begin{figure}[h]
-\center
-\includegraphics[scale=0.25]{graphics/Gesten.jpg}
-\caption[Definierte Gesten]{\label{fig:Gesten} Die vier definierten Gesten (oben und in der Mitte),
+	\center
+	\includegraphics[scale=0.25]{graphics/Gesten.jpg}
+	\caption[Definierte Gesten]{\label{fig:Gesten} Die vier definierten Gesten (oben und in der Mitte),
  bzw. die beiden Möglichkeiten für unbestimmte Fälle (links unten: mangelndes Gelenk, rechts unten: normale Körperhaltung)}
 \end{figure}
 

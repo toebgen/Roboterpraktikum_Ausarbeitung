@@ -103,8 +103,8 @@ Zusammenfassend muss der Roboter folgende Aufgaben bewältigen können:
 \subsubsection{3D Kameras (am Beispiel Microsoft Kinect)}
 Die Abbildung \ref{fig:Kinect} zeigt ein Bild der Kinect.
 Sie ist mit laser-basiertem \gls{ir} Projektor und einem monochromen \gls{cmos} Sensor ausgestattet.
-Der IR-Projektor projiziert ein Muster auf die beobachtete Szenerie, während der CMOS Sensor die Verformungen des Musters detektiert und gegen ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
-Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen und einer RGB-Kamera ausgestattet.
+Der \gls{ir}-Projektor projiziert ein Muster auf die beobachtete Szenerie, während der  Sensor die Verformungen des Musters detektiert und gegen ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
+Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen und einer \gls{rgb}-Kamera ausgestattet.
 Horizontal hat die Kamera einen Öffnungswinkel von $57\circ$ und vertikal $43\circ$.
 Die Arbeitsentfernung der Kinect liegt zwischen 0.8 und 3.5 m.
 Die Auflösung der Tiefenkamera beträgt 3mm in der X/Y Ebene und 10mm in Z-Richtung bei einem Abstand von 2 Metern.
@@ -180,34 +180,33 @@ Der PR2 ist mit folgenden Sensoren ausgestattet bzw. ausstattbar:
   \item Kalibrierungs-\glspl{led}
 \end{itemize}
 
-Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt (\ua TU München, Stanford University und MIT) und es existieren Arbeiten in verschiedensten Bereichen, wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz in Dienstleistungsbetrieben.
+Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt (\ua TU München, Stanford University und \gls{mit}) und es existieren Arbeiten in verschiedensten Bereichen, wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz in Dienstleistungsbetrieben.
 
-Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Betriebssystem ROS (Robot Operating System)  aufbaut und es Wissenschaftlern ermöglicht in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragen.
+Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Betriebssystem \gls{ros} aufbaut und es Wissenschaftlern ermöglicht in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragen.
 
 
 
 \subsection{Software}
 
-\todo[inline]{ehemals der kopierte Text}
 \subsubsection{OpenNI}
 
-OpenNI (Open Natual Interaction) dient zur Entwicklung von Applikationen der Mensch-Maschine-Interaktion.
-Dazu stehen der API viele Schnittstellen zur Verfügung.
-Folgende Eigenschaften stellt die API zur Verfügung \cite{kinect_6}:
+\gls{openni} dient zur Entwicklung von Applikationen der Mensch-Maschine-Interaktion.
+Dazu stehen der \gls{api} viele Schnittstellen zur Verfügung.
+Folgende Eigenschaften stellt die \gls{api} zur Verfügung \cite{kinect_6}:
 
 \begin{itemize}
   \item Kommunikation mit Video- und Audiosensoren
   \item Middleware zur Video- und Audiodatenverarbeitung
 \end{itemize}
 
-Dem Entwickler stehen zur Entwicklung entsprechender Appliaktionen mit OpenNI eine Reihe von Werkzeugen zur Verfügung.Grundlegend ist dabei, dass ein gemeinsames Interface in Form von Middleware verwendet wird.
+Dem Entwickler stehen zur Entwicklung entsprechender Appliaktionen mit \gls{openni} eine Reihe von Werkzeugen zur Verfügung.Grundlegend ist dabei, dass ein gemeinsames Interface in Form von Middleware verwendet wird.
 Dies ermöglicht die Entkopplung von Hardware- und Softwareherstellern, die nur die spezifizierten Datensignale liefern, bzw. darauf aufbauen müssen.
-OpenNI steht zum kostenlosen Download zur Verfügung.
+\gls{openni} steht zum kostenlosen Download zur Verfügung.
 Die Struktur ist in unten stehender Abbildung dargestellt: 
 
 \begin{description}
- \item[Oben:] Software-Applikationen die mit OpenNI kommunizieren
- \item[Mitte:] OpenNI, das Kommunikationsschnittstellen sowohl zu Hardware- als auch zu Softwarekomponenten zur Verfügung stellt
+ \item[Oben:] Software-Applikationen die mit \gls{openni} kommunizieren
+ \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu Hardware- als auch zu Softwarekomponenten zur Verfügung stellt
  \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
 \end{description}
 
@@ -217,7 +216,7 @@ Die Struktur ist in unten stehender Abbildung dargestellt:
 	\caption{\label{fig:openNI} \gls{openni} Architektur \cite{kinect_6}}
 \end{figure}
 
-OpenNI basiert auf drei Grundkonzepten:
+\gls{openni} basiert auf drei Grundkonzepten:
 \begin{itemize}
   \item Modularität
   \item Produktionsknoten
@@ -233,7 +232,7 @@ Auch die Software ist modular einsetzbar mit Komponenten zur Hand-, Körper-, Ge
 Mit den aufgezählten Modulen lassen sich relevante Informationen wie Gelenkposen, erkannte Gesten und die Segementierung der Szene gewinnen \cite{kinect_6}.
 
 \paragraph{Produktionsknoten}
-Produktionsknoten dienen in OpenNI zur Generierung von Daten.
+Produktionsknoten dienen in \gls{openni} zur Generierung von Daten.
 Diese Daten stellen sie anderen Anwendungen zur Verfügung.
 Da Prduktionsknoten in einer Hierarchie zu einander stehen können Produktionsknoten einer niedrigeren Hierarchieebene von solchen einer höheren Ebene genutzt werden wodurch.
 Somit lassen sich von manchen Knoten low-level-Informationen wie Tiefenbilder, von anderen high-level-Informationen wie Gelenkposen generieren \cite{kinect_6}.
@@ -245,12 +244,12 @@ Anwendern bleibt somit, mit der Verwendung der abstrakten Produktionsknoten hohe
 Diese Struktur ermöglicht Entwicklern außerdem eine größere Freiheit bei deren Gestaltung \cite{kinect_6}.
 
 \paragraph{Microsoft SDK}
-Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles Software Development Kit (SDK) das sich leicht in Visual Studio und Dot Net integrieren lässt.
-Mit dem Kinect Sensor und Microsoft SDK hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden.
+Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles \gls{sdk}, das sich leicht in Visual Studio und Dot Net integrieren lässt.
+Mit dem Kinect Sensor und Microsoft \gls{sdk} hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden.
 Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
-Dort kann Microsoft SDK auch kostenlos heruntergeladen werden \cite{kinect_4}.
-Die Eigenschaften des Microsoft SDK sind denen von OpenNI ähnlich, Microsoft SDK bietet jedoch kein eigenes Gestenerkennungsmodul, wie es in OpenNI verfügbar ist.
-In Vergleichstests von OpenNI und Microsoft SDK schneidet OpenNI bisher besser ab, jedoch liefert Microsoft SDK höhere Genauigkeit und Robustheit beim Skeletttracking.
+Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \cite{kinect_4}.
+Die Eigenschaften des Microsoft \gls{sdk} sind denen von \gls{openni} ähnlich, Microsoft \gls{sdk} bietet jedoch kein eigenes Gestenerkennungsmodul, wie es in \gls{openni} verfügbar ist.
+In Vergleichstests von \gls{openni} und Microsoft \gls{sdk} schneidet \gls{openni} bisher besser ab, jedoch liefert Microsoft \gls{sdk} höhere Genauigkeit und Robustheit beim Skeletttracking.
 Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung, wie zum Beispiel bei Microsofts Internetsuchmaschine bing.
 Eine neu entwickelte Körperscan Software erlaubt es, Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu verwenden, siehe Abbildung \ref{fig:skelettracking} \cite{kinect_5}.
 
