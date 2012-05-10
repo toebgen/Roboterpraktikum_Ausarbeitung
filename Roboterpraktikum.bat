@@ -1,6 +1,6 @@
 set file=Roboterpraktikum
 
-tskill AcroRd32
+::tskill AcroRd32
 
 pdflatex %file%
 bibtex %file%
