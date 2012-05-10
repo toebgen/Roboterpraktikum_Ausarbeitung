@@ -288,7 +288,7 @@ Die inverse Kinematik bezieht sich auf die \lstinline{MCA2}-Gruppe \lstinline{Se
 Folgende Bewegungsarten sind bereitgestellt:
 
 \begin{description}
-	\item[Differentiell] Die Steuerung des Roboters erfolgt, indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://en.wikipedia.org/wiki/Differential_wheeled_robot}}.
+	\item[Differentiell] Die Steuerung des Roboters erfolgt, indem Antriebsräder auf beiden Seiten des Roboters mit unterschiedlichen Geschwindigkeiten betrieben werden\footnote{\url{http://rossum.sourceforge.net/papers/DiffSteer/DiffSteer.html}}.
 	\item[Omnidirektional] Durch den Einsatz von Mecanum-Rädern\footnote{\url{http://de.wikipedia.org/wiki/Mecanum-Rad}} kann sich der Roboter holonom\footnote{Anzahl der Bewegungsfreiheitsgrade $\geq$ Anzahl Freiheitsgrade, hier: Bewegungsfreiheitsgrade $= 3$, Freiheitsgrade $= 3$.} bewegen.
 \end{description}
 
@@ -301,7 +301,7 @@ Folgende Bewegungsarten sind bereitgestellt:
 
 Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
 
-Zuletzt findet mit Hilfe des Virtual Protective Field (siehe Abs. \ref{lokalisierung_umsetzung_sec}) eine Kollisionsvermeidung statt.
+Zuletzt findet mit Hilfe des Virtual Protective Field (siehe Abs. \ref{sec:vpf}) eine Kollisionsvermeidung statt.
 
 \begin{figure}[h]
 	\label{fig:bahnplanung_umsetzung_auto_refl}
