@@ -3,14 +3,15 @@
 \label{einleitung_cha}
 \authorsection{\editorabel}
 
-Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Servicerobotik ist Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel statt eines reinen Staubsaugroboters einen Haushaltsroboters zu verwenden. Im Fokus steht außerdem, wie auch in der Informationstechnologie eine kostengünstige Verbesserung des Mensch-Maschine-Interface\cite{kinect_1}.
+Das aktuelle Interesse in der Forschung zur Robotik und insbesondere der Servicerobotik ist Robotersysteme flexibler zu gestalten und für breitere Anwendungsgebiete, zum Beispiel statt eines reinen Staubsaugroboters einen Haushaltsroboter zu verwenden.
+Im Fokus steht außerdem, wie auch in der Informationstechnologie, eine kostengünstige Verbesserung des Mensch-Maschine-Interface\cite{kinect_1}.
 
 Die Forschungsfelder in Industrie- und Servicerobotik nähern sich dabei im Laufe der Jahre immer weiter an.
 So müssen Industrieroboter in Zusammenarbeit mit dem Menschen ihre Aufgaben verrichten und Serviceroboter in Zukunft auch komplexe Handhabungsaufgaben lösen.
 Die Entwicklung findet daher besonders im Bereich der Informationstechnologie und der Sensorik statt  \cite{kinect_2}.
 
 In den letzten Jahrzehnten hat sich die Bildverarbeitung rasant weiterentwickelt.
-Zur meist funktionsrelevanten Interaktion eines Serviceroboters mit der Umwelt muss ein Roboter aufgrund der Vielfalt möglicher Umgebungen adaptiv in der Lage sein reichhaltige Informationen darüber zu gewinnen.
+Zur meist funktionsrelevanten Interaktion eines Serviceroboters mit der Umwelt muss ein Roboter aufgrund der Vielfalt möglicher Umgebungen adaptiv in der Lage sein, reichhaltige Informationen darüber zu gewinnen.
 Unstrukturierte Umgebungen lassen sich nicht vollständig modellieren.
 Roboter müssen somit durch Interaktion mit ihrer Umwelt lernen, sich orientieren und auf Menschen bzw. Informationen reagieren.
 Besonders anspruchsvoll sind dabei Perzeption und Verarbeitung von Signalen.
@@ -27,11 +28,19 @@ Besonders anspruchsvoll sind dabei Perzeption und Verarbeitung von Signalen.
 \label{motivation_real_sec}
 
 
-In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden, in denen es nicht möglich ist, diese durch
- (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}. Aber nicht nur Roboter müssen sich in solchen Umgebungen zurechtfinden, auch Menschen müssen eine neue Umgebung zuerst kennenlernen. In vielen Situation, etwa bei der Besichtigung eines Museums oder einer Firma, wird auf das Konzept des Zeigens oder Vormachen zurückgegriffen. Eine Person die mit der konkreten Situation oder Umgebung vertraut ist, teilt ihr Wissen mit anderen Personen in dem sie eine Führung anbietet oder den Weg zu einem bestimmten Ziel zeigt.
+In vielen Fällen müssen sich Serviceroboter in unstrukturierten Umgebungen zurechtfinden, in welchen es nicht möglich ist, diese durch (zum Beispiel markerbasierte) spezielle Kennzeichnung der Objekte mit Informationen anzureichern \citep{sturm10rss-workshop}.
+Aber nicht nur Roboter müssen sich in solchen Umgebungen zurechtfinden, auch Menschen müssen eine neue Umgebung zuerst kennenlernen.
+In vielen Situation, etwa bei der Besichtigung eines Museums oder einer Firma, wird auf das Konzept des Zeigens oder Vormachens zurückgegriffen.
+Eine Person, die mit der konkreten Situation oder Umgebung vertraut ist, teilt ihr Wissen mit anderen Personen, indem sie eine Führung anbietet oder den Weg zu einem bestimmten Ziel zeigt.
 
-In modernen Forschungseinrichtungen, wie etwa dem \gls{fzi} in Karlsruhe, wird besonderen Wert auf das Sehen und Anfassen aktueller Forschungsprojekte gelegt\cite{fziHoLL}.
-Um Besuchern die Räumlichkeiten und Forschungsprojekte zu zeigen ist es hier ebenfalls notwendig Führungen anzubieten. Um die Erfahrung Servicerobotik zu intensivieren liegt es auf der Hand eine solche Führung von einem Roboter ausführen zu lassen. Und um noch einen Schritt weiter zu gehen bietet es sich an die Definition einer Route, welche der Roboter späteren Besuchern zeigen soll, nicht fest zu programmieren, sondern die Möglichkeit zu schaffen, dass es dem Roboter möglich ist einem Menschen zu folgen und von ihm diese Route einzulernen. Somit schließt sich der Kreislauf; der Roboter lernt vom Menschen und Besucher können wiederum vom Roboter lernen.
+In modernen Forschungseinrichtungen wie etwa dem \gls{fzi} in Karlsruhe wird besonderen Wert auf das Sehen und Anfassen aktueller Forschungsprojekte gelegt \cite{fziHoLL}.
+Um Besuchern die Räumlichkeiten und Forschungsprojekte zu zeigen, ist es hier notwendig, Führungen anzubieten.
+Um in einer solchen Einrichtung die Erfahrung Servicerobotik zu intensivieren, liegt es auf der Hand, eine solche Führung von einem Roboter ausführen zu lassen.
+Es bietet sich außerdem an, die Definition einer Route, welche der Roboter späteren Besuchern zeigen soll, nicht fest zu programmieren.
+Vielmehr soll erreicht werden, dass es dem Roboter möglich ist, einem Menschen zu folgen und von ihm diese Route einzulernen.
+Somit schließt sich der Kreislauf:
+Der Roboter lernt vom Menschen und Besucher können wiederum vom Roboter lernen.
+
  
 % Auch Industrieroboter sollen in Zukunft enger mit (unberechenbaren) menschlichen Kooperationspartnern zusammenarbeiten.
 % Kamerabilder stellen in diesem Kontext eine reichhaltige und kostengünstige Informationsquelle dar und können über Sensorfusion bzw. Musterprojektion zusätzlich
@@ -102,7 +111,7 @@ Zusammenfassend muss der Roboter folgende Aufgaben bewältigen können:
 
 \subsubsection{3D Kameras (am Beispiel Microsoft Kinect)}
 Die Abbildung \ref{fig:Kinect} zeigt ein Bild der Kinect.
-Sie ist mit laser-basiertem \gls{ir} Projektor und einem monochromen \gls{cmos} Sensor ausgestattet.
+Sie ist mit einem laser-basierten \gls{ir}-Projektor und einem monochromen \gls{cmos}-Sensor ausgestattet.
 Der \gls{ir}-Projektor projiziert ein Muster auf die beobachtete Szenerie, während der  Sensor die Verformungen des Musters detektiert und gegen ein Vorgabemuster mittels Epipolargeometrie ein Tiefenbild errechnet.
 Die Kinect ist darüber hinaus mit einem Neigemotor, einer Reihe von Mikrofonen und einer \gls{rgb}-Kamera ausgestattet.
 Horizontal hat die Kamera einen Öffnungswinkel von $57^\circ$ und vertikal $43^\circ$.
@@ -143,9 +152,9 @@ Mobile Roboterplattformen werden in den meisten Fällen zu Forschungszwecken ver
 Wissenschaftler verschiedener Disziplinen wirken an Design und Programmierung mit.
 Sie weisen teils stark unterschiedliche Konfigurationen auf.
 Seit vielen Jahren wird jedoch intensiv an menschenähnliche Prototypen gearbeitet.
-Nach der Konstruktion dienen solche Plattformen häufig dazu durch verschiedenste Programmierungen vorgegebene Aufgaben zu erfüllen.
-Im Rahmen des Mobile Roboterpraktikums haben wir an der Plattform HoLLiE des FZI Karlsruhe gearbeitet.
-Auch die Roboterplattform ARMAR wurde in Karlsruhe am KIT entwickelt.
+Nach der Konstruktion dienen solche Plattformen häufig dazu, durch verschiedenste Programmierungen vorgegebene Aufgaben zu erfüllen.
+Im Rahmen des Mobile Roboterpraktikums haben wir an der Plattform \gls{hollie} des \gls{fzi} Karlsruhe gearbeitet.
+Auch die Roboterplattform ARMAR wurde in Karlsruhe am \gls{kit} entwickelt.
 
 Aufgrund der großen Popularität, technischen Ausgereiftheit und guten Dokumentation soll exemplarisch an dieser Stelle die Roboterplattform PR2 der Firma willow garage dargestellt werden, siehe Abbildung  \ref{fig:PR2Struktur}.
 
@@ -156,11 +165,11 @@ Aufgrund der großen Popularität, technischen Ausgereiftheit und guten Dokument
 \end{figure}
 
 Der PR2 ist ein kommerziell erhältlicher, weit entwickelter humanoider Roboter, der den typischen Aufbau humanoider Roboterplattformen aufweist.
-Er hat folgende, HoLLiE ähnlicher, technische Eigenschaften \cite{kinect_5}:
+Er hat folgende technische Eigenschaften, die \gls{hollie} ähnlich sind \cite{kinect_5}:
 
 \begin{itemize}
   \item 2 Arme mit Greifern (Arm 4 \gls{dof}, Handgelenk 3 \gls{dof}, Greifer 1 \gls{dof})
-  \item Kopf mir 2 \gls{dof}
+  \item Kopf mit 2 \gls{dof}
   \item Omnidirektionale Basis (3 \gls{dof})
 \end{itemize}
 
@@ -169,10 +178,10 @@ Der PR2 ist mit folgenden Sensoren ausgestattet bzw. ausstattbar:
 
 \begin{itemize}
   \item Microsoft Kinect
-  \item 5 MP Kamera
+  \item \unit[5]{MP} Kamera
   \item Stereokamerasystem
   \item Kleinwinkelkamera
-  \item \gls{led} Musterrojektor
+  \item \gls{led} Musterprojektor
   \item Laserscanner
   \item Mikrofonarray
   \item Beschleunigungssensorik in den Armen
@@ -182,7 +191,7 @@ Der PR2 ist mit folgenden Sensoren ausgestattet bzw. ausstattbar:
 
 Der PR2 wird mittlerweile an einigen namhaften Universitäten und Forschungsstätten eingesetzt (\ua TU München, Stanford University und \gls{mit}) und es existieren Arbeiten in verschiedensten Bereichen, wie zur Betreuung älterer und eingeschränkter Menschen, zum Verrichten von Hausarbeiten  und dem Einsatz in Dienstleistungsbetrieben.
 
-Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Betriebssystem \gls{ros} aufbaut und es Wissenschaftlern ermöglicht in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragen.
+Besonders an dem Roboter ist die gemeinsame mechatronische, aber besonders informationstechnische Plattform, die auf dem Software-Framework \gls{ros} aufbaut und es Wissenschaftlern ermöglicht, in einer gemeinsamen Umgebung zu arbeiten, Ergebnisse auszutauschen und auf neue Generationen zu übertragen.
 
 
 
@@ -199,13 +208,14 @@ Folgende Eigenschaften stellt die \gls{api} zur Verfügung \cite{kinect_6}:
   \item Middleware zur Video- und Audiodatenverarbeitung
 \end{itemize}
 
-Dem Entwickler stehen zur Entwicklung entsprechender Appliaktionen mit \gls{openni} eine Reihe von Werkzeugen zur Verfügung.Grundlegend ist dabei, dass ein gemeinsames Interface in Form von Middleware verwendet wird.
+Dem Entwickler stehen zur Entwicklung entsprechender Appliaktionen mit \gls{openni} eine Reihe von Werkzeugen zur Verfügung.
+Grundlegend ist dabei, dass ein gemeinsames Interface in Form von Middleware verwendet wird.
 Dies ermöglicht die Entkopplung von Hardware- und Softwareherstellern, die nur die spezifizierten Datensignale liefern, bzw. darauf aufbauen müssen.
 \gls{openni} steht zum kostenlosen Download zur Verfügung.
 Die Struktur ist in unten stehender Abbildung dargestellt: 
 
 \begin{description}
- \item[Oben:] Software-Applikationen die mit \gls{openni} kommunizieren
+ \item[Oben:] Software-Applikationen, die mit \gls{openni} kommunizieren
  \item[Mitte:] \gls{openni}, das Kommunikationsschnittstellen sowohl zu Hardware- als auch zu Softwarekomponenten zur Verfügung stellt
  \item[Unten:] Hardwarekomponenten, die Video- und Audiosignale aufnehmen
 \end{description}
@@ -225,33 +235,33 @@ Die Struktur ist in unten stehender Abbildung dargestellt:
 
 
 \paragraph{Modularität}
-Modularität bezieht sich in diesem Zusammenhang auf alle Aspekte OpenNIs.
+Modularität bezieht sich in diesem Zusammenhang auf alle Aspekte \glspl{openni}.
 Zum einen Hardware-Modularität;
-Theoretisch werden alle Sensoren, die die spezifizierten Signale liefern unterstützt.
+Theoretisch werden alle Sensoren, die die spezifizierten Signale liefern, unterstützt.
 Auch die Software ist modular einsetzbar mit Komponenten zur Hand-, Körper-, Gesten- und Szenendetektion.
 Mit den aufgezählten Modulen lassen sich relevante Informationen wie Gelenkposen, erkannte Gesten und die Segementierung der Szene gewinnen \cite{kinect_6}.
 
 \paragraph{Produktionsknoten}
 Produktionsknoten dienen in \gls{openni} zur Generierung von Daten.
 Diese Daten stellen sie anderen Anwendungen zur Verfügung.
-Da Prduktionsknoten in einer Hierarchie zu einander stehen können Produktionsknoten einer niedrigeren Hierarchieebene von solchen einer höheren Ebene genutzt werden wodurch.
+Da Produktionsknoten in einer Hierarchie zueinander stehen, können Produktionsknoten einer niedrigeren Hierarchieebene von solchen einer höheren Ebene genutzt werden.
 Somit lassen sich von manchen Knoten low-level-Informationen wie Tiefenbilder, von anderen high-level-Informationen wie Gelenkposen generieren \cite{kinect_6}.
 
 \paragraph{Produktionsketten}
 Produktionskette ist der formalisierte Begriff für die Verarbeitungskaskade in einer Produktionsknotenhierarchie.
-Höhere stehende Produktionsknoten fragen Informationen bei niedriger gestellten ab, die wieder niedriger gestellte abfragen usw.
-Anwendern bleibt somit, mit der Verwendung der abstrakten Produktionsknoten hoher Hierarchieebenen die komplexe Verarbeitunsstruktur verborgen.
+Höher stehende Produktionsknoten fragen Informationen bei niedriger gestellten ab, die wiederum niedriger gestellte abfragen usw.
+Anwendern bleibt die komplexe Verarbeitunsstruktur durch die Verwendung der abstrakten Produktionsknoten hoher Hierarchieebenen verborgen.
 Diese Struktur ermöglicht Entwicklern außerdem eine größere Freiheit bei deren Gestaltung \cite{kinect_6}.
 
 \paragraph{Microsoft SDK}
 Auch der Hersteller der Kinect, Microsoft, bietet nun ein offizielles \gls{sdk}, das sich leicht in Visual Studio und Dot Net integrieren lässt.
-Mit dem Kinect Sensor und Microsoft \gls{sdk} hat man Zugang zu Werkzeugen mit denen Menschen und Sprache erkannt werden.
+Mit dem Kinect Sensor und Microsoft \gls{sdk} hat man Zugang zu Werkzeugen, mit denen Menschen und Sprache erkannt werden.
 Darüber hinaus existiert ein Entwicklerportal mit kostenlosen Tutorials und Beispielen.
 Dort kann Microsoft \gls{sdk} auch kostenlos heruntergeladen werden \cite{kinect_4}.
 Die Eigenschaften des Microsoft \gls{sdk} sind denen von \gls{openni} ähnlich, Microsoft \gls{sdk} bietet jedoch kein eigenes Gestenerkennungsmodul, wie es in \gls{openni} verfügbar ist.
 In Vergleichstests von \gls{openni} und Microsoft \gls{sdk} schneidet \gls{openni} bisher besser ab, jedoch liefert Microsoft \gls{sdk} höhere Genauigkeit und Robustheit beim Skeletttracking.
 Die Sprach- und Gestenerkennung findet nicht nur in Spielen sondern auch in der Bedienung des Computers Anwendung, wie zum Beispiel bei Microsofts Internetsuchmaschine bing.
-Eine neu entwickelte Körperscan Software erlaubt es, Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu verwenden, siehe Abbildung \ref{fig:skelettracking} \cite{kinect_5}.
+Eine neu entwickelte Körperscan-Software erlaubt es, Bilder aufzunehmen und diese als Animationen oder als Avatar in Spielen zu verwenden, siehe Abbildung \ref{fig:skelettracking} \cite{kinect_5}.
 
 \begin{figure}[h]
 	\center
