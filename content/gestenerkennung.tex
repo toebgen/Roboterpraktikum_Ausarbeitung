@@ -163,7 +163,7 @@ durch die Verwendung von früher implementierten Modulen und Funktionen, integri
 
 \begin{figure}[h]
 	\center
-	\includegraphics[scale=0.5]{graphics/OpenNISourceTest.jpg}
+	\includegraphics[width=\textwidth]{graphics/OpenNISourceTest.jpg}
 	\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}--Grundstruktur unseres Moduls in \lstinline{MCABrowser}}
 \end{figure}
 
@@ -223,18 +223,8 @@ Damit merken wir die unzählige Gestenanzahl, die möglich bei dem Einsatz sind.
 	\label{fig:gesten_skelett}
 \end{figure}
 
-\subsubsection{Probleme}
-\authorsection{\editorhamza}
+\newpage
 
-Die Erkennung von Gesten muss zuverlässig und Sicher sein. Deshalb sollten wir auf den folgenden Probleme beachten:
-\begin{itemize}
-\item Die getrackte Person geht verloren wenn sein Abstand in große Geschwindigkeit  verändert wird.
-\item Gesten können nicht erkannt werden, wenn die getrackte Person seitlich steht oder die relevante Punkten (Spitzen, Gelenke, Körpergrößen … ) zu nah voneinander sind.
-\end{itemize}
-Damit haben  wir für den  Armgesten  entschieden, die sicherer und einfacher beim Test sind.
-In unserem Fall brauchen wir maximal 4 Gesten.
-Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.
-Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranzbereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet.
 
 \subsection{Gestenerkennung}
 \label{gestenerkennung_gestenerkennung_sec}
@@ -333,17 +323,16 @@ Eine weitere Möglichkeit der Umsetzung ist das Erkennen des zeitlichen Verlaufs
  In \gls{openni} und NITE Modulen wurden solche Funktionen implementiert, jedoch konnten wir diese aufgrund von Konfigurationsproblemen nicht nutzen.
 Bei der Anwendung werden stets einzelne Personen verfolgt. Sollten sich mehrere Personen im Sichtfeld der Kamera aufhalten, wird nur die zuerst getrackte Person beachtet.
 
-\subsection{Schwierigkeiten}
 
-%Im Mobile Roboter -- Praktikum hatten wir die Gelegenheit aktuelle
-% Forschungsgebiete der Servicerobotik zu beleuchten und verschiedene
-% Technologien praktisch auszuprobieren. Es fiel besonders auf, dass viele Konzepte zwar theoretisch funktionieren,
-% jedoch in der der Praxis nicht umsetzbar waren. Dies bedingte einige Iterationen im ursprünglichen Zielsystem des Projekts
-% wodurch der Funktionsumfang der letztendlichen Roboterplattform weitaus geringer ausfiel als geplant.
- Besonders in der Bildverarbeitung gab es erhebliche Probleme, da Softwarebibliotheken eingesetzt werden sollten,
- die sich selbst noch stark in der Entwicklung befanden. Somit konnte zum Beispiel die in NITE implementierte Gestenerkennung
- nicht verwendet werden und die Sensordaten der Kinect waren weitaus stärker verrauscht als erwartet.
- 
-%Die Aufteilung der Gruppe in drei spezialisierte Teilgruppen war bei dem Umfang des Projekts sehr sinnvoll,
-% das Projektmanagement jedoch schlecht. In den Teams wurde es versäumt früh feste Strukturen und Arbeitsweisen zu implementieren wodurch
-% wenig zielorientiertes Arbeiten und großer Motivationsschwund entstanden. Letztendlich konnte das Ziel des Projekts jedoch erreicht werden.
+\subsection{Probleme}
+\authorsection{\editorhamza}
+
+Die Erkennung von Gesten muss zuverlässig und Sicher sein. Deshalb sollten wir auf den folgenden Probleme beachten:
+\begin{itemize}
+	\item Die getrackte Person geht verloren wenn sein Abstand in große Geschwindigkeit  verändert wird.
+	\item Gesten können nicht erkannt werden, wenn die getrackte Person seitlich steht oder die relevante Punkten (Spitzen, Gelenke, Körpergrößen … ) zu nah voneinander sind.
+\end{itemize}
+Damit haben  wir für den  Armgesten  entschieden, die sicherer und einfacher beim Test sind.
+In unserem Fall brauchen wir maximal 4 Gesten.
+Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.
+Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranzbereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet.
