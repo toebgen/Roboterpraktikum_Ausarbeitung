@@ -146,7 +146,7 @@ Nach Navigationsart:
 \end{itemize}
 
 Weil die explizite Berechnung des kollisionsfreien Konfigurationsraums bei Robotern mit mehr als drei Freiheitsgraden sehr teuer ist, benutzt man oft den impliziten Konfigurationsraum.
-\Dh dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
+Das bedeutet, dass die Bahnplanung im Konfigurationsraum stattfindet, aber die Kollisionen und Abstände im Arbeitsraum berechnet und in den diskretisierten Konfigurationsraum transformiert werden \citep{innoKonz}.
 So wird der Konfigurationsraum während der Suche exploriert.
 
 Der Ablauf eines Planungsverfahren ist normalerweise zweigeteilt\cite{Russell2003}.
@@ -296,7 +296,7 @@ Folgende Bewegungsarten sind bereitgestellt:
 \label{fig:bahnpl_umsetz_schema_inv_kinem}
 \centering
 \includegraphics[width=\textwidth]{graphics/SCHEMA-invKinem.pdf}
-\caption{Schematische Darstellung des in-und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe.}
+\caption[In- und Output der \lstinline{SegwayOmniAutoReflexes}-Gruppe]{Schematische Darstellung des In- und Outputs der \lstinline{SegwayOmniAutoReflexes}-Gruppe}
 \end{figure}
 
 Zusätzlich zur Berechnung der Geschwindigkeiten erfolgt in dieser Gruppe die Begrenzung der tatsächlichen Geschwindigkeit bezüglich einer vorgegebenen maximal Geschwindigkeit sowie der auftretenden Beschleunigungen durch Änderungen der Geschwindigkeit oder Bewegungsrichtung.
@@ -456,7 +456,7 @@ Die drei Trajektorien-Punkte sind Ortsangaben mit einer $x$- bzw. $y$-Koordinate
 $following$ beinhaltet zusätzlich eine Komponente für $yaw$ (die ``Blickrichtung'' des Roboters, s. Abb. \ref{fig:roll_pitch_yaw}).
 Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten von \lstinline{HumanPosition} vorliegen.
 Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
-$next$ ist eine Roboter-Pose, die sich im Abstand $d_{hum}$ vor dem Menschen auf dem Vektor Roboter-Mensch befindet.
+$next$ ist eine Roboterpose, die sich im Abstand $d_{hum}$ vor dem Menschen auf dem Vektor Roboter-Mensch befindet.
 Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem Vektor next-estimated befindet sich der dritte Punkt der Trajektorie: $following$.
 Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig \unit[1,75]{m}.
 In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
