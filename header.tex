@@ -111,10 +111,8 @@
 % A graphic best describing your thesis
 \newcommand{\titlefig}{\includegraphics[width=0.4\textwidth]{graphics/FZI-Logo}}
 
-\usepackage[outermarks]{titlesec}
-\titleformat{\paragraph}
-  {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}    {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+% Verwendung von Paragraph ermöglichen
+\addtokomafont{paragraph}{\fontfamily{phv}\normalsize\mdseries}
 
 
 % Abkürzungen etc.
