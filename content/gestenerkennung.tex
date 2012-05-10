@@ -2,7 +2,7 @@
 
 \section{Aufgabenstellung}
 \label{kinect_aufgabenstellung_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
  Tiefenbildes eine Person zu verfolgen und ihre speziellen
@@ -25,7 +25,7 @@ Die Kinect-Gruppe bekam die Aufgabe, durch Verarbeitung eines Video- und
 
 \section{Grundlagen Kinect}
 \label{kinect_grundlagen_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 Sowohl die Bildqualität von Sensoren, als auch die Verarbeitungsalgorithmen zeigten eine erhebliche Entwicklung in den letzten Jahren.
  Heutzutage sind 3D-Entfernungskameras durch rapide Entwicklung des
@@ -101,9 +101,9 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
  Unsere Wahl war \gls{openni}, weil wir sie durch C++ Umgebung in das
  \lstinline{MCA2}-Rahmenwerk einbinden konnten.
 
-\subsection{\glstext{openni}}
-\authorsection{\editorhamza}
-\todo[inline]{Hamza}
+%\subsection{\glstext{openni}}
+%\authorsection{\editorhamza}
+%\todo[inline]{Hamza}
 %Mit \gls{openni} besteht ein Framework, welches unterschiedliche NUI (Natural User Interface) Geräte ansprechen kann, sofern dafür Treiber vorliegen. Das \gls{openni}-Framework stellt die Schnittstelle zwischen Anwendungssoftware und Treiber für einzelne NUI Geräte zur Verfügung. Daneben lässt sich das  Framework mit Middleware erweitern, um z.B. Skeleton Algorithmen einzubauen. Einer dieser Middleware Komponenten ist der Skeleton-Algorithmus NITE 1 von PrimeSense.
 %\begin{figure}
 %\label{fig:gesten_openni}
@@ -121,11 +121,11 @@ Es existieren mehrere Schnittstellen um auf die Bilder zuzugreifen (\gls{openni}
 %
 %Mit NITE  sind in \gls{openni}  User-Detection und -Tracking bereits einhalten. Auch einfache Gesten werden von der NITE-Middleware erkannt und können auf der Applikationsschicht direkt verwendet werden. Mit der NITE-Middleware kann \gls{openni} zudem so erweitert werden, dass zu einer erkannten Person die Gelenkpositionen errechnet werden.
 
-Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
+%Wir haben uns auf Grund des großen Funktionsumfangs und weiteren wichtigen Kriterien zur Verwendung dieses Frameworks entschieden.
 
 \section{Umsetzung}
 \label{kinect_umsetzung_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 \gls{openni} ist eine Klassenbibliothek, die für die Programmierer einen einheitlichen Zugriff und Verarbeitungsmöglichkeiten
  der Sensordaten (Farbbild, Tiefenbild, Audiosignale) anbietet. Bei natürlicher Interaktion (NI steht für „natural interaction“) wird der Input,
@@ -161,10 +161,9 @@ Alle anderen Verarbeitungsprozesse wurden in die \lstinline{MCA2}-Umgebung,
 durch die Verwendung von früher implementierten Modulen und Funktionen, integriert.
 
 \begin{figure}[h]
-\center
-\includegraphics[scale=0.5]{graphics/OpenNISourceTest.jpg}
-\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}-Grundstruktur
-unseres Moduls in \lstinline{MCABrowser}}
+	\center
+	\includegraphics[scale=0.5]{graphics/OpenNISourceTest.jpg}
+	\caption{\label{fig:OpenNISourceTest} Die \lstinline{MCA2}-Grundstruktur unseres Moduls in \lstinline{MCABrowser}}
 \end{figure}
 
 Zur Geschwindigkeitsschätzung wird der Torso (Rumpfmittelpunkt) auf den Boden projiziert
@@ -197,20 +196,23 @@ Die Gestenerkennung wurde in einem zweiten Modul (\lstinline{GestureClassifier})
 umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 
 \todo[inline]{Hamza}
+
+\subsection{Glättungsfilter zur Störungsunterdrückung (Average Filter)}
+
+In diesem Abschnitt werden die Messwerte ( Positionen [X,Y,Z], Geschwindigkeit) von Störungen unterdrückt, sodass wir die  Ausreißern möglichst weglassen  können , die unsere Werte abweichen. Solche Filter werden meistens durch Auswertung von Nachbarschaftsverhältnissen realisiert. 
+Es gibt sehr viele Filter, die wir benutzen konnten Z.B (Mittelwertfilter, Binominialfilter, Medianfilter, Rangordnungsfilter). Die Entscheidung war für den Mittelwertfilter, weil er ein einfaches Glättungsfilter ist. Jeder Messwert wird durch Addition der U-Werte (in unserem Fall 5 Werte)  und anschließend Division durch die Anzahl der an der Mittelung beteiligten Messwerten $|U|$ berechnet.
+Die Messwerten , die von Kinect an den anderen Gruppen geliefert werden, müssen möglichst genau sein. Außerdem müssen die kleine Bewegungen und die extrem schnelle Geschwindigkeiten von der verfolgter Person vermeiden, damit der Roboter unter Kontrolle bleibt und die verfolgte Person nicht verloren geht.
+
+
+
+
 %Gesten können sowohl von einzelnen Körperteilen, wie der Hand, als auch vom gesamten Körper ausgeführt werden. Es existieren unzählige Körperhaltungen, Bewegungen, Gesichtsausdrücke und Handgesten, die für die Kommunikation von Mensch und Maschine eingesetzt werden können.
-%\begin{figure}[h]
-%\label{fig:gesten_skelett}
-%\centering
-%\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
-%\caption{Dreidimensionales Körpermodell.}
-%\end{figure}
-%
-%\begin{figure}[h]
-%\label{fig:gesten_skelett}
-%\centering
-%\includegraphics[scale=0.7]{graphics/BILD-HandModell.png}
-%\caption{Modell der menschlichen Hand mit 27 Freiheitsgraden.}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{graphics/BILD-Skelett.png}
+	\caption{Dreidimensionales Körpermodell\cite{Hwang2006}.}
+	\label{fig:gesten_skelett}
+\end{figure}
 
 \subsubsection{Probleme}
 \authorsection{\editorhamza}
@@ -220,9 +222,10 @@ umgesetzt, das in Laufzeit aus \lstinline{OpenNISource} aufgerufen wird.
 %Damit haben  wir für den  Körpergesten  entschieden, die sicherer und einfacher beim Test sind. 
 In unserem Fall brauchen wir maximal 4 Gesten. Diese Gesten müssen durch Armen, die am meisten frei beweglich sind,gebildet sein.  Die einfachste Idee war, dass wir die Winkeln  zwischen Armengelenke messen. Wenn die Messwerten sich  innerhalb des Toleranz-bereichs befinden, wird die Geste erkannt, sonst  wird es als undefinierte Geste betrachtet. 
 
+
 \subsection{Gestenerkennung}
 \label{gestenerkennung_gestenerkennung_sec}
-\authorsection{Márton Kelemen}
+\authorsection{\editormarton}
 
 Ursprünglich sollte eine beliebig erweiterbare Struktur zur Gestenerkennung verwendet werden.
  Diesem Ansatz liegt ein binärer Entscheidungsbaum zu Grunde, dem den einzelnen
@@ -296,9 +299,9 @@ Aufgrund der groben Auflösung und der stark verrauschten Messwerte der Kinect m
 \todo[inline]{Auswählen ob Tabelle oder Description verwendet werden soll}
 
 \begin{figure}[h]
-\center
-\includegraphics[scale=0.25]{graphics/Gesten.jpg}
-\caption[Definierte Gesten]{\label{fig:Gesten} Die vier definierten Gesten (oben und in der Mitte),
+	\center
+	\includegraphics[scale=0.25]{graphics/Gesten.jpg}
+	\caption[Definierte Gesten]{\label{fig:Gesten} Die vier definierten Gesten (oben und in der Mitte),
  bzw. die beiden Möglichkeiten für unbestimmte Fälle (links unten: mangelndes Gelenk, rechts unten: normale Körperhaltung)}
 \end{figure}
 
@@ -323,6 +326,13 @@ right\_hand\_z: & height of right hand (palm)\\
 \caption{Erklärung zu charakteristischen Markmalen (Winkeldefintionen)}
 \label{tab:Winkeldefintionen}
 \end{table}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.3\textwidth]{graphics/BILD-Winkel.png}
+	\caption{Bild}
+	\label{fig:gestenerkennung_umsetzung_winkel}
+\end{figure}
 
 Falls eines der relevanten Gelenke verdeckt ist oder keine verfolgbare Person im
 Sichtbereich der Kamera ist, wird automatisch \lstinline{UNDEFIED_GESTURE}

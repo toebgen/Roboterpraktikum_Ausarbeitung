@@ -137,7 +137,7 @@ Dies äußert sich darin, dass die Kinect sich im Akku-Betrieb nicht in Betrieb 
 
 Daher ist es notwendig, ein externes Netzgerät zu verwenden, und den Roboter so mit zusätzlichem Strom zu versorgen.
 Dies hat allerdings zur Folge, dass die Reichweite von \gls{hollie} durch die Länge des Kabels zwischen Roboter und externem Netzgerät beschränkt ist.
-Der Aktionsradius beträgt somit nur noch ca. $5m$.
+Der Aktionsradius beträgt somit nur noch ca. \unit[5]{m}.
 
 Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschränkungen ausreichend.
 
@@ -150,10 +150,11 @@ Für die Zwecke des Praktikums ist diese Reichweite mit wenigen Einschränkungen
 
 
 \subsection{Kinect}
+\label{test_kinect}
 
 Nach ersten Erfolgen mit dem realen Roboter stellt sich heraus, dass die Kinect-Kamera (s. Abs. \ref{kinect_grundlagen_sec}, S. \pageref{kinect_grundlagen_sec} ff.) \emph{Schwierigkeiten} damit hat, selbst bewegt zu werden und gleichzeitig auch noch einen sich wiederum auch bewegenden Menschen zu tracken.
 Wenn \gls{hollie} sich zügig durch den Raum bewegt, kommt es bei der Kamera häufig zu einem Verlust des getrackten Menschen.
-Oft kommt es auch vor, dass statt des Menschen beispielsweise Säulen im Raum, Fenster, oder ähnliches als Menschen erkannt werden.
+Oft werden auch andere Objekte (beispielsweise Säulen im Raum, Fenster, oder ähnliches) als \glqq Tracking-Kandidaten\grqq\ erkannt und hervorgehoben.
 Dieses Phänomen zeigt sich auch bei rein rotatorischen Bewegungen.
 
 Andere wissenschaftliche Mitarbeiter am \gls{fzi} haben bereits ähnliche Beobachtungen mit der Kinect gemacht.
@@ -179,16 +180,18 @@ Dadurch kann die beschriebene Problematik zwar nicht endgültig beseitigt werden
 Schließlich treten während den Tests auf der realen Roboterplattform auch noch einige weitere, kleinere Probleme auf, von denen hier nur einige kurz erwähnt werden sollen.
 
 Eine sehr wichtige Erkenntnis während der Testphase war es, dass einzelne Module unbedingt anhand einer externen Konfigurationsdatei (beispielsweise eine \lstinline{XML}-Datei) aktivierbar bzw. deaktivierbar sein sollten.
-Falls dies nur innerhalb des programmierten Codes, also nur zur Compile-Zeit möglich ist, so kostet das ständige Ändern des Codes, Neu-Bauen der \gls{sw}, Überspielen auf den Roboter etc. einen immensen Zeitaufwand!
+Falls dies nur innerhalb des programmierten Codes, also nur zur Compile-Zeit möglich ist, so kostet das ständige Ändern des Codes, Neu-Bauen der Software, Überspielen auf den Roboter etc. einen immensen Zeitaufwand!
 Durch einfache \lstinline{bool}-Flags in der Konfigurationsdatei können die einmal erzeugten Binärdaten weiter verwendet werden, und dennoch bestimmte Module einfach de-/aktiviert werden.
 Der zusätzliche Aufwand während der Programmierung ist sehr gering, die Zeitersparnis während der Testphase jedoch immens.
 
 Aufgrund des weichen Bodens im Obergeschoss des \gls{fzi} kann der Roboter nur sehr ungenaue Odometrie-Daten liefern.
 Die Mecanum-Räder haben auf diesem Untergrund großen Schlupf.
-So kommt es vor, dass \gls{hollie} auf einer Fahrstrecke von ca. $8m$ bereits durchaus einen Fehler in der odometrischen Lokalisierung von mehr als $2m$ hat.
-Eine Lokalisierung allein auf Basis der Odometrie-Daten ist somit unmöglich.
+So kommt es vor, dass \gls{hollie} auf einer Fahrstrecke von ca. \unit[8]{m} bereits durchaus einen Fehler in der odometrischen Lokalisierung von mehr als \unit[2]{m} hat.
+Der Grund hierfür liegt in der sehr langsamen Fortbewegungsgeschwindigkeit, mit welcher der Roboter betrieben wird.
+Bewegt man \gls{hollie} schneller, so verbessern sich die Werte der odometrischen Lokalisierung deutlich.
+Da die Geschwindigkeit aufgrund anderer Faktoren (vgl. Abs. \ref{test_kinect}) begrenzt ist, ist eine Lokalisierung allein auf Basis der Odometrie-Daten somit unmöglich.
 
-Weiterhin treten auch noch viele kleinere bis mittelschwere Fehler in der während des Praktikums programmierten \gls{sw} auf, auf die nicht näher eingegangen wird.
+Weiterhin treten auch noch viele kleinere bis mittelschwere Fehler in der während des Praktikums programmierten Software auf, auf die nicht näher eingegangen wird.
 
 % \begin{itemize}
 % 	\item Odometrie auf Teppichboden

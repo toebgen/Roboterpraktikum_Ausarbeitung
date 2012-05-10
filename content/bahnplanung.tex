@@ -411,22 +411,14 @@ Die Berechnung der Trajektorie erfolgt im Modul \lstinline{GenerateTrajectory}.
 Die aktuelle und geschätzte Position des Menschen, sowie die aktuelle Position des Menschen werden als Parameter übergeben, und dienen als Grundlage für die Berechnung der Trajektorie.
 Die Struktur der zu berechnenden Trajektorie $s$ ist durch das Modul \lstinline{OmniDriveAlongPath} (s. Abs. \ref{bahnplanung_motoansteuerung_subsec}) vorgegeben:
 
-% \begin{equation}
-% 	s =
-% 	\begin{pmatrix} start \\ next \\ following \end{pmatrix} =
-% 	\begin{pmatrix} x_{st} & y_{st} & 0 \\ x_{nx} & y_{nx} & yaw_{nx} \\ x_{fl} & y_{fl} & 0 \end{pmatrix}
-% \end{equation}
-% 
-% \todo[inline]{welche Variante nehmen?}
-
 \begin{equation}
-	s =	\begin{pmatrix} start \\ next \\ following \end{pmatrix}
+	s =	\begin{pmatrix} \text{start} \\ \text{next} \\ \text{following} \end{pmatrix}
 \end{equation}
 mit 
 \begin{equation}
-	start = 		\begin{pmatrix}	x_{start} \\ y_{start}							\end{pmatrix},
-	next = 			\begin{pmatrix} x_{next} \\ y_{next} \\ yaw_{next}	\end{pmatrix},
-	following =	\begin{pmatrix}	x_{following} \\ y_{following}							\end{pmatrix}
+	\text{start} = 		\begin{pmatrix}	x_{\text{start}} \\ 		y_{\text{start}}												\end{pmatrix},
+	\text{next} = 			\begin{pmatrix} x_{\text{next}} \\ 			y_{\text{next}} \\ 		yaw_{\text{next}}	\end{pmatrix},
+	\text{following} =	\begin{pmatrix}	x_{\text{following}} \\ y_{\text{following}}										\end{pmatrix}
 \end{equation}
 
 %\begin{wrapfigure}{r}{0.35\textwidth}
@@ -443,7 +435,7 @@ Die Berechnung einer neuen Trajektorie wird durchgeführt, sobald neue Daten von
 Als $start$-Punkt wird dabei die aktuelle Roboterposition verwendet.
 $next$ ist eine Roboter-Pose, die sich im Abstand $d_{hum}$ vor dem Menschen auf dem Vektor Roboter-Mensch befindet.
 Im Abstand $d_{hum}$ vor der geschätzten zukünftigen Mensch-Position auf dem Vektor next-estimated befindet sich der dritte Punkt der Trajektorie: $following$.
-Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig $1,75m$.
+Der Abstand $d_{hum}$ zum Menschen kann dabei als externer Parameter vorgegeben werden, der Wert beträgt standardmäßig \unit[1,75]{m}.
 In Abb. \ref{fig:trajektorie} wird dies in einer Schemazeichnung dargestellt.
 
 \begin{figure}
@@ -524,6 +516,7 @@ $d_{save}$ kann als Parameter in einer externen Konfigurationsdatei definiert we
 
 Innerhalb des \lstinline{dumpFile}s werden die $x$, $y$ bzw. $yaw$-Werte zeilenweise durch Doppelpunkte getrennt gespeichert:
 $x_i:y_i:yaw_i$
+.
 
 Im globalen Modus \lstinline{loadPath} (s. Abs. \ref{integration_umsetzung_hierarchie_sec}), also während dem Abfahren eines gespeicherten Pfades, liest das Modul \lstinline{LoadRoboterPositionsFromFile} die Punkte aus dem \lstinline{dumpFile}.
 Die \gls{Euklidische-Distanz} findet wieder Verwendung, um den Zeitpunkt festzulegen, an welchem der nächste Punkt in die Trajektorie aufgenommen wird.
@@ -589,23 +582,23 @@ Es ist auch möglich, mehrere \lstinline{dumpFile}s anzulegen.
 
 Das Modul \lstinline{ObstacleAvoidance} überprüft die geplante Trajektorie auf Hindernisse, und plant ggf. um ein Hindernis herum, um Kolissionen zu vermeiden.
 Jede von \lstinline{GenerateTrajectory} bzw. \lstinline{LoadRoboterPositionsFromFile} (s. Abs. \ref{bahnplanung_trajektorie_subsubsec}) ausgegebene Trajektorie wird innerhalb des Moduls \lstinline{ObstacleAvoidance} auf Hindernisse überprüft, bevor sie an tiefer liegende Schichten weiter gegeben wird.
-Dies wird durch einen \gls{mux} erreicht, der je nach globalem Modus die entsprechenden Eingänge an das Modul \lstinline{ObstacleAvoidance} durchschaltet.
+Dies wird durch einen Multiplexer erreicht, der je nach globalem Modus die entsprechenden Eingänge an das Modul \lstinline{ObstacleAvoidance} durchschaltet.
 So wird sichergestellt, dass ungeprüfte Trajektorien nicht an die Motoransteuerung weiter gegeben werden.
 In Abb. \ref{fig:behaviours} (S. \pageref{fig:behaviours}) ist das Modul innerhalb der \lstinline{Behaviours}-Gruppe sichtbar.
 
-Für die Hindernis-Überprüfung innerhalb des Moduls werden die Trajektorienpunkte, die alle in \gls{wk} vorliegen, in \gls{bk} transformiert.
+Für die Hindernis-Überprüfung innerhalb des Moduls werden die Trajektorienpunkte, die alle in Weltkoordinaten vorliegen, in Bildkoordinaten transformiert.
 So werden $start$, $next$ und $following$ auf entsprechende Punkte der \lstinline{ObstacleMap} (s. Abs. \ref{hinderniskarte_subsec}, S: \pageref{hinderniskarte_subsec}) abgebildet.
-In einem weiteren Schritt werden alle \glstext{bk}, die zwischen den drei Trajektorienpunkten liegen, berechnet und in eine Liste geschrieben.
+In einem weiteren Schritt werden alle Bildkoordinaten, die zwischen den drei Trajektorienpunkten liegen, berechnet und in eine Liste geschrieben.
 Die Punkte dieser Liste werden anschließend anhand der \lstinline{ObstacleMap} auf Hindernisse überprüft.
 
-Falls für keinen der Punkte ein Hindernis festgestellt werden konnte, wird die Trajektorie (in \gls{wk}) unverändert weiter gegeben.
+Falls für keinen der Punkte ein Hindernis festgestellt werden konnte, wird die Trajektorie (in Weltkoordinaten) unverändert weiter gegeben.
 
 Liegt jedoch mindestens einer der Punkte innerhalb eines Hindernisses, so wird eine neue Trajektorie ermittelt, die um das Hindernis plant.
 Hierfür wird der A*-Algorithmus verwendet.
 Dieser benötigt einen Start- und einen Endpunkt, welche nicht innerhalb eines Hindernisses und auch nicht außerhalb des Bildes (\lstinline{ObstacleMap}) liegen dürfen.
 Die Implementierung dieses Algorithmus wird im nächsten Abschnitt beschrieben.
 
-Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in \gls{wk} umgerechnet, und an die Gruppe \lstinline{SegwayOmniReflexes} weiter gegeben.
+Schließlich wird die durch den A*-Algorithmus neu berechnete Trajektorie in Weltkoordinaten umgerechnet, und an die Gruppe \lstinline{SegwayOmniReflexes} weiter gegeben.
 
 \subsubsection{Algorithmus}
 \authorsection{\editorjulian}

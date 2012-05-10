@@ -81,8 +81,8 @@ In einem ersten Schritt ist es sinnvoll diese Funktionen zu strukturieren, in de
 interner Zustand zugewiesen wird. Da bei diesem Projekt nicht der Dialog mit dem Roboter sondern lediglich 
 die Aktivierung verschiedener Funktionen durch Gesten gewünscht ist, erfolgt der Wechsel der internen 
 Zustände durch eine deterministische Zustandsmaschine. Bei komplexeren 
-Aufgaben, oder in Szenarien bei der die beobachtete Umwelt nicht deterministisch aufgefasst wird, stößt 
-eine einfache Zustandsmaschine an ihre Grenzen und es muss eine Planer verwendet werden.
+Aufgaben, oder in Szenarien bei der die beobachtete Umwelt nicht als deterministisch betrachtet wird, stößt
+eine einfache Zustandsmaschine an ihre Grenzen. Erfolgt beispielsweise eine stochastische Auffassung der Umwelt muss mit probabilistischen Planungsmethoden gearbeitet werden.
 Neben der globalen Zustandsmaschine im Modul
 \lstinline{SegwayOmniStateMode-Manager} erhält jede Gruppe in der darunterliegenden Hierarchieebene (die Verhaltensebene) ebenfalls eine Zustandsmaschine; 
 realisiert sind diese in den Modulen \lstinline{SegwayOmniBehavioursManager} bzw. \lstinline{SegwayOmniKinectManager}.
