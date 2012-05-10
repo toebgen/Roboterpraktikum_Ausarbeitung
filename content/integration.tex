@@ -34,15 +34,15 @@ erlaubt, die einzelnen Funktionen der Software zu aktivieren.
 
 Die Gruppen \lstinline{SegwayOmniBehaviours} und \lstinline{SegwayOmniKinect} verfügen über 
 verschiedene Funktionen und bieten wichtige Informationen über den Zustand des Roboters und 
-dessen Umwelt. Um diese Informationen sinnvoll verarbeiten zu können und ein Abrufen der einzelnen 
+dessen Umwelt.
+Um diese Informationen sinnvoll verarbeiten zu können und ein Abrufen der einzelnen 
 Funktionen zu ermöglichen, ist es notwendig, eine entsprechende Architektur bereitzustellen.
 
 \subsubsection{Hierarchische Struktur}
 \label{integration_umsetzung_hierarchie_sec}
 
-In den existierenden Projekten \lstinline{Odete} und \lstinline{SegwayOmni} gab es bereits eine Hierarchie 
-in den verwendeten Gruppen, bei der Schritt für Schritt die Abstraktion von der verwendeten 
-Plattform bzw. Hardware erfolgte. Diese Hierachie wurde beibehalten und kann in drei Ebenen unterteilt 
+In den existierenden Projekten \lstinline{Odete} und \lstinline{SegwayOmni} gab es bereits eine Hierarchie in den verwendeten Gruppen, bei der Schritt für Schritt die Abstraktion von der verwendeten Plattform bzw. Hardware erfolgte.
+Diese Hierachie wurde beibehalten und kann in drei Ebenen unterteilt 
 werden (siehe Abs. \ref{bahnplanung_umsetzung_sec}). Auf der obersten Ebene, der Verhaltensebene, befinden sich die 
 Gruppen \lstinline{SegwayOmniBehaviours} und \lstinline{SegwayOmniKinect}. Zur Kontrolle des Roboters kommt 
 eine zusätzliche Ebene hinzu, die es erlaubt, die einzelnen Verhalten zu aktivieren. Diese Ebene arbeitet auf 
