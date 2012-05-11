@@ -44,7 +44,7 @@ Erreicht wird dies, indem Teile des gesamten Kontrollsystems in kleinen standard
 Jedes Modul ist dabei in gleicher Weise aufgebaut. Es besitzt 5 Schnittstellen, wovon vier zur Kommunikation mit anderen Modulen dienen,
  die fünfte wird genutzt um interne Parameter zu lesen und zu ändern. Die vier Kommunikationsschnittstellen ergeben sich jeweils aus der
  Kommunikation zu über-- oder untergeordneten Modulen. In jede dieser beiden Richtung können Daten gesendet, bzw. empfangen werden.
- Man spricht in der einen Richtung von Sensor--, in der anderen Richtung von Kontroll--Daten. Diese Daten sind dabei realisiert durch einen Vektor fester Werte,
+ Man spricht in der einen Richtung von Sensor--, in der anderen Richtung von _Steuerungs--Daten. Diese Daten sind dabei realisiert durch einen Vektor fester Werte,
  die von einem Modul an ein Weiteres in derselben oder einer permutierten Reihenfolge weitergegeben werden.
  Mittels der fünften Schnittstelle werden diese Daten dann manipuliert. Dazu besitzt jedes Modul zwei Funktionen: Die Sense()-- und die Control()--Funktion.
  Die Sense()--Funktion dient dazu, die Sensordaten von der Input-- zur Output--Schnittstelle verändert oder unverändert weiter zu geben, die Control()--Funktion ist
@@ -71,12 +71,7 @@ Die Idee von Gruppen wird in MCA2 dann konsequent weiter gedacht und resultiert 
  Der größte Unterschied zwischen einer Gruppe und einem Part besteht darin, dass die Sense()-- und Control()--Funktionen einer Gruppe nur bei Aufruf,
  bei einem Part dagegen immer wiederholt entsprechend einer Art 'Takt' ausgeführt werden.
 
-Für die Arbeit im Rahmen des Projektpraktikums wurde noch ein zusätzlicher Mechanismus benötigt,
- der einen geteilten Speicherbereich anbietet. Organisiert als einfacher Array von festen Werten bieten Blackboards diese Möglichkeit,
- um Daten für komplexere Datenstrukturen wie Bilder weiter zu leiten.
- Benötigt zum Beispiel für das Virtual Protective Field oder auch die Weitergabe von Daten der Laserscanner.
-
-Letztendlich bietet MCA noch Schnittstellen, die via Ethernet alle Sensordaten in Text oder Bild auf einer grafische Benutzeroberfläche bereitstellen.
+MCA bietet Schnittstellen, welche alle Sensordaten in Text oder Bild auf einer grafische Benutzeroberfläche bereitstellen.
  Diese mcagui kann auf jedem PC innerhalb des Netzwerkes ausgeführt werden, so dass die ausführende Computereinheit
  mit dem zusätzlichen Overhead nicht belastet wird. Mit Hilfe dieser grafischen Benutzeroberfläche wurde das Testen
  innerhalb einer Simulationsumgebung ausgeführt, aber auch erste Tests auf dem realen Roboter konnten mittels dieser Schnittstelle erleichtert werden.
