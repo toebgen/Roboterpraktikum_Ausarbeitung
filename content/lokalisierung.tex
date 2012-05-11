@@ -21,15 +21,17 @@ Roboter Pose, welche die Position und Orientierung des Roboters in seiner Umgebu
  Aufgrund einer unbekannter Startposition oder von Messungenauigkeiten während
  der Fortbewegung, kann die Pose eines Roboters nur in den seltensten Fällen
  genau bestimmt werden.
- Von lokaler Lokalisierung wird gesprochen wenn die aktuelle Pose des Roboters
- in seiner Umwelt bekannt ist und bei einer Positionsänderung des Roboters diese
+ Von \emph{lokaler Lokalisierung} wird gesprochen wenn die aktuelle Pose des
+ Roboters in seiner Umwelt bekannt ist und bei einer Positionsänderung des Roboters diese
  fortlaufend aktualisiert wird, um sie auf dem neusten Stand zu halten. Hier
  werden Schätzungen der Bewegung aufgrund der Odometrie Sensorik mit Hilfe von weiteren Daten zur Posenbestimmung korrigiert. Dieses Vorgehen soll eine Aufsummierung von Fehlern bei der
  Schätzung der Bewegung durch die Odometrie verhindern. Im Gegensatz dazu ist
- bei der globalen Lokalisierung die aktuelle Pose des Roboters in seiner Umwelt
- nicht bekannt und muss zum Beispiel anhand von Kartenmaterial geschätzt werden.
+ bei der \emph{globalen Lokalisierung} die aktuelle Pose des Roboters in seiner
+ Umwelt nicht bekannt und muss zum Beispiel anhand von Kartenmaterial geschätzt werden.
  Man sieht leicht ein, dass bei dieser Art der Lokalisierung die Initiale Schätzung einen beliebig großen Fehler aufweisen kann.
- Nach dieser Einführung sollte klar geworden sein das es notwendig ist eine Lokalisierung durchzuführen um es unserem Roboter zu ermöglichen sich fortzubewegen.
+ Nach dieser Einführung sollte klar geworden sein das es notwendig ist eine
+ Lokalisierung durchzuführen um es dem Roboter zu ermöglichen sich
+ fortzubewegen.
 % -----------------------------------------------------------------------------
 %													Hinderniskarte
 \subsection{Hinderniskarte}
@@ -68,14 +70,15 @@ Die Aufgabe der Bahnplanung besteht darin auf Grundlage der Lokalisierung und de
 \section{Grundlagen Lokalisierung}
 \label{lokalisierung_grundlagen_sec}
 \authorsection{\editoranne}
-\begin{flushright}\textit{Einige Abschnitte in Anlehnung an das oder aus dem Projektwiki von Dirk~Toewe}\end{flushright}
+\authorsection{\editordirk}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung}
 Um die im vorangegangenen Abschnitt vorgestellten Aufgaben und Ziele umzusetzen, gibt es verschiedene Möglichkeiten. Wir gehen nun etwas detailierter auf grundlegende Verfahren ein, die für die Durchführung einer Positionsbestimmung von Nutzen sind.
  
 \subsubsection{Odometrie}
-Die erste vorgestellte Methode zur Positionsbestimmung ist die Odometrie. Dieser aus dem griechischen kommende Begriff steht sinngemäß für ''Wegmessung'' und beschreibt im Wesentlichen schon die Hauptaufgabe. Die Odometrie umfasst die technischen Einrichtungen, die während des Betriebes des Roboters die zurückgelegte Wegstrecke ausmessen.
+Die erste vorgestellte Methode zur Positionsbestimmung ist die Odometrie. Dieser
+aus dem Griechischen kommende Begriff steht sinngemäß für ''Wegmessung'' und beschreibt im Wesentlichen schon die Hauptaufgabe. Die Odometrie umfasst die technischen Einrichtungen, die während des Betriebes des Roboters die zurückgelegte Wegstrecke ausmessen.
 
 Ein sehr einfacher und dennoch effektiver Ansatz zur Wegbestimmung ist die Verwendung von Schrittzählern. Bewegt sich der Roboter mittels Beinen fort, wird die Anzahl der gemachten Schritte gezählt. Werden dagegen Rädern  zur Fortbewegung genutzt, können schwarz--weisse Musterscheiben angebracht werden. Diese werden mittels einem oder mehrerer Sensoren abgetastet. Eine einfache, zumeist lineare, Abbildung ermittelt aus der Anzahl der schwarzen und weissen Flächen die zurückgelegte Wegstrecke. Es kann anschließend relativ zur Ausgangpose eine neue Roboterpose angegeben werden.
 
@@ -89,13 +92,16 @@ Die Vorteile liegen bei diesem Ansatz in der Einfachheit der Konstruktion. Der b
 
 \subsubsection{Kartenbasierte Lokalisierung}
 
-Ist eine Karte der Umgebung gegeben, in der sich der Roboter aufhält, so kann mittels geeigneter Sensordaten die Roboterpose geschätzt, bzw. eindeutig bestimmt werden. Eine Möglichkeit besteht darin, Laser an dem Roboter anzubringen und mittels Abstandsdaten Gegenstände, Wände und Flächen zu erkennen. Dazu wird aus einer Punktwolke eine Menge von geometrischen Figuren, wie zum Beispiel Kanten extrahiert. Diese werden mit den Kartenmaterial abgeglichen und man erhält im schlechten Fall mehrere mögliche Positionen, im optimalen Fall eine eindeutige Position an der sich der Roboter aktuell befindet.
+Ist eine Karte der Umgebung gegeben, in der sich der Roboter aufhält, so kann
+mittels geeigneter Sensordaten die Roboterpose geschätzt, bzw. eindeutig
+bestimmt werden. Eine Möglichkeit besteht darin, Laserscanner an dem Roboter
+anzubringen und mittels Abstandsdaten Gegenstände, Wände und Flächen zu erkennen. Dazu wird aus einer Punktwolke eine Menge von geometrischen Figuren, wie zum Beispiel Kanten extrahiert. Diese werden mit den Kartenmaterial abgeglichen und man erhält im schlechten Fall mehrere mögliche Positionen, im optimalen Fall eine eindeutige Position an der sich der Roboter aktuell befindet.
 
 Hierbei wird immer die aktuelle Roboterpose berechnet ohne auf vorhergehende Roboterposen angewiesen zu sein. Dies ist vorteilhaft, da sich im Laufe des Betriebes keine Fehler akkumulieren können und man nicht einmal eine Ausgangspose benötigt. Allerdings ist der Roboter auf möglichst detailgetreues Kartenmaterial angewiesen, welches selbstverständlich aktuell gehalten werden muss. In einer Umgebung in der keine markanten Stellen zu finden sind, wird die Zahl der möglichen Roboterposen eventuell unangenehm hoch sein. Dazu kommen die Nachteile der Technik, die verwendet wird um Informationen über die Umwelt zu erhalten. Bei einem Laser muss darauf geachtet werden, dass er freie Sicht hat und gerade am Roboter angebracht ist. Zusätzlich kann der Laser fehlerhafte Daten zurückliefern, wenn er auf spiegelnde, glatte Flächen trifft, durch eine Glaswand hindurchsieht oder von sich bewegenden Gegenständen umgeben ist.  
 
 \subsubsection{Landmarkbasierte Lokalisierung}
 
-In einer bekannten Umgebung können Landmarks (\gls{qr}--Codes, Bodenlinien,
+In einer bekannten Umgebung können Landmarken (\gls{qr}--Codes, Bodenlinien,
  \gls{gps}--Satelliten) angebracht werden. Diese können durch Sensoren
  am Roboter wiedererkannt werden und ermöglichen die Lokalisierung
  z.B. mittels Triangulierung.
@@ -134,8 +140,14 @@ In den Iterationsschritten wechseln sich nun Prädiktion und Korrektion ab: Aus 
 
 \subsubsection{Partikel--Filter}
 
-Als Alternative zum Kalman--Filter existiert die Sequentielle Monte--Carlo--Methode. Auch bekannt als Partikel--Filter. Mit Hilfe dieser Methode können ebenfalls kontinuierlich Ort und Geschwindigkeit, insbesondere eines autonomen Roboters, ermittelt werden, obwohl nur ungenaue Messwerte vorliegen.
-Ist das Prozessmodell nicht linear oder sind die äußeren Einflüsse, die zu fehlerhaften Messwerten führen nicht normalverteilt, kann auch nicht von einer Normalverteilung des zu schätzendes Zustandes ausgegangen werden. Eine Normalverteilung hat die Eigenschaft nur ein Maxima aufzuweisen und somit nur einen möglichen besten Zustand zurück zu liefern. Liegt diese nicht vor, muss angenommen werden, dass die Wahrscheinlichkeitsdichte mehrere Maxima aufweist, das heisst, das mehrere mögliche Zustände in Frage kommen, als die Besten und Wahrscheinlichsten zum gegenwärtigen Zeitpunkt zu gelten.
+Als Alternative zum Kalman--Filter existiert die Sequentielle
+Monte--Carlo--Methode, auch bekannt als Partikel--Filter. Mit Hilfe dieser
+Methode können ebenfalls kontinuierlich Ort und Geschwindigkeit eines autonomen Roboters ermittelt werden, obwohl nur ungenaue Messwerte vorliegen.
+Ist das Prozessmodell nicht linear oder sind die äußeren Einflüsse, die zu
+fehlerhaften Messwerten führen nicht normalverteilt, kann auch nicht von einer
+Normalverteilung des zu schätzendes Zustandes ausgegangen werden. Eine
+Normalverteilung hat die Eigenschaft nur ein Maximum aufzuweisen und somit nur
+einen möglichen besten Zustand zurück zu liefern. Liegt diese nicht vor, muss angenommen werden, dass die Wahrscheinlichkeitsdichte mehrere Maxima aufweist, das heisst, das mehrere mögliche Zustände in Frage kommen, als die Besten und Wahrscheinlichsten zum gegenwärtigen Zeitpunkt zu gelten.
 Diese unbekannte, aber gerade aktuelle Warscheinlichkeitsdichte auf dem Zustandsraum soll nun geschätzt werden, um daraus den wahrscheinlichsten Zustand zu schätzen. Dazu wird eine Menge von Partikeln erzeugt. Jeder Partikel ist dabei ein Paar aus Gewicht und einem Punkt im Zustandsraum. Die Menge der Partikel repräsentiert die Wahrscheinlichkeitsdichte.
 Jedem Partikel wird dann eine mögliche Lösungskurve zugeordnet und je besser diese zu den tatsächlichen Messwerten passt, desto mehr wird das Gewicht des Partikels angepasst. Im Laufe der Messungen verbessert sich somit die Schätzung der Wahrscheinlichkeitsdichte, welches durch Methoden der nichtparametrischen Dichteschätzung erfolgt.\citep{rob3}
 
@@ -146,16 +158,14 @@ Jedem Partikel wird dann eine mögliche Lösungskurve zugeordnet und je besser d
 \section{Umsetzung}
 \label{lokalisierung_umsetzung_sec}
 \authorsection{\editorandreas}
-\begin{flushright}\textit{Einige Abschnitte aus dem Projektwiki übernommen deren
-Autor: Dirk~Toewe}\end{flushright}
+\authorsection{\editordirk}
 % -----------------------------------------------------------------------------
 %													Lokalisierung
 \subsection{Lokalisierung} 
 In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
- Lokalisierung beschäftigen. Wie sie wahrscheinlich schon aus Kapitel
- \ref{grundlagen_cha} wissen, verfügen die beiden Roboter \gls{hollie} und
- \lstinline{Odete} über sehr ähnliche Sensoren, die zur Lokalisierung verwendet
- werden können. Der Roboter \lstinline{Odete} weist 2 Winkelencoder und einen 270 Grad Sick
+ Lokalisierung beschäftigen. Die beiden Roboter \gls{hollie} und
+ \lstinline{Odete} verfügen über sehr ähnliche Sensoren, die zur Lokalisierung
+ verwendet werden können. Der Roboter \lstinline{Odete} weist 2 Winkelencoder und einen 270 Grad Sick
  Laserscanner (Scheibenförmiger Scan) auf.
  \gls{hollie} verfügt über 2 Winkelencoder und zwei
  270 Grad Sick Laserscanner.
@@ -198,8 +208,8 @@ In diesem Abschnitt wollen wir uns mit der eigentlichen Umsetzung der
  Auch die Kalman--Filterung findet in dieser Gruppe im
  \lstinline{AbsoluteCoordinatesMecanumKLF}--Modul statt (KLF = KalmanFilter). Für
  eine Darstellung der Gruppe siehe Abbildung \ref{fig:segwayHal}.
-\item[SAL(Scanner abstraction Layer)] Die \lstinline{Sal}--Gruppe umfasst alle ``angebauten''
-Scanner, nicht aber in Plattform integrierte Scanner (Winkelencoder).
+\item[SAL(Scanner abstraction Layer)] Die \lstinline{Sal}--Gruppe umfasst die
+Laserscanner-Datenverarbei"=tung.
  Im Sinne der Abstraction Layer können auch hier Hardware-- und
  Simulationsversion der \lstinline{Sal} ausgewechselt werden, siehe Abbildung
  \ref{fig:SegwayOmniSal}
@@ -413,6 +423,6 @@ Die Module \lstinline{ProtectiveFieldSideward},
  \lstinline{ProtectiveFieldCom-}\lstinline{bined} dienen wie das Modul
  \lstinline{ObstacleMap} aus der \lstinline{ObstacleExtractor}--Gruppe zur Visualisierung, wobei hier die Virtual
  protective Fields dargestellt werden können. Die Module 
- \lstinline{ProtectiveField-}\lstinline{SidewardAnd},
+ \lstinline{Protec-tiveField}\lstinline{SidewardAnd},
  \lstinline{ProtectiveFieldForwardAnd} und \lstinline{ProtectiveFieldCombinedAnd} können dazu genutzt werden die
  Bitmaps nach der AND--Operation anzuzeigen.
